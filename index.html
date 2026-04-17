@@ -155,10 +155,9 @@
                 <div class="absolute inset-0 z-0 overflow-hidden bg-brand-light">
                     <div class="absolute inset-0 z-0"
                         style="background: url('assets/motochefe-campo-grande-fachada-loja-scooter-eletrica.jpg') center center / cover no-repeat;">
+                         <!-- Overlay escuro para legibilidade -->
+                    <div class="absolute inset-0 z-0" style="box-shadow: inset 0 0 100px 40px rgba(0, 0, 0, 0.7);">
                     </div>
-
-                    <!-- Overlay escuro para legibilidade -->
-                    <div class="absolute inset-0 z-0" style="box-shadow: inset 0 0 100px 40px rgba(10, 15, 42, 0.7);">
                     </div>
 
                     <!-- Gradient Overlay Multi-camadas -->
@@ -204,6 +203,15 @@
             <!-- Main CTA & Links -->
             <main class="px-5 pt-4 space-y-4">
 
+                <!-- Link Âncora Catálogo (Sutil e Centralizado) -->
+                <div class="flex justify-center pb-2">
+                    <a href="#section-catalogo"
+                        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-brand-dark dark:text-zinc-400 hover:text-brand-main transition-all group">
+                        <i class="fa-solid fa-motorcycle text-xs group-hover:scale-110 transition-transform"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.2em]">Ver Catálogo de Veículos</span>
+                    </a>
+                </div>
+
                 <!-- WhatsApp Principal -->
                 <a data-config="link.whatsapp"
                     href="https://wa.me/5521977342290?text=Olá, vim através do link da bio e gostaria de falar sobre veículos elétricos."
@@ -232,13 +240,13 @@
                 <!-- Botões de Contato Rápido (Abaixo do WhatsApp) -->
                 <div class="grid grid-cols-2 gap-3">
                     <a data-config="link.telefone" href="tel:21977342290"
-                        class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white dark:bg-[#1A1F3D] border border-black/5 dark:border-none shadow-md dark:shadow-xl transition-all active:scale-95 group">
+                        class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white dark:bg-[#18181b] border border-black/5 dark:border-none shadow-md dark:shadow-xl transition-all active:scale-95 group">
                         <i class="fa-solid fa-phone text-brand-main text-xs group-hover:shake transition-transform"></i>
                         <span class="text-[9px] uppercase font-bold tracking-widest text-brand-dark">Ligar
                             Loja</span>
                     </a>
                     <button onclick="downloadVCard()"
-                        class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white dark:bg-[#1A1F3D] border border-black/5 dark:border-none shadow-md dark:shadow-xl transition-all active:scale-95 group">
+                        class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white dark:bg-[#18181b] border border-black/5 dark:border-none shadow-md dark:shadow-xl transition-all active:scale-95 group">
                         <i
                             class="fa-solid fa-address-book text-brand-main text-xs group-hover:scale-110 transition-transform"></i>
                         <span
@@ -249,7 +257,7 @@
 
                 <!-- Website Link -->
                 <a data-config="link.secundario.0" href="https://campogrande.motochefe.com.br/" target="_blank"
-                    class="relative inline-flex items-center justify-center gap-4 rounded-2xl transition-all duration-300 transform active:scale-95 cursor-pointer group overflow-hidden h-24 bg-white dark:bg-[#1A1F3D] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-brand-dark dark:text-white shadow-xl border border-black/5 dark:border-white/10 px-6 w-full">
+                    class="relative inline-flex items-center justify-center gap-4 rounded-2xl transition-all duration-300 transform active:scale-95 cursor-pointer group overflow-hidden h-24 bg-white dark:bg-[#18181b] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-brand-dark dark:text-white shadow-xl border border-black/5 dark:border-white/10 px-6 w-full">
                     <div
                         class="absolute -right-4 -bottom-4 opacity-10 dark:opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
                         <i class="fa-solid fa-globe text-8xl text-brand-dark dark:text-white"></i>
@@ -276,7 +284,7 @@
 
                 <!-- Instagram Button -->
                 <a data-config="link.secundario.1" href="https://www.instagram.com/motochefecampogrand" target="_blank"
-                    class="relative inline-flex items-center justify-center gap-4 rounded-2xl transition-all duration-300 transform active:scale-95 cursor-pointer group overflow-hidden h-24 bg-white dark:bg-[#1A1F3D] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-brand-dark dark:text-white shadow-xl border border-black/5 dark:border-white/10 px-6 w-full">
+                    class="relative inline-flex items-center justify-center gap-4 rounded-2xl transition-all duration-300 transform active:scale-95 cursor-pointer group overflow-hidden h-24 bg-white dark:bg-[#18181b] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-brand-dark dark:text-white shadow-xl border border-black/5 dark:border-white/10 px-6 w-full">
                     <div
                         class="absolute -right-4 -bottom-4 opacity-10 dark:opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
                         <i class="fa-brands fa-instagram text-8xl text-brand-dark dark:text-white"></i>
@@ -301,6 +309,29 @@
                     </div>
                 </a>
 
+                <!-- Google Business Button -->
+                <a href="https://share.google/oIkqUCFIa4u3MsnJJ" target="_blank"
+                    class="relative inline-flex items-center justify-center gap-4 rounded-2xl transition-all duration-300 transform active:scale-95 cursor-pointer group overflow-hidden h-24 bg-white dark:bg-[#18181b] hover:bg-zinc-50 dark:hover:bg-zinc-800 text-brand-dark dark:text-white shadow-xl border border-black/5 dark:border-white/10 px-6 w-full">
+                    <div
+                        class="absolute -right-4 -bottom-4 opacity-10 dark:opacity-10 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fa-brands fa-google text-8xl text-brand-dark dark:text-white"></i>
+                    </div>
+                    <div class="shrink-0 z-10 transition-transform duration-300 group-hover:rotate-12">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-brand-main/10 dark:bg-white/10 flex items-center justify-center">
+                            <i class="fa-brands fa-google text-2xl text-brand-main"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start z-10 text-left flex-1">
+                        <span class="text-[10px] uppercase tracking-widest font-bold mb-1 opacity-60 dark:opacity-70 text-brand-dark dark:text-white/70">Localização</span>
+                        <span class="font-bold leading-tight text-xl uppercase font-title text-brand-dark dark:text-white">Perfil no Google</span>
+                    </div>
+                    <div
+                        class="ml-auto pl-2 opacity-60 z-10 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                        <i class="fa-solid fa-chevron-right text-brand-main"></i>
+                    </div>
+                </a>
+
                 <!-- Diferenciais Section -->
                 <section class="py-12" id="section-diferenciais">
                     <div class="flex flex-col items-center mb-10 text-center px-2 reveal">
@@ -311,26 +342,208 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
-                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#10122B] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
+                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#121212] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
                             style="transition-delay: 100ms">
                             <i class="fa-solid fa-headset text-2xl text-brand-main"></i>
                             <span class="text-[11px] font-bold uppercase tracking-tight text-brand-dark dark:text-zinc-300">Atendimento Personalizado</span>
                         </div>
-                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#10122B] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
+                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#121212] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
                             style="transition-delay: 200ms">
                             <i class="fa-solid fa-tags text-2xl text-brand-main"></i>
                             <span class="text-[11px] font-bold uppercase tracking-tight text-brand-dark dark:text-zinc-300">Melhor Preço</span>
                         </div>
-                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#10122B] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
+                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#121212] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
                             style="transition-delay: 300ms">
                             <i class="fa-solid fa-shield-halved text-2xl text-brand-main"></i>
                             <span class="text-[11px] font-bold uppercase tracking-tight text-brand-dark dark:text-zinc-300">Garantia Real</span>
                         </div>
-                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#10122B] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
+                        <div class="flex flex-col items-center gap-3 p-5 bg-white dark:bg-[#121212] rounded-[2rem] border border-black/5 dark:border-white/5 shadow-sm text-center reveal diferencial-card-premium cursor-pointer"
                             style="transition-delay: 400ms">
                             <i class="fa-solid fa-wrench text-2xl text-brand-main"></i>
                             <span class="text-[11px] font-bold uppercase tracking-tight text-brand-dark dark:text-zinc-300">Manutenção Especializada</span>
                         </div>
+                    </div>
+                </section>
+
+
+                <!-- Catálogo de Veículos Section (Premium) -->
+                <section class="mt-16" id="section-catalogo">
+                    <div class="flex flex-col items-center mb-8 text-center px-4">
+                        <span class="diferenciais-eyebrow">Nossa Linha</span>
+                        <h2 class="diferenciais-titulo">Catálogo de<br>Veículos</h2>
+                        <div class="diferenciais-linha"></div>
+                        <p class="diferenciais-subtitulo">Escolha o modelo ideal para sua mobilidade elétrica</p>
+                    </div>
+
+                    <!-- Barra de Pesquisa -->
+                    <div class="px-4 mb-5">
+                        <div class="catalog-search-wrap">
+                            <i class="fa-solid fa-magnifying-glass catalog-search-icon"></i>
+                            <input type="text" id="catalog-search" placeholder="Buscar modelo, categoria, potência, autonomia..." autocomplete="off">
+                            <button type="button" id="catalog-search-clear" class="catalog-search-clear" aria-label="Limpar busca">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filtros Premium -->
+                    <div class="px-4 mb-6">
+                        <div id="catalog-filters-premium" class="flex flex-wrap justify-center gap-2 pb-2">
+                            <button data-filter="Todos" class="catalog-filter-premium active flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-brand-main text-white shadow-lg shadow-brand-main/20">
+                                <i class="fa-solid fa-th"></i> Todos
+                            </button>
+                            <button data-filter="Autopropelidos" class="catalog-filter-premium flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white text-brand-dark border border-black/20 hover:border-brand-main/50">
+                                <i class="fa-solid fa-bolt"></i> Autopropelidos
+                            </button>
+                            <button data-filter="Ciclomotor" class="catalog-filter-premium flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white text-brand-dark border border-black/20 hover:border-brand-main/50">
+                                <i class="fa-solid fa-motorcycle"></i> Ciclomotor
+                            </button>
+                            <button data-filter="E-Bikes" class="catalog-filter-premium flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white text-brand-dark border border-black/20 hover:border-brand-main/50">
+                                <i class="fa-solid fa-bicycle"></i> E-Bikes
+                            </button>
+                            <button data-filter="Triciclos" class="catalog-filter-premium flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white text-brand-dark border border-black/20 hover:border-brand-main/50">
+                                <i class="fa-solid fa-tricycle"></i> Triciclos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ofertas da Semana -->
+                    <div id="section-ofertas-semana" class="px-4 mb-10">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-[3px] h-9 rounded-full bg-red-500 flex-shrink-0"></div>
+                            <div>
+                                <p class="text-[9px] font-bold uppercase tracking-[0.22em] text-red-500">Promoção</p>
+                                <h3 class="font-title text-[22px] font-extrabold uppercase leading-none text-brand-dark dark:text-white">Ofertas da Semana</h3>
+                            </div>
+                        </div>
+                        <div id="catalog-grid-ofertas" class="grid gap-3">
+                            <div class="catalog-skeleton" style="height:300px;border-radius:1.5rem"></div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="catalog-skeleton" style="height:220px;border-radius:1.5rem"></div>
+                                <div class="catalog-skeleton" style="height:220px;border-radius:1.5rem"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mais Vendidos: 1 grande + 2 lado a lado -->
+                    <div id="section-mais-vendidos" class="px-4 mb-10">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-[3px] h-9 rounded-full bg-brand-main flex-shrink-0"></div>
+                            <div>
+                                <p class="text-[9px] font-bold uppercase tracking-[0.22em] text-brand-main">Destaques</p>
+                                <h3 class="font-title text-[22px] font-extrabold uppercase leading-none text-brand-dark dark:text-white">Top 3 Mais Vendidos</h3>
+                            </div>
+                        </div>
+                        <div id="catalog-grid-destaque" class="grid gap-3">
+                            <div class="catalog-skeleton" style="height:300px;border-radius:1.5rem"></div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="catalog-skeleton" style="height:220px;border-radius:1.5rem"></div>
+                                <div class="catalog-skeleton" style="height:220px;border-radius:1.5rem"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contador -->
+                    <div class="px-4 mb-4">
+                        <p id="catalog-counter" class="text-[10px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-widest"><span class="text-brand-main" id="catalog-count">—</span> veículos encontrados</p>
+                    </div>
+
+                    <!-- Grid de Produtos -->
+                    <div id="catalog-grid" class="px-4 grid grid-cols-1 gap-4">
+                        <!-- skeleton enquanto carrega -->
+                        <div class="catalog-skeleton"></div>
+                        <div class="catalog-skeleton"></div>
+                        <div class="catalog-skeleton"></div>
+                        <!-- REMOVIDO: cards estáticos substituídos pelo Google Sheets -->
+                        
+                    </div>
+                </section>
+                <!-- Simulação de Economia Section -->
+                <section class="mt-16 reveal" id="section-economia">
+                    <div class="bg-[#18181b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden">
+                        <!-- Glow accent -->
+                        <div class="absolute -left-20 -top-20 w-64 h-64 bg-brand-main/10 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div class="absolute -right-20 -bottom-20 w-48 h-48 bg-brand-main/5 blur-[60px] rounded-full pointer-events-none"></div>
+
+                        <div class="flex flex-col items-center mb-8 text-center px-4">
+                            <span class="diferenciais-eyebrow">Calcule Agora</span>
+                            <h2 class="diferenciais-titulo">Quanto Você<br>Vai Economizar?</h2>
+                            <div class="diferenciais-linha"></div>
+                            <p class="diferenciais-subtitulo">Compare o custo da gasolina com o elétrico no seu dia a dia</p>
+                        </div>
+
+                        <!-- Inputs -->
+                        <div class="space-y-5 mb-6">
+                            <!-- KM por dia -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Km que você faz por dia</label>
+                                    <span id="eco-km-val" class="text-brand-main font-bold font-mono text-sm">30 km</span>
+                                </div>
+                                <input id="eco-km" type="range" min="5" max="150" step="5" value="30"
+                                    class="eco-slider w-full">
+                            </div>
+
+                            <!-- Preço gasolina -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Preço da gasolina (R$/litro)</label>
+                                    <span id="eco-gas-val" class="text-brand-main font-bold font-mono text-sm">R$ 6,50</span>
+                                </div>
+                                <input id="eco-gas" type="range" min="5.00" max="9.00" step="0.50" value="6.50"
+                                    class="eco-slider w-full">
+                            </div>
+
+                            <!-- Consumo da moto a gasolina -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Consumo da sua moto atual (km/l)</label>
+                                    <span id="eco-consumo-val" class="text-brand-main font-bold font-mono text-sm">35 km/l</span>
+                                </div>
+                                <input id="eco-consumo" type="range" min="20" max="60" step="5" value="35"
+                                    class="eco-slider w-full">
+                            </div>
+                        </div>
+
+                        <!-- Resultado -->
+                        <div class="bg-black/30 rounded-3xl border border-white/5 p-6 mb-6">
+                            <div class="grid grid-cols-3 gap-3 text-center mb-4">
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Gasolina</p>
+                                    <p id="eco-gasto-gas" class="text-lg font-bold font-mono text-red-400">R$ 167</p>
+                                </div>
+                                <div class="flex flex-col items-center justify-center">
+                                    <div class="w-8 h-8 rounded-full bg-brand-main/20 border border-brand-main/30 flex items-center justify-center mb-1">
+                                        <i class="fa-solid fa-bolt text-brand-main text-xs"></i>
+                                    </div>
+                                    <p class="text-[8px] uppercase tracking-widest text-zinc-600 font-bold">vs</p>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Elétrico</p>
+                                    <p id="eco-gasto-ele" class="text-lg font-bold font-mono text-green-400">R$ 13</p>
+                                </div>
+                            </div>
+
+                            <!-- Economia destaque -->
+                            <div class="border-t border-white/5 pt-4 text-center">
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Sua economia mensal</p>
+                                <p id="eco-mensal" class="text-4xl font-extrabold font-title text-brand-main leading-none mb-1">R$ 154</p>
+                                <p id="eco-anual" class="text-[11px] text-zinc-400 font-bold">→ R$ 1.848 economizados por ano</p>
+                            </div>
+                        </div>
+
+                        <!-- Nota técnica -->
+                        <p class="text-[9px] text-zinc-600 text-center leading-relaxed mb-6">
+                            * Cálculo estimado. Elétrico: consumo médio de 2 kWh/100km, tarifa residencial R$ 0,85/kWh. Valores reais podem variar.
+                        </p>
+
+                        <!-- CTA -->
+                        <a href="https://wa.me/5521977342290?text=Olá! Fiz a simulação de economia e quero saber mais sobre as scooters elétricas."
+                            target="_blank"
+                            class="w-full py-5 rounded-2xl bg-brand-main text-white text-[11px] font-bold tracking-[0.3em] flex items-center justify-center gap-3 transition-all transform active:scale-95 uppercase shadow-xl shadow-brand-main/30 hover:shadow-brand-main/50 group">
+                            <i class="fa-brands fa-whatsapp text-lg group-hover:scale-110 transition-transform"></i>
+                            Quero Economizar Também
+                        </a>
                     </div>
                 </section>
 
@@ -425,7 +638,7 @@
                     <div class="mt-12 flex flex-col items-center reveal">
                         <a href="https://wa.me/5521977342290?text=Olá, vim através do link da bio e gostaria de falar sobre veículos elétricos."
                             target="_blank"
-                            class="group inline-flex items-center gap-3 py-4 px-8 rounded-full bg-[#1A1F3D] border border-white/10 shadow-xl hover:bg-zinc-800 transition-all duration-300">
+                            class="group inline-flex items-center gap-3 py-4 px-8 rounded-full bg-[#18181b] border border-white/10 shadow-xl hover:bg-zinc-800 transition-all duration-300">
                             <span class="text-[10px] sm:text-xs font-bold text-white uppercase tracking-[0.2em]">Falar com Especialista</span>
                             <div
                                 class="w-8 h-8 rounded-full bg-brand-main text-white flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -433,141 +646,6 @@
                             </div>
                         </a>
                         <p class="mt-4 text-[10px] text-brand-gray font-bold uppercase tracking-widest opacity-60">Atendimento personalizado</p>
-                    </div>
-                </section>
-
-                <!-- Catálogo de Veículos Section (Premium) -->
-                <section class="mt-16" id="section-catalogo">
-                    <div class="flex flex-col items-center mb-8 text-center px-4">
-                        <span class="diferenciais-eyebrow">Nossa Linha</span>
-                        <h2 class="diferenciais-titulo">Catálogo de<br>Veículos</h2>
-                        <div class="diferenciais-linha"></div>
-                        <p class="diferenciais-subtitulo">Escolha o modelo ideal para sua mobilidade elétrica</p>
-                    </div>
-
-                    <!-- Filtros Premium -->
-                    <div class="px-4 mb-6">
-                        <div id="catalog-filters-premium" class="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
-                            <button data-filter="Todos" class="catalog-filter-premium active flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-brand-main text-white shadow-lg shadow-brand-main/20">
-                                <i class="fa-solid fa-th"></i> Todos
-                            </button>
-                            <button data-filter="Autopropelidos" class="catalog-filter-premium flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white dark:bg-[#1A1F3D] text-brand-dark dark:text-zinc-300 border border-black/5 dark:border-white/10 hover:border-brand-main/30">
-                                <i class="fa-solid fa-bolt"></i> Autopropelidos
-                            </button>
-                            <button data-filter="Ciclomotor" class="catalog-filter-premium flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white dark:bg-[#1A1F3D] text-brand-dark dark:text-zinc-300 border border-black/5 dark:border-white/10 hover:border-brand-main/30">
-                                <i class="fa-solid fa-motorcycle"></i> Ciclomotor
-                            </button>
-                            <button data-filter="E-Bikes" class="catalog-filter-premium flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white dark:bg-[#1A1F3D] text-brand-dark dark:text-zinc-300 border border-black/5 dark:border-white/10 hover:border-brand-main/30">
-                                <i class="fa-solid fa-bicycle"></i> E-Bikes
-                            </button>
-                            <button data-filter="Triciclos" class="catalog-filter-premium flex items-center gap-2 whitespace-nowrap px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all bg-white dark:bg-[#1A1F3D] text-brand-dark dark:text-zinc-300 border border-black/5 dark:border-white/10 hover:border-brand-main/30">
-                                <i class="fa-solid fa-tricycle"></i> Triciclos
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Contador -->
-                    <div class="px-4 mb-4">
-                        <p id="catalog-counter" class="text-[10px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-widest"><span class="text-brand-main" id="catalog-count">—</span> veículos encontrados</p>
-                    </div>
-
-                    <!-- Grid de Produtos -->
-                    <div id="catalog-grid" class="px-4 grid grid-cols-1 gap-4">
-                        <!-- skeleton enquanto carrega -->
-                        <div class="catalog-skeleton"></div>
-                        <div class="catalog-skeleton"></div>
-                        <div class="catalog-skeleton"></div>
-                        <!-- REMOVIDO: cards estáticos substituídos pelo Google Sheets -->
-                        
-                    </div>
-                </section>
-
-                <!-- Simulação de Economia Section -->
-                <section class="mt-16 reveal" id="section-economia">
-                    <div class="bg-[#18181b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden">
-                        <!-- Glow accent -->
-                        <div class="absolute -left-20 -top-20 w-64 h-64 bg-brand-main/10 blur-[80px] rounded-full pointer-events-none"></div>
-                        <div class="absolute -right-20 -bottom-20 w-48 h-48 bg-brand-main/5 blur-[60px] rounded-full pointer-events-none"></div>
-
-                        <div class="flex flex-col items-center mb-8 text-center px-4">
-                            <span class="diferenciais-eyebrow">Calcule Agora</span>
-                            <h2 class="diferenciais-titulo">Quanto Você<br>Vai Economizar?</h2>
-                            <div class="diferenciais-linha"></div>
-                            <p class="diferenciais-subtitulo">Compare o custo da gasolina com o elétrico no seu dia a dia</p>
-                        </div>
-
-                        <!-- Inputs -->
-                        <div class="space-y-5 mb-6">
-                            <!-- KM por dia -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Km que você faz por dia</label>
-                                    <span id="eco-km-val" class="text-brand-main font-bold font-mono text-sm">30 km</span>
-                                </div>
-                                <input id="eco-km" type="range" min="5" max="150" step="5" value="30"
-                                    class="eco-slider w-full">
-                            </div>
-
-                            <!-- Preço gasolina -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Preço da gasolina (R$/litro)</label>
-                                    <span id="eco-gas-val" class="text-brand-main font-bold font-mono text-sm">R$ 6,50</span>
-                                </div>
-                                <input id="eco-gas" type="range" min="5.00" max="9.00" step="0.50" value="6.50"
-                                    class="eco-slider w-full">
-                            </div>
-
-                            <!-- Consumo da moto a gasolina -->
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Consumo da sua moto atual (km/l)</label>
-                                    <span id="eco-consumo-val" class="text-brand-main font-bold font-mono text-sm">35 km/l</span>
-                                </div>
-                                <input id="eco-consumo" type="range" min="20" max="60" step="5" value="35"
-                                    class="eco-slider w-full">
-                            </div>
-                        </div>
-
-                        <!-- Resultado -->
-                        <div class="bg-black/30 rounded-3xl border border-white/5 p-6 mb-6">
-                            <div class="grid grid-cols-3 gap-3 text-center mb-4">
-                                <div>
-                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Gasolina</p>
-                                    <p id="eco-gasto-gas" class="text-lg font-bold font-mono text-red-400">R$ 167</p>
-                                </div>
-                                <div class="flex flex-col items-center justify-center">
-                                    <div class="w-8 h-8 rounded-full bg-brand-main/20 border border-brand-main/30 flex items-center justify-center mb-1">
-                                        <i class="fa-solid fa-bolt text-brand-main text-xs"></i>
-                                    </div>
-                                    <p class="text-[8px] uppercase tracking-widest text-zinc-600 font-bold">vs</p>
-                                </div>
-                                <div>
-                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Elétrico</p>
-                                    <p id="eco-gasto-ele" class="text-lg font-bold font-mono text-green-400">R$ 13</p>
-                                </div>
-                            </div>
-
-                            <!-- Economia destaque -->
-                            <div class="border-t border-white/5 pt-4 text-center">
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Sua economia mensal</p>
-                                <p id="eco-mensal" class="text-4xl font-extrabold font-title text-brand-main leading-none mb-1">R$ 154</p>
-                                <p id="eco-anual" class="text-[11px] text-zinc-400 font-bold">→ R$ 1.848 economizados por ano</p>
-                            </div>
-                        </div>
-
-                        <!-- Nota técnica -->
-                        <p class="text-[9px] text-zinc-600 text-center leading-relaxed mb-6">
-                            * Cálculo estimado. Elétrico: consumo médio de 2 kWh/100km, tarifa residencial R$ 0,85/kWh. Valores reais podem variar.
-                        </p>
-
-                        <!-- CTA -->
-                        <a href="https://wa.me/5521977342290?text=Olá! Fiz a simulação de economia e quero saber mais sobre as scooters elétricas."
-                            target="_blank"
-                            class="w-full py-5 rounded-2xl bg-brand-main text-white text-[11px] font-bold tracking-[0.3em] flex items-center justify-center gap-3 transition-all transform active:scale-95 uppercase shadow-xl shadow-brand-main/30 hover:shadow-brand-main/50 group">
-                            <i class="fa-brands fa-whatsapp text-lg group-hover:scale-110 transition-transform"></i>
-                            Quero Economizar Também
-                        </a>
                     </div>
                 </section>
 
@@ -645,7 +723,7 @@
                     </div>
                 </section>
 
-                                <!-- Galeria Section (Premium) -->
+                <!-- Galeria Section (Premium) -->
                 <section class="mt-16 reveal pb-8 w-full overflow-hidden">
                     <div class="flex flex-col items-center mb-10 text-center px-4">
                         <span class="diferenciais-eyebrow">Conheça a Motochefe</span>
@@ -773,128 +851,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div onclick="openImageModal('assets/motochefe-campo-grande-fachada-loja-scooter-eletrica.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-campo-grande-fachada-loja-scooter-eletrica.jpg"
-                                    alt="Fachada Motochefe Campo Grande" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-campo-grande-fachada-tres-scooters-eletricos.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-campo-grande-fachada-tres-scooters-eletricos.jpg"
-                                    alt="Três scooters elétricos na fachada" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-branca-banco-caramelo-parque.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-branca-banco-caramelo-parque.jpg"
-                                    alt="Scooter elétrica branca no parque" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-branca-caramelo-rua-campo-grande.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-branca-caramelo-rua-campo-grande.jpg"
-                                    alt="Scooter branca caramelo na rua" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-preta-amarela-exterior.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-preta-amarela-exterior.jpg"
-                                    alt="Scooter preta e amarela exterior" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-preta-branca-showroom.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-preta-branca-showroom.jpg"
-                                    alt="Scooter preta e branca no showroom" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-preta-showroom-interior.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-preta-showroom-interior.jpg"
-                                    alt="Scooter preta no showroom interior" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/motochefe-scooter-eletrica-vermelha-frente-loja.jpg')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/motochefe-scooter-eletrica-vermelha-frente-loja.jpg"
-                                    alt="Scooter vermelha frente loja" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div onclick="openImageModal('assets/logo-motochefe-campo-grande-veiculos-eletricos.png')"
-                                class="w-[260px] sm:w-[280px] shrink-0 aspect-[4/5] rounded-[2rem] overflow-hidden border border-brand-dark/10 dark:border-white/10 shadow-xl group/item relative cursor-zoom-in">
-                                <img src="assets/logo-motochefe-campo-grande-veiculos-eletricos.png"
-                                    alt="Logo Motochefe" loading="lazy"
-                                    class="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-[1.5s] ease-out">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-all duration-500 flex items-center justify-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-brand-main/90 backdrop-blur-xl border border-white/30 flex items-center justify-center transform translate-y-4 group-hover/item:translate-y-0 transition-all duration-500 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                                        <i class="fa-solid fa-expand text-white text-xl"></i>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Seção Destaques Mosaic -->
+
                 <section class="mt-8 px-5 reveal" id="secao-destaques-mosaic">
                     <div class="grid grid-cols-2 gap-3 h-[240px] sm:h-[280px]">
                         <!-- Imagem Grande (Esquerda) -->
@@ -945,7 +907,7 @@
 <!-- Botão Galeria Completa -->
                 <div class="mt-4 pb-8 flex justify-center reveal">
                     <button onclick="openModal('modal-galeria-completa')"
-                        class="inline-flex items-center gap-3 py-4 px-8 rounded-2xl bg-brand-main dark:bg-[#1A1F3D] border border-black/5 dark:border-white/10 shadow-xl text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:scale-105 transition-all active:scale-95 group">
+                        class="inline-flex items-center gap-3 py-4 px-8 rounded-2xl bg-brand-main dark:bg-[#18181b] border border-black/5 dark:border-white/10 shadow-xl text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:scale-105 transition-all active:scale-95 group">
                         <i class="fa-solid fa-images text-white group-hover:rotate-12 transition-transform"></i>
                         Acessar todas as fotos
                     </button>
@@ -954,12 +916,12 @@
                                 <!-- Localização & Info Section -->
                 <section class="mt-16 reveal pb-10">
                     <div
-                        class="bg-white dark:bg-[#1A1F3D] rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/5 shadow-2xl relative">
+                        class="bg-white dark:bg-[#18181b] rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/5 shadow-2xl relative">
                         <!-- Mapa Integrado -->
                         <div
                             class="w-full h-48 sm:h-56 relative opacity-80 hover:opacity-100 transition-opacity duration-500 border-b border-white/5">
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.0!2d-43.5562!3d-22.9008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDU0JzAzLjEiUyA0M8KwMzMnMjIuMyJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3674.8695322802605!2d-43.55322462468939!3d-22.918182579246977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9be75a9d42a255%3A0x133f77bd9e2a8321!2sMotoChefe%20Campo%20Grande!5e0!3m2!1spt-BR!2sbr!4v1776414376550!5m2!1spt-BR!2sbr"
                                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
@@ -1024,7 +986,7 @@
     </div>
 
     <!-- Image Preview Modal -->
-    <div id="modal-image" class="modal-backdrop" style="z-index: 9999;"
+    <div id="modal-image" class="modal-backdrop" style="z-index: 5000;"
         onclick="if(event.target === this) closeModal('modal-image');">
         <div class="modal-content !bg-transparent !border-none !shadow-none !p-0 !max-w-4xl flex justify-center items-center"
             style="position: relative; z-index: 10000;" onclick="event.stopPropagation();">
@@ -1037,7 +999,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="mt-8 py-10 px-6 bg-[#1A1F3D] text-zinc-400 text-center rounded-t-[3rem] reveal text-[16px]">
+    <footer class="mt-8 py-10 px-6 bg-[#18181b] text-zinc-400 text-center rounded-t-[3rem] reveal text-[16px]">
         <img src="assets/logo-motochefe-campo-grande-veiculos-eletricos.png"
             alt="Motochefe Campo Grande" class="w-24 mx-auto mb-6">
 
@@ -1204,7 +1166,7 @@
                 </div>
 
     <!-- Modal Produto Individual (Premium) -->
-    <div id="modal-produto" class="modal-backdrop" style="z-index: 3000;" onclick="if(event.target === this) closeModal('modal-produto');">
+    <div id="modal-produto" class="modal-backdrop" style="z-index: 4000;" onclick="if(event.target === this) closeModal('modal-produto');">
         <div class="modal-content product-modal-content !max-w-lg w-[95%] !p-0 !rounded-[2.5rem] overflow-hidden" onclick="event.stopPropagation();">
             <!-- Imagem do Produto -->
             <div class="relative w-full h-64 sm:h-72 modal-img-wrap">
@@ -1216,15 +1178,10 @@
                     <span class="text-white text-[9px] font-bold uppercase tracking-wider">Ampliar</span>
                 </div>
                 
-                <!-- Badges -->
+                <!-- Badge destaque -->
                 <div class="absolute top-4 left-4 flex gap-2">
-                    <span id="produto-badge-destaque" class="hidden px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-extrabold uppercase tracking-wider shadow-lg">
-                        <i class="fa-solid fa-star mr-1"></i> Destaque
-                    </span>
-                </div>
-                <div class="absolute top-4 right-4 flex gap-2">
-                    <span id="produto-badge-categoria" class="px-3 py-1.5 rounded-full bg-brand-main text-white text-[9px] font-extrabold uppercase tracking-wider shadow-lg">
-                        Categoria
+                    <span id="produto-badge-destaque" class="hidden w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg flex items-center justify-center">
+                        <i class="fa-solid fa-star text-[11px]"></i>
                     </span>
                 </div>
                 
@@ -1235,12 +1192,12 @@
             </div>
 
             <!-- Miniaturas -->
-            <div id="produto-thumbs" class="hidden px-6 pt-4 bg-white dark:bg-[#1A1F3D] flex gap-3 overflow-x-auto">
+            <div id="produto-thumbs" class="hidden px-6 pt-4 bg-white dark:bg-[#18181b] flex gap-3 overflow-x-auto">
                 <!-- populado via JS -->
             </div>
 
             <!-- Conteúdo -->
-            <div class="px-6 pb-6 pt-4 bg-white dark:bg-[#1A1F3D]">
+            <div class="px-6 pb-6 pt-4 bg-white dark:bg-[#18181b]">
                 <!-- Categoria -->
                 <p id="produto-categoria" class="text-[10px] font-bold text-brand-main uppercase tracking-[0.2em] mb-1">Categoria</p>
                 
@@ -1278,10 +1235,10 @@
                 
                 <!-- Botões CTA -->
                 <div class="space-y-3">
-                    <a id="produto-link-site" href="#" target="_blank" class="w-full py-4 rounded-2xl bg-white dark:bg-[#10122B] border-2 border-brand-main text-brand-main font-bold flex items-center justify-center gap-2 uppercase tracking-[0.15em] text-[10px] transition-all hover:bg-brand-main hover:text-white">
-                        <i class="fa-solid fa-globe text-lg"></i> Ver no Site Oficial
+                    <a id="produto-link-site" href="#" target="_blank" class="w-full py-4 rounded-2xl bg-white dark:bg-[#121212] border-2 border-brand-main text-brand-main font-bold flex items-center justify-center gap-2 uppercase tracking-[0.15em] text-[10px] transition-all hover:bg-brand-hover hover:border-brand-hover hover:text-white group">
+                        <i class="fa-solid fa-globe text-lg group-hover:text-white"></i> Ver no Site Oficial
                     </a>
-                    <a id="produto-link-whatsapp" href="#" target="_blank" class="w-full py-4 rounded-2xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 uppercase tracking-[0.15em] text-[10px] transition-transform active:scale-95">
+                    <a id="produto-link-whatsapp" href="#" target="_blank" class="w-full py-4 rounded-2xl bg-brand-main text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-brand-main/20 uppercase tracking-[0.15em] text-[10px] transition-transform active:scale-95">
                         <i class="fa-brands fa-whatsapp text-lg"></i> Tenho Interesse neste Veículo
                     </a>
                 </div>
@@ -1289,134 +1246,37 @@
         </div>
     </div>
 
-    <!-- Script do Catálogo Premium inline -->
-    <script>
-        (function() {
-            var fallbackData = [
-                { id: 1, nome: 'Giga', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Frente agressiva, farol e setas em LED e painel digital futurista. Escolha de quem quer sair do óbvio, chegar em silêncio e causar impacto.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/Giga_modelo.webp', link: 'https://motochefebrasil.com.br/modelos/giga', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 2, nome: 'JET MAX', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '55 km', descricao: 'Visual esportivo de scooter robusta com tecnologia e conforto. Motor 1000W com 55 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/JET-MAX-_-Oficial-2_b.webp', link: 'https://motochefebrasil.com.br/modelos/jet-max', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 3, nome: 'X12', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Scooter elétrica que redefine mobilidade urbana. Compacta, potente e tecnológica com 1000W e até 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/x12b.webp', link: 'https://motochefebrasil.com.br/modelos/x12/', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 4, nome: 'BOB', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Posição confortável, plataforma baixa, assento amplo com espaço para carona e encosto traseiro.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/bob_1.webp', link: 'https://motochefebrasil.com.br/modelos/bob', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 5, nome: 'JET', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JET_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/jet', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 6, nome: 'Joyzinha', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Design para o dia a dia, parceira ideal para trabalho, faculdade ou passeio na orla.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/5.webp', link: 'https://motochefebrasil.com.br/modelos/joyzinha', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 7, nome: 'Joy Classic', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Estilo clássico, conforto de sobra e autonomia para o seu dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-CLASSIC-_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-classic', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 8, nome: 'Joy Super', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-SUPER-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-super', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 9, nome: 'MC20 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Farol FULL LED, freio a disco hidráulico, bateria removível turbo 5A, suporta até 180 kg.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MC20-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20-mini', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 10, nome: 'MC21 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Equilíbrio perfeito entre design minimalista e desempenho elétrico. Bateria de lítio removível.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc21_mini_tin.webp', link: 'https://motochefebrasil.com.br/modelos/mc21-mini', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 11, nome: 'Mia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Não é necessária CNH para conduzir um equipamento autopropelido (Resolução nº 996/2023 do Contran).', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 12, nome: 'Sofia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Combina estilo clássico e tecnologia moderna. Motor 1000W, 32 km/h e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/sofia_web3_tiny.webp', link: 'https://motochefebrasil.com.br/modelos/sofia', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 13, nome: 'Ret', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/RET-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ret', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 14, nome: 'Soma', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Sem CNH, sem emplacamento. Motor 1000W, bateria 60V 20Ah removível e 40 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/Soma-1-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/soma', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 15, nome: 'Mia Tri', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elétrico 800W para quem quer segurança, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 16, nome: 'Joy Tri', categoria: 'Autopropelidos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi robusto de três rodas com estabilidade e confiança para o dia a dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 17, nome: 'BIG TRI', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com segurança. Design retrô, conforto e tecnologia moderna em triciclo elétrico 1000W.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 18, nome: 'VED', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elétrica acessível, segura e confortável. Motor 1000W e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 19, nome: 'X11', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '80 km', descricao: 'Design robusto e presença marcante com soluções modernas de mobilidade elétrica.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x11__-1.webp', link: 'https://motochefebrasil.com.br/modelos/x11', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 20, nome: 'MC20', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '40 km', descricao: '2000W ou 3000W, NFC, alarme com bloqueio, painel digital e até 80 km com bateria extra. Visual chopper, IP65.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc20_pop-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20/', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 21, nome: 'X15', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elétrico potente e seguro com motor 3000W para aceleração firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 22, nome: 'Roma', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '50 km', descricao: 'Charme retrô europeu com tecnologia elétrica moderna. 3000W, 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/roma_ai_sombra-1.webp', link: 'https://motochefebrasil.com.br/modelos/roma', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 23, nome: 'GRID', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Ágil, robusta e divertida de pilotar.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/GRID-LATERAL1-1.webp', link: 'https://motochefebrasil.com.br/modelos/grid/', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 24, nome: 'Style', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'E-bike urbana 750W (pico 1000W), bateria 48V 15,6Ah removível, freio a disco hidráulico — assinada por Diego Ribas.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/style-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/style', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 25, nome: 'Liberty', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Motor 500W (pico 800W), bateria 48V 13Ah removível e modos por aceleração ou pedal assistido PAS 5 níveis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/liberty_product_web.webp', link: 'https://motochefebrasil.com.br/modelos/liberty', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 26, nome: 'SPACE', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Motor 750W, bateria 48V 12Ah removível, 7 marchas. Aceleração no punho ou pedal assistido PAS 5 níveis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/space_ia-1.webp', link: 'https://motochefebrasil.com.br/modelos/space', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 27, nome: 'Retrô', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Visual de bike urbana com praticidade de e-bike moderna. Motor 500W, 32 km/h e 35 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/retro_hero-1.webp', link: 'https://motochefebrasil.com.br/modelos/retro', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 28, nome: 'Joy Tri', categoria: 'Triciclos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi de três rodas com estabilidade e confiança. Ideal para quem quer segurança sem abrir mão da liberdade.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 29, nome: 'BIG TRI', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com segurança. Triciclo 1000W com design retrô, conforto e tecnologia moderna.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 30, nome: 'Mia Tri', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elétrico 800W para quem quer segurança, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 31, nome: 'X15', categoria: 'Triciclos', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elétrico potente com motor 3000W para aceleração firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'Não', status: 'Ativo' },
-                { id: 32, nome: 'VED', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elétrica acessível, segura e confortável. Motor 1000W e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'Não', status: 'Ativo' }
-            ];
+    <!-- Modal Categoria -->
+    <div id="modal-categoria" class="modal-backdrop" style="z-index: 3000;" onclick="if(event.target === this) closeModal('modal-categoria');">
+        <div class="modal-content catalog-modal-content !max-w-lg w-[95%] !p-0 !rounded-[2.5rem] overflow-hidden" onclick="event.stopPropagation();">
+            <!-- Header -->
+            <div class="sticky top-0 z-10 px-6 py-5 bg-white dark:bg-[#18181b] border-b border-black/5 dark:border-white/5 flex items-center justify-between">
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-[0.22em] text-brand-main mb-0.5">Catálogo</p>
+                    <h3 id="modal-categoria-titulo" class="font-title text-xl font-extrabold uppercase leading-none text-brand-dark dark:text-white">Todos</h3>
+                </div>
+                <button onclick="closeModal('modal-categoria')" class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/20 transition-colors">
+                    <i class="fa-solid fa-xmark text-brand-dark dark:text-white text-lg"></i>
+                </button>
+            </div>
 
-            var catalogFilter = 'Todos';
+            <!-- Grid de Produtos -->
+            <div id="modal-categoria-grid" class="px-6 py-5 grid grid-cols-1 gap-4 max-h-[78vh] overflow-y-auto">
+                <!-- populado via JS -->
+            </div>
 
-            function renderCatalogPremium() {
-                var grid = document.getElementById('catalog-grid');
-                var counter = document.getElementById('catalog-count');
-                if (!grid) return;
-                
-                var filtered = fallbackData.filter(function(p) {
-                    return catalogFilter === 'Todos' || p.categoria === catalogFilter;
-                });
-                
-                if (counter) counter.textContent = filtered.length;
-                
-                if (filtered.length === 0) {
-                    grid.innerHTML = '<div class="col-span-full text-center py-12"><i class="fa-solid fa-motorcycle text-4xl text-brand-main/30 mb-4"></i><p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p></div>';
-                    return;
-                }
-                
-                grid.innerHTML = filtered.map(function(p, idx) {
-                    var isDestaque = p.destaque.toLowerCase() === 'sim' || p.destaque.toLowerCase() === 'yes';
-                    return '<div onclick="openProductModal(' + p.id + ')" class="catalog-card-premium" style="animation-delay:' + (idx * 60) + 'ms"><div class="relative overflow-hidden"><img src="' + p.imagem + '" alt="' + p.nome + '" class="card-image" loading="lazy" onerror="this.src=\'assets/logo-motochefe-campo-grande-veiculos-eletricos.png\'"><div class="card-badges">' + (isDestaque ? '<span class="badge-destaque"><i class="fa-solid fa-star"></i> Destaque</span>' : '<span></span>') + '<span class="badge-categoria">' + p.categoria + '</span></div></div><div class="card-content"><h3 class="card-title">' + p.nome + '</h3><p class="card-desc">' + p.descricao + '</p><div class="card-specs">' + (p.velocidade ? '<span class="card-spec"><i class="fa-solid fa-gauge-high"></i> ' + p.velocidade + '</span>' : '') + (p.potencia ? '<span class="card-spec"><i class="fa-solid fa-bolt"></i> ' + p.potencia + '</span>' : '') + (p.autonomia ? '<span class="card-spec"><i class="fa-solid fa-road"></i> ' + p.autonomia + '</span>' : '') + '</div></div></div>';
-                }).join('');
-            }
-
-            window.openProductModal = function(id) {
-                var p = fallbackData.find(function(item) { return item.id === id; });
-                if (!p) return;
-                
-                document.getElementById('produto-img').src = p.imagem;
-                document.getElementById('produto-img').alt = p.nome;
-                document.getElementById('produto-nome').textContent = p.nome;
-                document.getElementById('produto-categoria').textContent = p.categoria;
-                document.getElementById('produto-badge-categoria').textContent = p.categoria;
-                document.getElementById('produto-descricao').textContent = p.descricao;
-                document.getElementById('produto-velocidade').textContent = p.velocidade || '-';
-                document.getElementById('produto-potencia').textContent = p.potencia || '-';
-                document.getElementById('produto-autonomia').textContent = p.autonomia || '-';
-                document.getElementById('produto-link-site').href = p.link || '#';
-                
-                var badgeDestaque = document.getElementById('produto-badge-destaque');
-                var isDestaque = p.destaque.toLowerCase() === 'sim' || p.destaque.toLowerCase() === 'yes';
-                badgeDestaque.classList.toggle('hidden', !isDestaque);
-                
-                var precoBox = document.getElementById('produto-preco-box');
-                if (p.preco && p.preco.trim() !== '') {
-                    document.getElementById('produto-preco').textContent = 'R$ ' + p.preco;
-                    precoBox.classList.remove('hidden');
-                } else {
-                    precoBox.classList.add('hidden');
-                }
-                
-                var waText = encodeURIComponent('Olá, vim pelo catálogo do link da bio e tenho interesse no modelo ' + p.nome + '.');
-                document.getElementById('produto-link-whatsapp').href = 'https://wa.me/5521977342290?text=' + waText;
-                
-                var modal = document.getElementById('modal-produto');
-                if (modal) {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            };
-
-            function initCatalogInline() {
-                console.log('🛵 Catálogo Premium inicializando...');
-                renderCatalogPremium();
-                
-                var filters = document.getElementById('catalog-filters-premium');
-                if (filters) {
-                    filters.addEventListener('click', function(e) {
-                        var btn = e.target.closest('.catalog-filter-premium');
-                        if (!btn) return;
-                        catalogFilter = btn.dataset.filter;
-                        document.querySelectorAll('.catalog-filter-premium').forEach(function(b) {
-                            b.classList.toggle('active', b === btn);
-                        });
-                        renderCatalogPremium();
-                    });
-                }
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initCatalogInline);
-            } else {
-                initCatalogInline();
-            }
-        })();
-    </script>
+            <!-- Footer contador -->
+            <div class="px-4 py-0.5 bg-white dark:bg-[#18181b] border-t border-black/5 dark:border-white/5">
+                <p class="text-[8px] font-bold text-brand-gray/60 dark:text-zinc-500 uppercase tracking-widest text-center">
+                    <span class="text-brand-main" id="modal-categoria-count">0</span> veículos encontrados
+                </p>
+            </div>
+        </div>
+    </div>
 
 <!-- Welcome Ticker (Rodapé) -->
     <div
-        class="welcome-ticker overflow-hidden bg-brand-light dark:bg-[#1A1F3D] border-y border-brand-accent/20 dark:border-white/10 py-2 relative">
+        class="welcome-ticker overflow-hidden bg-brand-light dark:bg-[#18181b] border-y border-brand-accent/20 dark:border-white/10 py-2 relative">
         <div class="ticker-content flex animate-scroll whitespace-nowrap">
             <span>Motochefe Campo Grande</span>
             <span class="separator">|</span>

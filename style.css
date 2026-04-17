@@ -123,7 +123,7 @@ body.light-mode .close-whatsapp-bubble {
 body.dark-mode #whatsapp-message {
     background: #0D0D0D !important;
     color: #ffffff !important;
-    border-color: rgba(74, 90, 176, 0.4) !important;
+    border-color: rgba(201, 162, 39, 0.4) !important;
 }
 
 body.dark-mode .close-whatsapp-bubble {
@@ -432,7 +432,7 @@ body.light-mode [class*="text-white/8"] {
 }
 
 body.light-mode [class*="text-white/5"] {
-    color: rgba(26, 26, 46, 0.5) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 
 body.light-mode .text-brand-gray {
@@ -549,7 +549,7 @@ body.light-mode .theme-toggle i {
 
 body.dark-mode .theme-toggle {
     background: #0D0D0D !important;
-    border: 1px solid rgba(74, 90, 176, 0.3) !important;
+    border: 1px solid rgba(201, 162, 39, 0.3) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
     color: #FFFFFF !important;
 }
@@ -574,23 +574,27 @@ body.dark-mode .theme-toggle:hover {
    Tom azul médio
    ======================================== */
 
-/* Botões de link secundários com bg-[#18181b] */
+/* Botões de link secundários com bg-[#18181b] ou bg-[#18181b] */
 body.light-mode a[class*="bg-[#18181b]"],
 body.light-mode button[class*="bg-[#18181b]"],
 body.light-mode a.bg-white[class*="dark:bg-[#18181b]"],
-body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] {
+body.light-mode button.bg-white[class*="dark:bg-[#18181b]"],
+body.light-mode a[class*="bg-[#18181b]"],
+body.light-mode button[class*="bg-[#18181b]"] {
     background-color: #0D0D0D !important;
-    border-color: rgba(74, 90, 176, 0.2) !important;
-    box-shadow: 0 8px 24px rgba(26, 26, 46, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Hover: escurece levemente */
+/* Hover: escurece levemente ou muda para cor da marca */
 body.light-mode a[class*="bg-[#18181b]"]:hover,
 body.light-mode button[class*="bg-[#18181b]"]:hover,
 body.light-mode a.bg-white[class*="dark:bg-[#18181b]"]:hover,
-body.light-mode button.bg-white[class*="dark:bg-[#18181b]"]:hover {
-    background-color: #B08D1F !important;
-    box-shadow: 0 12px 30px rgba(26, 26, 46, 0.35) !important;
+body.light-mode button.bg-white[class*="dark:bg-[#18181b]"]:hover,
+body.light-mode a[class*="bg-[#18181b]"]:hover,
+body.light-mode button[class*="bg-[#18181b]"]:hover {
+    background-color: #1A1A1A !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Textos e ícones brancos dentro dos botões principais */
@@ -601,15 +605,29 @@ body.light-mode button[class*="bg-[#18181b]"] i,
 body.light-mode a.bg-white[class*="dark:bg-[#18181b]"] span,
 body.light-mode a.bg-white[class*="dark:bg-[#18181b]"] i,
 body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] span,
-body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] i {
+body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] i,
+body.light-mode a[class*="bg-[#18181b]"] span,
+body.light-mode a[class*="bg-[#18181b]"] i,
+body.light-mode button[class*="bg-[#18181b]"] span,
+body.light-mode button[class*="bg-[#18181b]"] i {
     color: #ffffff !important;
+}
+
+/* Ajuste do fundo do ícone em botões principais no modo claro */
+body.light-mode a[class*="bg-[#18181b]"] [class*="bg-brand-main/10"],
+body.light-mode a[class*="bg-[#18181b]"] [class*="bg-brand-main/10"],
+body.light-mode button[class*="bg-[#18181b]"] [class*="bg-brand-main/10"],
+body.light-mode button[class*="bg-[#18181b]"] [class*="bg-brand-main/10"] {
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Ícone decorativo de fundo (background) — opacidade levemente maior */
 body.light-mode a[class*="bg-[#18181b]"] .opacity-10,
 body.light-mode button[class*="bg-[#18181b]"] .opacity-10,
 body.light-mode a.bg-white[class*="dark:bg-[#18181b]"] .opacity-10,
-body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] .opacity-10 {
+body.light-mode button.bg-white[class*="dark:bg-[#18181b]"] .opacity-10,
+body.light-mode a[class*="bg-[#18181b]"] .opacity-10,
+body.light-mode button[class*="bg-[#18181b]"] .opacity-10 {
     opacity: 0.15 !important;
 }
 
@@ -635,24 +653,25 @@ body.light-mode section [class*="rounded-[2"] {
     border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Botões Ligar Loja e Salvar Contato — fundo branco com borda e sombra */
+/* Botões Ligar Loja e Salvar Contato — agora escuros para combinar com a dark */
 body.light-mode .grid-cols-2 a.bg-white,
 body.light-mode .grid-cols-2 button.bg-white {
-    background-color: #ffffff !important;
-    border: 1.5px solid rgba(201, 162, 39, 0.25) !important;
-    box-shadow: 0 4px 16px rgba(201, 162, 39, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+    background-color: #0D0D0D !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
 }
 
 body.light-mode .grid-cols-2 a.bg-white:hover,
 body.light-mode .grid-cols-2 button.bg-white:hover {
-    border-color: rgba(201, 162, 39, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(201, 162, 39, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+    background-color: #1A1A1A !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Garantir textos e ícones corretos nesses botões */
+/* Garantir textos e ícones brancos nesses botões */
 body.light-mode .grid-cols-2 a.bg-white span,
 body.light-mode .grid-cols-2 button.bg-white span {
-    color: #0D0D0D !important;
+    color: #ffffff !important;
 }
 
 body.light-mode .grid-cols-2 a.bg-white i,
@@ -734,14 +753,11 @@ body.light-mode a.bg-brand-main i {
     color: #ffffff !important;
 }
 
-/* Botão WhatsApp gradiente — manter texto branco */
-body.light-mode [class*="from-[#25D366]"] {
-    color: #ffffff !important;
-}
-
-body.light-mode [class*="from-[#25D366]"] span,
-body.light-mode [class*="from-[#25D366]"] i,
-body.light-mode [class*="from-[#25D366]"] div {
+/* Botão WhatsApp gradiente — manter texto e ícones brancos */
+body.light-mode a[data-config="link.whatsapp"],
+body.dark-mode a[data-config="link.whatsapp"],
+body.light-mode a[data-config="link.whatsapp"] *,
+body.dark-mode a[data-config="link.whatsapp"] * {
     color: #ffffff !important;
 }
 
@@ -1390,8 +1406,8 @@ body.dark-mode [class*="bg-[#18181b]"],
 body.dark-mode [class*="bg-zinc-900"],
 body.dark-mode .modal-content {
     background-color: var(--card-bg) !important;
-    border: 1px solid rgba(74, 90, 176, 0.15) !important;
-    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(74, 90, 176, 0.05) !important;
+    border: 1px solid rgba(201, 162, 39, 0.15) !important;
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 162, 39, 0.05) !important;
 }
 
 body.dark-mode [class*="bg-[#18181b]"]:hover {
@@ -1606,6 +1622,7 @@ body.dark-mode .bg-zinc-900 {
     transform: translateX(-50%) scale(1.05);
 }
 
+
 @keyframes pulseSom {
 
     0%,
@@ -1619,7 +1636,7 @@ body.dark-mode .bg-zinc-900 {
 }
 
 .video-gallery-section {
-    background-color: rgba(26, 26, 46, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
@@ -2103,7 +2120,7 @@ body.light-mode footer.bg-zinc-900 {
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     cursor: pointer;
     background: #000;
-    box-shadow: 0 10px 30px rgba(26, 26, 46, 0.1), 0 20px 60px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 20px 60px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -2113,7 +2130,7 @@ body.light-mode footer.bg-zinc-900 {
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
     filter: blur(0);
-    box-shadow: 0 30px 90px rgba(26, 26, 46, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.2), 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Estado: Esquerda (Pausado/Atrás) */
@@ -2145,7 +2162,7 @@ body.light-mode footer.bg-zinc-900 {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(26, 26, 46, 0.8), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     z-index: 5;
     transition: opacity 0.3s;
 }
@@ -2213,7 +2230,7 @@ body.light-mode .catalog-modal-content {
 }
 
 body.dark-mode .catalog-modal-content {
-    background: #1A1F3D !important;
+    background: #18181b !important;
 }
 
 /* Filtros */
@@ -2248,7 +2265,7 @@ body.light-mode .catalog-product-card {
 }
 
 body.dark-mode .catalog-product-card {
-    background: #10122B;
+    background: #121212;
 }
 
 .catalog-product-card:hover {
@@ -2271,7 +2288,7 @@ body.dark-mode .catalog-product-card:hover {
 }
 
 body.dark-mode .catalog-product-image {
-    background: #1A1F3D;
+    background: #18181b;
 }
 
 /* Specs badges */
@@ -2395,7 +2412,7 @@ body.dark-mode .catalog-spec {
 }
 
 body.dark-mode .catalog-card-premium {
-    background: #1A1F3D;
+    background: #18181b;
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.3);
 }
@@ -2530,8 +2547,47 @@ body.dark-mode .catalog-card-premium .card-spec {
 }
 
 .catalog-filter-premium:not(.active):hover {
-    border-color: rgba(201, 162, 39, 0.4) !important;
+    border-color: rgba(201, 162, 39, 0.6) !important;
     transform: translateY(-1px);
+}
+
+/* Light mode - garantir fundo branco e texto escuro legível */
+body.light-mode .catalog-filter-premium:not(.active),
+body.light-mode button.catalog-filter-premium:not(.active),
+body.light-mode button.catalog-filter-premium:not(.active)[class*="dark:bg-"] {
+    background-color: #ffffff !important;
+    color: #0D0D0D !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.22) !important;
+    box-shadow: none !important;
+}
+
+body.light-mode .catalog-filter-premium:not(.active):hover,
+body.light-mode button.catalog-filter-premium:not(.active):hover,
+body.light-mode button.catalog-filter-premium:not(.active)[class*="dark:bg-"]:hover {
+    border-color: var(--brand-main) !important;
+    background-color: #ffffff !important;
+    color: #0D0D0D !important;
+    box-shadow: none !important;
+}
+
+body.light-mode .catalog-filter-premium.active,
+body.light-mode button.catalog-filter-premium.active {
+    background-color: var(--brand-main) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+/* Dark mode - fundo escuro nos filtros inativos */
+body.dark-mode .catalog-filter-premium:not(.active),
+body.dark-mode button.catalog-filter-premium:not(.active) {
+    background-color: #18181b !important;
+    color: #d4d4d8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.dark-mode .catalog-filter-premium:not(.active):hover,
+body.dark-mode button.catalog-filter-premium:not(.active):hover {
+    border-color: rgba(201, 162, 39, 0.4) !important;
 }
 
 /* Modal Produto Premium — scroll no backdrop, não aqui */
@@ -2539,12 +2595,138 @@ body.dark-mode .catalog-card-premium .card-spec {
     width: 100%;
 }
 
+/* Modal Categoria */
+#modal-categoria {
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+}
+#modal-categoria .modal-content {
+    max-height: 96vh;
+    height: 96vh;
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 1.75rem;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    margin-bottom: 0;
+}
+body.light-mode #modal-categoria .modal-content {
+    background: #ffffff !important;
+}
+body.dark-mode #modal-categoria .modal-content {
+    background: #18181b !important;
+}
+#modal-categoria .modal-content * {
+    opacity: 1;
+    visibility: visible;
+}
+#modal-categoria #modal-categoria-grid {
+    overflow-y: auto;
+}
+#modal-categoria #modal-categoria-grid::-webkit-scrollbar {
+    width: 4px;
+}
+#modal-categoria #modal-categoria-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+#modal-categoria #modal-categoria-grid::-webkit-scrollbar-thumb {
+    background: rgba(201, 162, 39, 0.3);
+    border-radius: 4px;
+}
+
+/* Garantir que o grid ocupe o espaço disponível */
+#modal-categoria #modal-categoria-grid {
+    flex: 1;
+}
+
+/* Correção para cards do modal de categoria no light mode */
+body.light-mode #modal-categoria #modal-categoria-grid > div {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .relative.h-48 {
+    background: #0d0d0d !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .bg-gradient-to-t.from-black\/80,
+body.light-mode #modal-categoria #modal-categoria-grid > div .bg-gradient-to-t.from-black\/40 {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%) !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div h3,
+body.light-mode #modal-categoria #modal-categoria-grid > div .text-white,
+body.light-mode #modal-categoria #modal-categoria-grid > div .text-white\/70,
+body.light-mode #modal-categoria #modal-categoria-grid > div [class*="text-white"] {
+    color: #ffffff !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .text-base.font-extrabold.text-brand-main {
+    color: var(--brand-main) !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .line-through {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .p-3 {
+    background: #ffffff !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .p-3 .text-zinc-500,
+body.light-mode #modal-categoria #modal-categoria-grid > div .p-3 .text-zinc-400 {
+    color: #52525b !important;
+}
+
+body.light-mode #modal-categoria #modal-categoria-grid > div .p-3 .bg-zinc-100,
+body.light-mode #modal-categoria #modal-categoria-grid > div .p-3 .dark\:bg-zinc-800 {
+    background: #f4f4f5 !important;
+}
+
+/* Correções gerais para o modal de categoria em ambos os modos */
+#modal-categoria #modal-categoria-grid > div {
+    min-height: 280px;
+}
+
+#modal-categoria #modal-categoria-grid > div .relative.h-48 {
+    min-height: 192px;
+    background: #18181b;
+}
+
+#modal-categoria #modal-categoria-grid > div img {
+    max-height: 100%;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+body.dark-mode #modal-categoria #modal-categoria-grid > div .relative.h-48 {
+    background: #0d0d0d !important;
+}
+
 body.light-mode .product-modal-content {
     background: #ffffff !important;
 }
 
+/* Hover do botão Ver no Site Oficial no popup da moto */
+body.light-mode #modal-produto a#produto-link-site:hover,
+body.light-mode #modal-produto a#produto-link-site:hover i,
+body.dark-mode #modal-produto a#produto-link-site:hover,
+body.dark-mode #modal-produto a#produto-link-site:hover i {
+    color: #ffffff !important;
+}
+
+body.light-mode #modal-produto a#produto-link-site:hover,
+body.dark-mode #modal-produto a#produto-link-site:hover {
+    background-color: var(--brand-hover) !important;
+    border-color: var(--brand-hover) !important;
+}
+
 body.dark-mode .product-modal-content {
-    background: #1A1F3D !important;
+    background: #18181b !important;
 }
 
 /* Animação de entrada dos cards */
@@ -2561,6 +2743,83 @@ body.dark-mode .product-modal-content {
 
 .catalog-card-premium {
     animation: cardSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ========================================
+   BARRA DE PESQUISA DO CATÁLOGO
+   ======================================== */
+.catalog-search-wrap {
+    position: relative;
+    width: 100%;
+}
+.catalog-search-wrap input {
+    width: 100%;
+    padding: 14px 44px 14px 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    color: #0D0D0D;
+    outline: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+body.dark-mode .catalog-search-wrap input {
+    background: #18181b;
+    border-color: rgba(255,255,255,0.08);
+    color: #fff;
+}
+.catalog-search-wrap input:focus {
+    border-color: rgba(201,162,39,0.5);
+    box-shadow: 0 4px 16px rgba(201,162,39,0.12);
+}
+.catalog-search-wrap input::placeholder {
+    color: #9CA3AF;
+    font-weight: 400;
+}
+body.dark-mode .catalog-search-wrap input::placeholder {
+    color: #9CA3AF;
+}
+.catalog-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--brand-main);
+    font-size: 14px;
+    pointer-events: none;
+}
+.catalog-search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.05);
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+body.dark-mode .catalog-search-clear {
+    background: rgba(255,255,255,0.08);
+    color: #D4D4D8;
+}
+.catalog-search-clear.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.catalog-search-clear:hover {
+    background: rgba(201,162,39,0.15);
+    color: var(--brand-main);
 }
 
 /* ========================================
@@ -2600,6 +2859,7 @@ body.light-mode .catalog-skeleton {
     border: 1px solid rgba(255,255,255,0.06);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     animation: cardSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+    position: relative;
 }
 body.light-mode .card-v2 {
     background: #fff;
@@ -2608,6 +2868,33 @@ body.light-mode .card-v2 {
 }
 .card-v2:active {
     transform: scale(0.98);
+}
+
+/* Faixa Promoção Especial */
+.card-v2-promo-strip {
+    position: absolute;
+    top: 18px;
+    right: -36px;
+    width: 140px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 6px 0;
+    text-align: center;
+    transform: rotate(45deg);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.45);
+}
+.card-v2-oferta {
+    border-color: rgba(239, 68, 68, 0.35);
+    box-shadow: 0 6px 28px rgba(239, 68, 68, 0.18);
+}
+body.light-mode .card-v2-oferta {
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 6px 24px rgba(239, 68, 68, 0.12);
 }
 
 /* imagem */
@@ -2669,15 +2956,18 @@ body.light-mode .card-v2-gradient {
 .card-v2-badge-destaque {
     background: linear-gradient(135deg, #f59e0b, #ef4444);
     color: #fff;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 4px 10px;
+    padding: 6px 8px;
     border-radius: 999px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    min-width: 28px;
+    min-height: 28px;
 }
 .card-v2-badge-cat {
     background: var(--brand-main);
@@ -2698,6 +2988,27 @@ body.light-mode .card-v2-gradient {
     right: 0;
     padding: 14px 16px;
     z-index: 2;
+}
+
+/* ver detalhes no canto inferior direito */
+.card-v2-details {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    z-index: 3;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    border-bottom: 1.5px solid var(--brand-main);
+    padding-bottom: 2px;
+    pointer-events: none;
+}
+body.light-mode .card-v2-details {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .card-v2-nome {
     font-family: 'Barlow Condensed', sans-serif;
@@ -2784,6 +3095,19 @@ body.light-mode .card-v2-spec {
     color: var(--brand-main);
     font-size: 9px;
 }
+.card-v2-spec-cat {
+    background: rgba(201, 162, 39, 0.12);
+    border-color: rgba(201, 162, 39, 0.22);
+    color: var(--brand-main);
+}
+body.light-mode .card-v2-spec-cat {
+    background: rgba(201, 162, 39, 0.10);
+    border-color: rgba(201, 162, 39, 0.20);
+    color: #B08D1F;
+}
+.card-v2-spec-cat i {
+    color: inherit;
+}
 
 .card-v2-actions {
     display: flex;
@@ -2806,24 +3130,27 @@ body.light-mode .card-v2-spec {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    font-weight: 800;
+    gap: 5px;
+    font-size: 9px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #fff;
-    background: var(--brand-main);
-    border: none;
-    padding: 7px 14px;
+    letter-spacing: 0.12em;
+    color: var(--brand-main);
+    background: rgba(201, 162, 39, 0.10);
+    border: 1px solid rgba(201, 162, 39, 0.25);
+    padding: 6px 14px;
     border-radius: 999px;
     cursor: pointer;
-    transition: filter 0.2s;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    backdrop-filter: blur(4px);
 }
 .card-v2-btn:hover {
-    filter: brightness(1.1);
+    background: rgba(201, 162, 39, 0.18);
+    border-color: rgba(201, 162, 39, 0.5);
 }
 .card-v2-btn i {
     font-size: 8px;
+    opacity: 0.7;
 }
 
 /* ========================================
@@ -2933,3 +3260,4 @@ body.light-mode .eco-slider {
 body.light-mode .modal-img-wrap {
     background: #f0f0f0;
 }
+

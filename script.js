@@ -661,6 +661,30 @@ const CATALOG_FALLBACK_DATA = [
 
 let catalogData = [];
 let catalogFilter = 'Todos';
+let catalogSearchQuery = '';
+
+function normalizeText(str) {
+    return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function productMatchesSearch(p, query) {
+    if (!query) return true;
+    const q = normalizeText(query);
+    const fields = [
+        p.nome,
+        p.categoria,
+        p.velocidade,
+        p.potencia,
+        p.autonomia,
+        p.descricao,
+        p.preco,
+        p.precoPor,
+        p.parcelado,
+        p.badge,
+        p.status
+    ];
+    return fields.some(field => normalizeText(field).includes(q));
+}
 
 function renderCatalogPremium() {
     const grid = document.getElementById('catalog-grid');
@@ -671,8 +695,10 @@ function renderCatalogPremium() {
 
     const data = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
     const filtered = data.filter(p => {
-        if (catalogFilter === 'Todos') return true;
-        return p.categoria && p.categoria.toLowerCase().includes(catalogFilter.toLowerCase());
+        if ((p.status || '').toLowerCase() === 'inativo') return false;
+        const matchesFilter = catalogFilter === 'Todos' || (p.categoria && p.categoria.toLowerCase().includes(catalogFilter.toLowerCase()));
+        const matchesSearch = productMatchesSearch(p, catalogSearchQuery);
+        return matchesFilter && matchesSearch;
     });
 
     if (counter) counter.textContent = filtered.length;
@@ -681,58 +707,14 @@ function renderCatalogPremium() {
         grid.innerHTML = `<div class="col-span-full text-center py-16">
             <i class="fa-solid fa-motorcycle text-5xl text-brand-main/20 mb-4 block"></i>
             <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p>
+            <p class="text-xs text-brand-gray mt-2">Tente outro termo de busca ou filtro</p>
         </div>`;
         return;
     }
 
     grid.innerHTML = filtered.map((p, idx) => {
-        const isDestaque = String(p.destaque).toLowerCase() === 'sim';
-        const temPreco   = p.precoPor && String(p.precoPor).trim();
-        const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
-        const badge      = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
-
-        return `
-        <div onclick="openProductModal(${p.id})" class="card-v2" style="animation-delay:${idx * 50}ms">
-
-            <!-- Imagem full -->
-            <div class="card-v2-img-wrap">
-                <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
-                     onerror="this.src='assets/logo-motochefe-campo-grande-veiculos-eletricos.png'">
-
-                <!-- gradient base -->
-                <div class="card-v2-gradient"></div>
-
-                <!-- topo: destaque + categoria -->
-                <div class="card-v2-top">
-                    ${isDestaque ? `<span class="card-v2-badge-destaque"><i class="fa-solid fa-star"></i> Destaque</span>` : '<span></span>'}
-                    <span class="card-v2-badge-cat">${p.categoria.split(',')[0].trim()}</span>
-                </div>
-
-                <!-- base: nome + preço sobre a imagem -->
-                <div class="card-v2-over">
-                    <h3 class="card-v2-nome">${p.nome}</h3>
-                    ${temPreco ? `
-                    <div class="card-v2-preco-wrap">
-                        ${temDesconto ? `<span class="card-v2-de">R$ ${p.preco}</span>` : ''}
-                        <span class="card-v2-por">R$ ${p.precoPor}</span>
-                    </div>` : ''}
-                </div>
-            </div>
-
-            <!-- Rodapé com specs + badge + botão -->
-            <div class="card-v2-footer">
-                <div class="card-v2-specs">
-                    ${p.velocidade ? `<span class="card-v2-spec"><i class="fa-solid fa-gauge-high"></i>${p.velocidade}</span>` : ''}
-                    ${p.potencia   ? `<span class="card-v2-spec"><i class="fa-solid fa-bolt"></i>${p.potencia}</span>`   : ''}
-                    ${p.autonomia  ? `<span class="card-v2-spec"><i class="fa-solid fa-road"></i>${p.autonomia}</span>`  : ''}
-                </div>
-                <div class="card-v2-actions">
-                    ${badge ? `<span class="card-v2-tag">${badge}</span>` : ''}
-                    <button class="card-v2-btn">Ver modelo <i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
-
-        </div>`;
+        const isOferta = String(p.destaque).toLowerCase() === 'oferta da semana';
+        return cardV2HTML(p, idx, false, isOferta, false);
     }).join('');
 }
 
@@ -767,7 +749,6 @@ window.openProductModal = function(id) {
     }
     document.getElementById('produto-nome').textContent = p.nome;
     document.getElementById('produto-categoria').textContent = p.categoria;
-    document.getElementById('produto-badge-categoria').textContent = p.categoria;
     document.getElementById('produto-descricao').textContent = p.descricao;
     document.getElementById('produto-velocidade').textContent = p.velocidade || '-';
     document.getElementById('produto-potencia').textContent = p.potencia || '-';
@@ -778,15 +759,23 @@ window.openProductModal = function(id) {
     const isDestaque = String(p.destaque).toLowerCase() === 'sim' || String(p.destaque).toLowerCase() === 'yes' || String(p.destaque).includes('🔥');
     badgeDestaque.classList.toggle('hidden', !isDestaque);
     
+    const isOfertaPopup = String(p.destaque).toLowerCase() === 'oferta da semana';
     const precoBox = document.getElementById('produto-preco-box');
     if ((p.preco && String(p.preco).trim()) || (p.precoPor && String(p.precoPor).trim())) {
         const precoEl = document.getElementById('produto-preco');
         let html = '';
-        if (p.preco && String(p.preco).trim()) {
-            html += `<span class="modal-preco-de">R$ ${p.preco}</span>`;
-        }
-        if (p.precoPor && String(p.precoPor).trim()) {
+        if (isOfertaPopup) {
+            // Ofertas sempre mostram preço riscado + preço atual
+            const precoDe = (p.preco && String(p.preco).trim()) ? p.preco : p.precoPor;
+            html += `<span class="modal-preco-de">R$ ${precoDe}</span>`;
             html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
+        } else {
+            if (p.preco && String(p.preco).trim()) {
+                html += `<span class="modal-preco-de">R$ ${p.preco}</span>`;
+            }
+            if (p.precoPor && String(p.precoPor).trim()) {
+                html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
+            }
         }
         precoEl.innerHTML = html;
         precoBox.classList.remove('hidden');
@@ -815,9 +804,200 @@ window.openProductModal = function(id) {
     }
 };
 
+function cardV2HTML(p, idx, forceDestaque = false, isOferta = false, hidePreco = false) {
+    const isDestaque  = forceDestaque || String(p.destaque).toLowerCase() === 'sim';
+    const temPreco    = p.precoPor && String(p.precoPor).trim();
+    const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
+    const badge       = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
+
+    // Preço no card: ofertas sempre mostram De/Por (forçando desconto visual)
+    let precoHTML = '';
+    if (!hidePreco && temPreco) {
+        if (isOferta) {
+            const precoDe = p.preco && String(p.preco).trim() ? p.preco : p.precoPor;
+            precoHTML = `<div class="card-v2-preco-wrap">
+                <span class="card-v2-de">R$ ${precoDe}</span>
+                <span class="card-v2-por">R$ ${p.precoPor}</span>
+            </div>`;
+        } else {
+            precoHTML = `<div class="card-v2-preco-wrap">
+                ${temDesconto ? `<span class="card-v2-de">R$ ${p.preco}</span>` : ''}
+                <span class="card-v2-por">R$ ${p.precoPor}</span>
+            </div>`;
+        }
+    }
+
+    return `
+    <div onclick="openProductModal(${p.id})" class="card-v2 ${isOferta ? 'card-v2-oferta' : ''}" style="animation-delay:${idx*60}ms">
+        ${isOferta ? `<div class="card-v2-promo-strip">Promoção</div>` : ''}
+        <div class="card-v2-img-wrap">
+            <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
+                 onerror="this.src='assets/logo-motochefe-campo-grande-veiculos-eletricos.png'">
+            <div class="card-v2-gradient"></div>
+            <div class="card-v2-top">
+                ${isDestaque ? `<span class="card-v2-badge-destaque"><i class="fa-solid fa-star"></i></span>` : '<span></span>'}
+            </div>
+            <div class="card-v2-over">
+                <h3 class="card-v2-nome">${p.nome}</h3>
+                ${precoHTML}
+            </div>
+
+            <!-- ver detalhes no canto inferior direito -->
+            <div class="card-v2-details">Ver detalhes</div>
+        </div>
+        <div class="card-v2-footer">
+            <div class="card-v2-specs">
+                <span class="card-v2-spec card-v2-spec-cat"><i class="fa-solid fa-tag"></i>${p.categoria.split(',')[0].trim()}</span>
+                ${p.velocidade ? `<span class="card-v2-spec"><i class="fa-solid fa-gauge-high"></i>${p.velocidade}</span>` : ''}
+                ${p.potencia   ? `<span class="card-v2-spec"><i class="fa-solid fa-bolt"></i>${p.potencia}</span>`   : ''}
+                ${p.autonomia  ? `<span class="card-v2-spec"><i class="fa-solid fa-road"></i>${p.autonomia}</span>`  : ''}
+            </div>
+            <div class="card-v2-actions">
+                ${badge ? `<span class="card-v2-tag">${badge}</span>` : ''}
+            </div>
+        </div>
+    </div>`;
+}
+
+function renderOfertasSemana() {
+    const section = document.getElementById('section-ofertas-semana');
+    const wrap    = document.getElementById('catalog-grid-ofertas');
+    if (!wrap || !section) return;
+
+    // Se há busca ativa, oculta a seção de ofertas
+    if (catalogSearchQuery && catalogSearchQuery.trim().length > 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    const data    = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
+    const ativos  = data.filter(p => (p.status || '').toLowerCase() !== 'inativo');
+    const ofertas = ativos.filter(p => String(p.destaque).toLowerCase() === 'oferta da semana');
+
+    // Sem nenhuma oferta da semana → oculta a seção inteira
+    if (ofertas.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = '';
+
+    // Layout: todos em cards grandes (col-span total)
+    wrap.innerHTML = ofertas.map((p, idx) => `
+        <div class="grid grid-cols-1 gap-3">
+            ${cardV2HTML(p, idx, false, true)}
+        </div>
+    `).join('');
+}
+
+function renderDestaqueGrid() {
+    const section = document.getElementById('section-mais-vendidos');
+    const wrap    = document.getElementById('catalog-grid-destaque');
+    if (!wrap || !section) return;
+
+    // Se há busca ativa, oculta a seção de destaques para focar nos resultados filtrados
+    if (catalogSearchQuery && catalogSearchQuery.trim().length > 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    const data    = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
+    const ativos  = data.filter(p => (p.status || '').toLowerCase() !== 'inativo');
+    const destaques = ativos.filter(p => String(p.destaque).toLowerCase() === 'sim');
+
+    // Sem nenhum destaque na col P → oculta a seção inteira
+    if (destaques.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = '';
+
+    const top3 = destaques.slice(0, 3);
+
+    // Layout: todos os destaques em cards grandes (col-span total)
+    wrap.innerHTML = top3.map((p, idx) => `
+        <div class="grid grid-cols-1 gap-3">
+            ${cardV2HTML(p, idx, true, false, true)}
+        </div>
+    `).join('');
+}
+
+function openCategoriaModal(filterValue) {
+    const modal = document.getElementById('modal-categoria');
+    const grid = document.getElementById('modal-categoria-grid');
+    const titulo = document.getElementById('modal-categoria-titulo');
+    const counter = document.getElementById('modal-categoria-count');
+    if (!modal || !grid) return;
+
+    const data = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
+    const filtered = data.filter(p => {
+        if ((p.status || '').toLowerCase() === 'inativo') return false;
+        if (filterValue === 'Todos') return true;
+        return p.categoria && p.categoria.toLowerCase().includes(filterValue.toLowerCase());
+    });
+
+    if (titulo) titulo.textContent = filterValue;
+    if (counter) counter.textContent = filtered.length;
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div class="text-center py-12">
+            <i class="fa-solid fa-motorcycle text-5xl text-brand-main/20 mb-4 block"></i>
+            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p>
+        </div>`;
+    } else {
+        grid.innerHTML = filtered.map((p, idx) => {
+            const isOferta = String(p.destaque).toLowerCase() === 'oferta da semana';
+            const temPreco = p.precoPor && String(p.precoPor).trim();
+            const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
+            const badge = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
+
+            let precoHTML = '';
+            if (temPreco) {
+                if (isOferta) {
+                    const precoDe = (p.preco && String(p.preco).trim()) ? p.preco : p.precoPor;
+                    precoHTML = `<div class="flex items-baseline gap-2 mt-1"><span class="text-[11px] font-bold text-white/70 line-through decoration-red-500 decoration-2">R$ ${precoDe}</span><span class="text-base font-extrabold text-brand-main" style="font-family:'Barlow Condensed',sans-serif">R$ ${p.precoPor}</span></div>`;
+                } else {
+                    precoHTML = `<div class="flex items-baseline gap-2 mt-1">${temDesconto ? `<span class="text-[11px] font-bold text-white/70 line-through decoration-red-500 decoration-2">R$ ${p.preco}</span>` : ''}<span class="text-base font-extrabold text-brand-main" style="font-family:'Barlow Condensed',sans-serif">R$ ${p.precoPor}</span></div>`;
+                }
+            }
+
+            return `
+            <div onclick="openProductModal(${p.id})" class="group relative bg-white dark:bg-[#18181b] rounded-[1.5rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 cursor-pointer" style="animation-delay:${idx*50}ms">
+                ${isOferta ? `<div class="absolute top-3 right-[-26px] w-[100px] bg-gradient-to-r from-red-500 to-red-600 text-white text-[8px] font-black uppercase tracking-wider py-1 text-center rotate-45 z-10 shadow-md">Promoção</div>` : ''}
+                <div class="relative h-48 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                    <img src="${p.imagem}" alt="${p.nome}" loading="lazy" onerror="this.src='assets/logo-motochefe-campo-grande-veiculos-eletricos.png'" class="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105">
+                    ${String(p.destaque).toLowerCase() === 'sim' ? `<div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-lg"><i class="fa-solid fa-star text-[10px]"></i></div>` : ''}
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 pt-8">
+                        <h3 class="text-white font-extrabold text-lg uppercase tracking-tight leading-none" style="font-family:'Barlow Condensed',sans-serif;text-shadow:0 1px 3px rgba(0,0,0,.5)">${p.nome}</h3>
+                        ${precoHTML}
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="flex flex-wrap gap-1.5 mb-2">
+                        <span class="text-[9px] font-bold text-brand-main bg-brand-main/10 border border-brand-main/20 px-2 py-1 rounded-full uppercase tracking-wide"><i class="fa-solid fa-tag mr-1"></i>${p.categoria.split(',')[0].trim()}</span>
+                        ${p.velocidade ? `<span class="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-full uppercase"><i class="fa-solid fa-gauge-high mr-1 text-brand-main"></i>${p.velocidade}</span>` : ''}
+                        ${p.potencia ? `<span class="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-full uppercase"><i class="fa-solid fa-bolt mr-1 text-brand-main"></i>${p.potencia}</span>` : ''}
+                        ${p.autonomia ? `<span class="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-full uppercase"><i class="fa-solid fa-road mr-1 text-brand-main"></i>${p.autonomia}</span>` : ''}
+                    </div>
+                    ${badge ? `<div class="flex items-center justify-between"><span class="text-[9px] font-extrabold text-brand-main bg-brand-main/10 border border-brand-main/25 px-2.5 py-1 rounded-full uppercase tracking-wide">${badge}</span></div>` : ''}
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
 async function initCatalog() {
     await loadCatalogData();
-    renderCatalogPremium();
+    renderOfertasSemana();
+    renderDestaqueGrid();
+    
+    // Esconde o grid principal e contador da tela inicial
+    const gridPrincipal = document.getElementById('catalog-grid');
+    const counterPrincipal = document.getElementById('catalog-counter');
+    if (gridPrincipal) gridPrincipal.style.display = 'none';
+    if (counterPrincipal) counterPrincipal.style.display = 'none';
     
     const filters = document.getElementById('catalog-filters-premium');
     if (filters) {
@@ -828,7 +1008,33 @@ async function initCatalog() {
             document.querySelectorAll('.catalog-filter-premium').forEach(b => {
                 b.classList.toggle('active', b === btn);
             });
-            renderCatalogPremium();
+            openCategoriaModal(catalogFilter);
+        });
+    }
+
+    // Barra de pesquisa
+    const searchInput = document.getElementById('catalog-search');
+    const searchClear = document.getElementById('catalog-search-clear');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            catalogSearchQuery = e.target.value.trim();
+            if (searchClear) {
+                searchClear.classList.toggle('visible', catalogSearchQuery.length > 0);
+            }
+            renderOfertasSemana();
+            renderDestaqueGrid();
+        });
+    }
+    if (searchClear) {
+        searchClear.addEventListener('click', () => {
+            catalogSearchQuery = '';
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.focus();
+            }
+            searchClear.classList.remove('visible');
+            renderOfertasSemana();
+            renderDestaqueGrid();
         });
     }
 }
@@ -870,6 +1076,7 @@ window.openImageModal = openImageModal;
 window.downloadVCard = downloadVCard;
 window.scrollGallery = scrollGallery;
 window.openProductModal = openProductModal;
+window.openCategoriaModal = openCategoriaModal;
 
 // ============================================
 // LIGHTBOX COM ZOOM
