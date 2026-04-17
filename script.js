@@ -496,7 +496,133 @@ function initWhatsappBubble() {
 // CATÁLOGO PREMIUM - GOOGLE SHEETS + FALLBACK
 // ============================================
 
-const GOOGLE_SHEETS_CSV_URL = '';
+const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1EvK5ss-XaHY5I3fxn6YT3lG3Q9cX987SJnXs_Tic60Y/gviz/tq?tqx=out:csv';
+
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        const next = line[i + 1];
+        if (char === '"') {
+            if (inQuotes && next === '"') {
+                current += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
+            }
+        } else if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    result.push(current);
+    return result;
+}
+
+function parseCSV(csvText) {
+    const lines = csvText.trim().split(/\r?\n/);
+    if (lines.length === 0) return [];
+    // Pula linha de título da planilha (linha 0 tem o nome do catálogo, headers reais estão na linha 1)
+    const firstCols = parseCSVLine(lines[0]);
+    const headerLineIdx = (firstCols[0] || '').trim() === 'ID' ? 0 : 1;
+    const headers = parseCSVLine(lines[headerLineIdx]).map(h => h.trim());
+    const rows = [];
+    for (let i = headerLineIdx + 1; i < lines.length; i++) {
+        const values = parseCSVLine(lines[i]);
+        const obj = {};
+        headers.forEach((h, idx) => {
+            obj[h] = (values[idx] || '').trim();
+        });
+        // anexa array bruto para leitura por índice de coluna
+        obj.__raw = values.map(v => (v || '').trim());
+        rows.push(obj);
+    }
+    return rows;
+}
+
+function findKey(obj, ...candidates) {
+    const keys = Object.keys(obj);
+    for (const c of candidates) {
+        const lower = c.toLowerCase();
+        const exact = keys.find(k => k.toLowerCase() === lower);
+        if (exact !== undefined) return exact;
+        const partial = keys.find(k => k.toLowerCase().includes(lower));
+        if (partial !== undefined) return partial;
+    }
+    return undefined;
+}
+
+function normalizeProductData(raw, rawArray) {
+    // rawArray = valores em ordem de coluna [col0, col1, ..., col16]
+    // Posições fixas (baseadas na planilha atual):
+    // 0=ID, 1=Nome, 2=Cat, 3=Vel, 4=Pot, 5=Auto, 6=Desc,
+    // 7=Img1, 8=Img2, 9=Img3, 10=Link,
+    // 11=De: Preço (col L), 12=Por: Preço (col M),
+    // 13=Parcelado, 14=Badge, 15=Oferta, 16=Status
+
+    function col(idx) {
+        if (rawArray && rawArray[idx] !== undefined) return String(rawArray[idx] || '').trim();
+        return '';
+    }
+
+    function parseMoney(val) {
+        const clean = (val || '').replace(/[^\d,]/g, '').replace(',', '.').trim();
+        return clean ? parseFloat(clean).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
+    }
+
+    const id = parseInt(col(0), 10) || 0;
+    const precoDeRaw = col(11);
+    const precoPorRaw = col(12);
+
+    // Se De e Por forem idênticos, não há desconto — exibe só o Por sem risco
+    const precoDe  = parseMoney(precoDeRaw);
+    const precoPor = parseMoney(precoPorRaw);
+    const temDesconto = precoDe && precoPor && precoDe !== precoPor;
+
+    return {
+        id,
+        nome:       col(1),
+        categoria:  col(2),
+        velocidade: col(3),
+        potencia:   col(4),
+        autonomia:  col(5),
+        descricao:  col(6),
+        imagem:     col(7),
+        imagem2:    col(8),
+        imagem3:    col(9),
+        link:       col(10),
+        preco:      temDesconto ? precoDe  : '',   // só mostra riscado se houver desconto real
+        precoPor:   precoPor || precoDe,            // preço final sempre visível
+        parcelado:  col(13),
+        badge:      col(14).replace(/Sem CNH\s*\|?\s*/gi, '').trim(),
+        destaque:   col(15) || 'Não',
+        status:     col(16) || 'Ativo'
+    };
+}
+
+async function loadCatalogData() {
+    if (GOOGLE_SHEETS_CSV_URL) {
+        try {
+            const response = await fetch(GOOGLE_SHEETS_CSV_URL, { cache: 'no-store' });
+            if (response.ok) {
+                const csvText = await response.text();
+                const parsed = parseCSV(csvText);
+                catalogData = parsed.map(p => normalizeProductData(p, p.__raw))
+                                    .filter(p => p.nome && p.status.toLowerCase() !== 'inativo');
+                console.log('✅ Catálogo carregado do Google Sheets:', catalogData.length);
+                return;
+            }
+        } catch (e) {
+            console.warn('⚠️ Falha ao carregar Google Sheets:', e);
+        }
+    }
+    catalogData = CATALOG_FALLBACK_DATA.filter(p => p.status.toLowerCase() !== 'inativo');
+    console.log('📦 Catálogo usando fallback local:', catalogData.length);
+}
 
 const CATALOG_FALLBACK_DATA = [
     { id: 1, nome: 'Giga', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Frente agressiva, farol e setas em LED e painel digital futurista. Escolha de quem quer sair do óbvio, chegar em silêncio e causar impacto.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/Giga_modelo.webp', link: 'https://motochefebrasil.com.br/modelos/giga', preco: '', destaque: 'Não', status: 'Ativo' },
@@ -539,40 +665,74 @@ let catalogFilter = 'Todos';
 function renderCatalogPremium() {
     const grid = document.getElementById('catalog-grid');
     const counter = document.getElementById('catalog-count');
+    // remove skeletons antes de renderizar
+    grid && grid.querySelectorAll('.catalog-skeleton').forEach(s => s.remove());
     if (!grid) return;
-    
+
     const data = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
-    const filtered = data.filter(p => catalogFilter === 'Todos' || p.categoria === catalogFilter);
-    
+    const filtered = data.filter(p => {
+        if (catalogFilter === 'Todos') return true;
+        return p.categoria && p.categoria.toLowerCase().includes(catalogFilter.toLowerCase());
+    });
+
     if (counter) counter.textContent = filtered.length;
-    
+
     if (filtered.length === 0) {
-        grid.innerHTML = '<div class="col-span-full text-center py-12"><i class="fa-solid fa-motorcycle text-4xl text-brand-main/30 mb-4"></i><p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p></div>';
+        grid.innerHTML = `<div class="col-span-full text-center py-16">
+            <i class="fa-solid fa-motorcycle text-5xl text-brand-main/20 mb-4 block"></i>
+            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p>
+        </div>`;
         return;
     }
-    
+
     grid.innerHTML = filtered.map((p, idx) => {
-        const isDestaque = String(p.destaque).toLowerCase() === 'sim' || String(p.destaque).toLowerCase() === 'yes' || String(p.destaque).includes('🔥');
+        const isDestaque = String(p.destaque).toLowerCase() === 'sim';
+        const temPreco   = p.precoPor && String(p.precoPor).trim();
+        const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
+        const badge      = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
+
         return `
-            <div onclick="openProductModal(${p.id})" class="catalog-card-premium" style="animation-delay: ${idx * 60}ms">
-                <div class="relative overflow-hidden">
-                    <img src="${p.imagem}" alt="${p.nome}" class="card-image" loading="lazy" onerror="this.src='assets/logo-motochefe-campo-grande-veiculos-eletricos.png'">
-                    <div class="card-badges">
-                        ${isDestaque ? '<span class="badge-destaque"><i class="fa-solid fa-star"></i> Destaque</span>' : '<span></span>'}
-                        <span class="badge-categoria">${p.categoria}</span>
-                    </div>
+        <div onclick="openProductModal(${p.id})" class="card-v2" style="animation-delay:${idx * 50}ms">
+
+            <!-- Imagem full -->
+            <div class="card-v2-img-wrap">
+                <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
+                     onerror="this.src='assets/logo-motochefe-campo-grande-veiculos-eletricos.png'">
+
+                <!-- gradient base -->
+                <div class="card-v2-gradient"></div>
+
+                <!-- topo: destaque + categoria -->
+                <div class="card-v2-top">
+                    ${isDestaque ? `<span class="card-v2-badge-destaque"><i class="fa-solid fa-star"></i> Destaque</span>` : '<span></span>'}
+                    <span class="card-v2-badge-cat">${p.categoria.split(',')[0].trim()}</span>
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">${p.nome}</h3>
-                    <p class="card-desc">${p.descricao}</p>
-                    <div class="card-specs">
-                        ${p.velocidade ? `<span class="card-spec"><i class="fa-solid fa-gauge-high"></i> ${p.velocidade}</span>` : ''}
-                        ${p.potencia ? `<span class="card-spec"><i class="fa-solid fa-bolt"></i> ${p.potencia}</span>` : ''}
-                        ${p.autonomia ? `<span class="card-spec"><i class="fa-solid fa-road"></i> ${p.autonomia}</span>` : ''}
-                    </div>
+
+                <!-- base: nome + preço sobre a imagem -->
+                <div class="card-v2-over">
+                    <h3 class="card-v2-nome">${p.nome}</h3>
+                    ${temPreco ? `
+                    <div class="card-v2-preco-wrap">
+                        ${temDesconto ? `<span class="card-v2-de">R$ ${p.preco}</span>` : ''}
+                        <span class="card-v2-por">R$ ${p.precoPor}</span>
+                    </div>` : ''}
                 </div>
             </div>
-        `;
+
+            <!-- Rodapé com specs + badge + botão -->
+            <div class="card-v2-footer">
+                <div class="card-v2-specs">
+                    ${p.velocidade ? `<span class="card-v2-spec"><i class="fa-solid fa-gauge-high"></i>${p.velocidade}</span>` : ''}
+                    ${p.potencia   ? `<span class="card-v2-spec"><i class="fa-solid fa-bolt"></i>${p.potencia}</span>`   : ''}
+                    ${p.autonomia  ? `<span class="card-v2-spec"><i class="fa-solid fa-road"></i>${p.autonomia}</span>`  : ''}
+                </div>
+                <div class="card-v2-actions">
+                    ${badge ? `<span class="card-v2-tag">${badge}</span>` : ''}
+                    <button class="card-v2-btn">Ver modelo <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+        </div>`;
     }).join('');
 }
 
@@ -581,8 +741,30 @@ window.openProductModal = function(id) {
     const p = data.find(item => item.id === id);
     if (!p) return;
     
-    document.getElementById('produto-img').src = p.imagem;
-    document.getElementById('produto-img').alt = p.nome;
+    const imgEl = document.getElementById('produto-img');
+    imgEl.src = p.imagem;
+    imgEl.alt = p.nome;
+    imgEl.onclick = function(e) {
+        e.stopPropagation();
+        openImageModal(imgEl.src);
+    };
+    
+    // Miniaturas
+    const thumbsContainer = document.getElementById('produto-thumbs');
+    const thumbs = [p.imagem, p.imagem2, p.imagem3].filter(src => src && src.trim() !== '');
+    if (thumbsContainer) {
+        if (thumbs.length > 1) {
+            thumbsContainer.classList.remove('hidden');
+            thumbsContainer.innerHTML = thumbs.map((src, idx) => `
+                <button onclick="document.getElementById('produto-img').src='${src}';" class="flex-shrink-0 w-16 h-16 rounded-xl border-2 ${idx === 0 ? 'border-brand-main' : 'border-transparent'} overflow-hidden hover:border-brand-main transition-colors">
+                    <img src="${src}" alt="" class="w-full h-full object-cover">
+                </button>
+            `).join('');
+        } else {
+            thumbsContainer.classList.add('hidden');
+            thumbsContainer.innerHTML = '';
+        }
+    }
     document.getElementById('produto-nome').textContent = p.nome;
     document.getElementById('produto-categoria').textContent = p.categoria;
     document.getElementById('produto-badge-categoria').textContent = p.categoria;
@@ -597,14 +779,33 @@ window.openProductModal = function(id) {
     badgeDestaque.classList.toggle('hidden', !isDestaque);
     
     const precoBox = document.getElementById('produto-preco-box');
-    if (p.preco && String(p.preco).trim() !== '') {
-        document.getElementById('produto-preco').textContent = 'R$ ' + p.preco;
+    if ((p.preco && String(p.preco).trim()) || (p.precoPor && String(p.precoPor).trim())) {
+        const precoEl = document.getElementById('produto-preco');
+        let html = '';
+        if (p.preco && String(p.preco).trim()) {
+            html += `<span class="modal-preco-de">R$ ${p.preco}</span>`;
+        }
+        if (p.precoPor && String(p.precoPor).trim()) {
+            html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
+        }
+        precoEl.innerHTML = html;
         precoBox.classList.remove('hidden');
+
+        const parceladoEl = document.getElementById('produto-parcelado');
+        if (parceladoEl) {
+            if (p.parcelado && String(p.parcelado).trim()) {
+                parceladoEl.textContent = p.parcelado;
+                parceladoEl.classList.remove('hidden');
+            } else {
+                parceladoEl.classList.add('hidden');
+            }
+        }
     } else {
         precoBox.classList.add('hidden');
     }
     
-    const waText = encodeURIComponent('Olá, vim pelo catálogo do link da bio e tenho interesse no modelo ' + p.nome + '.');
+    const precoWa = p.precoPor ? ` — R$ ${p.precoPor}` : '';
+    const waText = encodeURIComponent(`Olá! Vi o catálogo e tenho interesse no modelo ${p.nome}${precoWa}. Pode me passar mais informações?`);
     document.getElementById('produto-link-whatsapp').href = 'https://wa.me/5521977342290?text=' + waText;
     
     const modal = document.getElementById('modal-produto');
@@ -614,7 +815,8 @@ window.openProductModal = function(id) {
     }
 };
 
-function initCatalog() {
+async function initCatalog() {
+    await loadCatalogData();
     renderCatalogPremium();
     
     const filters = document.getElementById('catalog-filters-premium');
@@ -634,7 +836,7 @@ function initCatalog() {
 // ============================================
 // INICIALIZAÇÃO
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // 1. Inicializar alternância de tema (Prioridade)
     initThemeToggle();
     
@@ -651,7 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initModalBackdrops();
     initEscapeKey();
     initWhatsappBubble();
-    initCatalog();
+    await initCatalog();
 
     // Console log
     console.log(`%c${CONFIG.projectName}`, 'color: #C9A227; font-size: 20px; font-weight: bold;');
@@ -668,3 +870,88 @@ window.openImageModal = openImageModal;
 window.downloadVCard = downloadVCard;
 window.scrollGallery = scrollGallery;
 window.openProductModal = openProductModal;
+
+// ============================================
+// LIGHTBOX COM ZOOM
+// ============================================
+(function() {
+    let scale = 1;
+    const MIN = 1, MAX = 4, STEP = 0.5;
+
+    function getEls() {
+        return {
+            lb:    document.getElementById('lightbox'),
+            img:   document.getElementById('lightbox-img'),
+            stage: document.getElementById('lightbox-stage'),
+            cap:   document.getElementById('lightbox-caption'),
+        };
+    }
+
+    function applyScale(s) {
+        scale = Math.min(MAX, Math.max(MIN, s));
+        const { img, stage } = getEls();
+        img.style.transition = 'transform 0.2s ease';
+        img.style.transform = `scale(${scale})`;
+        stage.style.cursor = scale > 1 ? 'zoom-out' : 'grab';
+    }
+
+    window.openLightbox = function(src, alt) {
+        const { lb, img, cap } = getEls();
+        if (!lb) return;
+        scale = 1;
+        img.style.transition = 'none';
+        img.style.transform = 'scale(1)';
+        img.src = src;
+        cap.textContent = alt || '';
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeLightbox = function() {
+        const { lb } = getEls();
+        if (lb) lb.style.display = 'none';
+        document.body.style.overflow = '';
+        scale = 1;
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const { lb, img, stage } = getEls();
+        if (!lb) return;
+
+        // Fechar ao clicar no fundo
+        lb.addEventListener('click', function(e) {
+            if (e.target === lb || e.target === stage) window.closeLightbox();
+        });
+
+        // Botões zoom
+        document.getElementById('lightbox-close').addEventListener('click', window.closeLightbox);
+        document.getElementById('lb-zoom-in').addEventListener('click', function(e) { e.stopPropagation(); applyScale(scale + STEP); });
+        document.getElementById('lb-zoom-out').addEventListener('click', function(e) { e.stopPropagation(); applyScale(scale - STEP); });
+        document.getElementById('lb-zoom-reset').addEventListener('click', function(e) { e.stopPropagation(); applyScale(1); });
+
+        // Scroll para zoom (desktop)
+        lb.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            applyScale(scale + (e.deltaY < 0 ? STEP : -STEP));
+        }, { passive: false });
+
+        // Double-tap / double-click para zoom
+        let lastTap = 0;
+        img.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                applyScale(scale > 1 ? 1 : 2.5);
+            }
+            lastTap = now;
+        });
+
+        // Teclado
+        document.addEventListener('keydown', function(e) {
+            if (!lb || lb.style.display === 'none') return;
+            if (e.key === 'Escape') window.closeLightbox();
+            if (e.key === '+' || e.key === '=') applyScale(scale + STEP);
+            if (e.key === '-') applyScale(scale - STEP);
+        });
+    });
+})();

@@ -182,8 +182,10 @@
                         <span class="font-label text-[1.1rem] !text-white mb-2 drop-shadow-md dark:drop-shadow-lg">Desde
                             2023</span>
                         <span data-config="negocio.nome"
-                            class="text-[3rem] sm:text-[3.4rem] font-extrabold leading-[0.9] text-center text-white dark:text-white/95 dark:drop-shadow-lg">Motochefe
-                            Campo Grande</span>
+                            class="text-[3.2rem] sm:text-[3.8rem] font-extrabold leading-[0.85] text-center text-white dark:text-white/95 flex flex-col items-center gap-1">
+                            <span class="hero-title-gradient">Motochefe</span>
+                            <span class="hero-title-gradient text-[2.4rem] sm:text-[2.8rem] opacity-90">Campo Grande</span>
+                        </span>
                     </h1>
 
                     <!-- Categoria Pill -->
@@ -466,16 +468,106 @@
 
                     <!-- Contador -->
                     <div class="px-4 mb-4">
-                        <p id="catalog-counter" class="text-[10px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-widest"><span class="text-brand-main" id="catalog-count">0</span> veículos encontrados</p>
+                        <p id="catalog-counter" class="text-[10px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-widest"><span class="text-brand-main" id="catalog-count">—</span> veículos encontrados</p>
                     </div>
 
                     <!-- Grid de Produtos -->
                     <div id="catalog-grid" class="px-4 grid grid-cols-1 gap-4">
-                        <!-- Produtos renderizados via JS -->
-                        <div class="flex flex-col items-center justify-center py-12 text-center">
-                            <div class="w-10 h-10 border-2 border-brand-main/30 border-t-brand-main rounded-full animate-spin mb-3"></div>
-                            <p class="text-[11px] text-brand-gray dark:text-zinc-400">Carregando catálogo...</p>
+                        <!-- skeleton enquanto carrega -->
+                        <div class="catalog-skeleton"></div>
+                        <div class="catalog-skeleton"></div>
+                        <div class="catalog-skeleton"></div>
+                        <!-- REMOVIDO: cards estáticos substituídos pelo Google Sheets -->
+                        
+                    </div>
+                </section>
+
+                <!-- Simulação de Economia Section -->
+                <section class="mt-16 reveal" id="section-economia">
+                    <div class="bg-[#18181b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden">
+                        <!-- Glow accent -->
+                        <div class="absolute -left-20 -top-20 w-64 h-64 bg-brand-main/10 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div class="absolute -right-20 -bottom-20 w-48 h-48 bg-brand-main/5 blur-[60px] rounded-full pointer-events-none"></div>
+
+                        <div class="flex flex-col items-center mb-8 text-center px-4">
+                            <span class="diferenciais-eyebrow">Calcule Agora</span>
+                            <h2 class="diferenciais-titulo">Quanto Você<br>Vai Economizar?</h2>
+                            <div class="diferenciais-linha"></div>
+                            <p class="diferenciais-subtitulo">Compare o custo da gasolina com o elétrico no seu dia a dia</p>
                         </div>
+
+                        <!-- Inputs -->
+                        <div class="space-y-5 mb-6">
+                            <!-- KM por dia -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Km que você faz por dia</label>
+                                    <span id="eco-km-val" class="text-brand-main font-bold font-mono text-sm">30 km</span>
+                                </div>
+                                <input id="eco-km" type="range" min="5" max="150" step="5" value="30"
+                                    class="eco-slider w-full">
+                            </div>
+
+                            <!-- Preço gasolina -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Preço da gasolina (R$/litro)</label>
+                                    <span id="eco-gas-val" class="text-brand-main font-bold font-mono text-sm">R$ 6,50</span>
+                                </div>
+                                <input id="eco-gas" type="range" min="5.00" max="9.00" step="0.50" value="6.50"
+                                    class="eco-slider w-full">
+                            </div>
+
+                            <!-- Consumo da moto a gasolina -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Consumo da sua moto atual (km/l)</label>
+                                    <span id="eco-consumo-val" class="text-brand-main font-bold font-mono text-sm">35 km/l</span>
+                                </div>
+                                <input id="eco-consumo" type="range" min="20" max="60" step="5" value="35"
+                                    class="eco-slider w-full">
+                            </div>
+                        </div>
+
+                        <!-- Resultado -->
+                        <div class="bg-black/30 rounded-3xl border border-white/5 p-6 mb-6">
+                            <div class="grid grid-cols-3 gap-3 text-center mb-4">
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Gasolina</p>
+                                    <p id="eco-gasto-gas" class="text-lg font-bold font-mono text-red-400">R$ 167</p>
+                                </div>
+                                <div class="flex flex-col items-center justify-center">
+                                    <div class="w-8 h-8 rounded-full bg-brand-main/20 border border-brand-main/30 flex items-center justify-center mb-1">
+                                        <i class="fa-solid fa-bolt text-brand-main text-xs"></i>
+                                    </div>
+                                    <p class="text-[8px] uppercase tracking-widest text-zinc-600 font-bold">vs</p>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Gasto/mês<br>Elétrico</p>
+                                    <p id="eco-gasto-ele" class="text-lg font-bold font-mono text-green-400">R$ 13</p>
+                                </div>
+                            </div>
+
+                            <!-- Economia destaque -->
+                            <div class="border-t border-white/5 pt-4 text-center">
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Sua economia mensal</p>
+                                <p id="eco-mensal" class="text-4xl font-extrabold font-title text-brand-main leading-none mb-1">R$ 154</p>
+                                <p id="eco-anual" class="text-[11px] text-zinc-400 font-bold">→ R$ 1.848 economizados por ano</p>
+                            </div>
+                        </div>
+
+                        <!-- Nota técnica -->
+                        <p class="text-[9px] text-zinc-600 text-center leading-relaxed mb-6">
+                            * Cálculo estimado. Elétrico: consumo médio de 2 kWh/100km, tarifa residencial R$ 0,85/kWh. Valores reais podem variar.
+                        </p>
+
+                        <!-- CTA -->
+                        <a href="https://wa.me/5521977342290?text=Olá! Fiz a simulação de economia e quero saber mais sobre as scooters elétricas."
+                            target="_blank"
+                            class="w-full py-5 rounded-2xl bg-brand-main text-white text-[11px] font-bold tracking-[0.3em] flex items-center justify-center gap-3 transition-all transform active:scale-95 uppercase shadow-xl shadow-brand-main/30 hover:shadow-brand-main/50 group">
+                            <i class="fa-brands fa-whatsapp text-lg group-hover:scale-110 transition-transform"></i>
+                            Quero Economizar Também
+                        </a>
                     </div>
                 </section>
 
@@ -1115,9 +1207,14 @@
     <div id="modal-produto" class="modal-backdrop" style="z-index: 3000;" onclick="if(event.target === this) closeModal('modal-produto');">
         <div class="modal-content product-modal-content !max-w-lg w-[95%] !p-0 !rounded-[2.5rem] overflow-hidden" onclick="event.stopPropagation();">
             <!-- Imagem do Produto -->
-            <div class="relative w-full h-56 sm:h-64">
-                <img id="produto-img" src="" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div class="relative w-full h-64 sm:h-72 modal-img-wrap">
+                <img id="produto-img" src="" alt="" class="w-full h-full object-contain p-4 cursor-zoom-in transition-transform duration-300 hover:scale-105" title="Clique para ampliar" onclick="openImageModal(this.src)">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                <!-- ícone lupa -->
+                <div class="absolute bottom-3 left-3 pointer-events-none flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1">
+                    <i class="fa-solid fa-magnifying-glass-plus text-white text-[10px]"></i>
+                    <span class="text-white text-[9px] font-bold uppercase tracking-wider">Ampliar</span>
+                </div>
                 
                 <!-- Badges -->
                 <div class="absolute top-4 left-4 flex gap-2">
@@ -1135,6 +1232,11 @@
                 <button onclick="closeModal('modal-produto')" class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/30 transition-colors">
                     <i class="fa-solid fa-xmark text-white text-lg"></i>
                 </button>
+            </div>
+
+            <!-- Miniaturas -->
+            <div id="produto-thumbs" class="hidden px-6 pt-4 bg-white dark:bg-[#1A1F3D] flex gap-3 overflow-x-auto">
+                <!-- populado via JS -->
             </div>
 
             <!-- Conteúdo -->
@@ -1169,8 +1271,9 @@
                 
                 <!-- Preço -->
                 <div id="produto-preco-box" class="hidden bg-black/5 dark:bg-white/5 rounded-2xl p-4 mb-5 border border-black/5 dark:border-white/5">
-                    <p class="text-[9px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-[0.2em] mb-1">Preço</p>
-                    <p id="produto-preco" class="text-2xl font-title font-extrabold text-brand-dark dark:text-white">R$ 0,00</p>
+                    <p class="text-[9px] font-bold text-brand-gray dark:text-zinc-400 uppercase tracking-[0.2em] mb-2">Preço</p>
+                    <div id="produto-preco" class="flex flex-wrap items-baseline gap-3"></div>
+                    <p id="produto-parcelado" class="hidden text-[11px] text-zinc-400 dark:text-zinc-500 mt-1 font-medium"></p>
                 </div>
                 
                 <!-- Botões CTA -->
@@ -1454,6 +1557,59 @@
             }
         })();
     </script>
+
+    <!-- Simulação de Economia -->
+    <script>
+    (function () {
+        var KWH_PER_100KM = 2;      // consumo médio elétrico
+        var KWH_PRICE = 0.85;       // tarifa residencial R$/kWh
+        var DAYS_MONTH = 30;
+
+        function fmt(val) {
+            return 'R$ ' + val.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function calc() {
+            var km   = parseFloat(document.getElementById('eco-km').value) || 30;
+            var gas  = parseFloat(document.getElementById('eco-gas').value) || 6.50;
+            var cons = parseFloat(document.getElementById('eco-consumo').value) || 35;
+
+            var gastoGas = (km / cons) * gas * DAYS_MONTH;
+            var gastoEle = (km / 100) * KWH_PER_100KM * KWH_PRICE * DAYS_MONTH;
+            var economia = gastoGas - gastoEle;
+
+            document.getElementById('eco-km-val').textContent      = km + ' km';
+            document.getElementById('eco-gas-val').textContent      = 'R$ ' + gas.toFixed(2).replace('.', ',');
+            document.getElementById('eco-consumo-val').textContent  = cons + ' km/l';
+            document.getElementById('eco-gasto-gas').textContent    = fmt(gastoGas);
+            document.getElementById('eco-gasto-ele').textContent    = fmt(gastoEle);
+            document.getElementById('eco-mensal').textContent       = fmt(economia);
+            document.getElementById('eco-anual').textContent        = '→ ' + fmt(economia * 12) + ' economizados por ano';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            ['eco-km', 'eco-gas', 'eco-consumo'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.addEventListener('input', calc);
+            });
+            calc();
+        });
+    })();
+    </script>
+
+    <!-- Lightbox com zoom -->
+    <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.96);backdrop-filter:blur(10px);align-items:center;justify-content:center;overflow:hidden;touch-action:none;">
+        <button id="lightbox-close" style="position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:22px;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;line-height:1;">✕</button>
+        <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2;">
+            <button id="lb-zoom-out" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:16px;cursor:pointer;">−</button>
+            <button id="lb-zoom-reset" style="height:36px;padding:0 12px;border-radius:18px;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.05em;">RESET</button>
+            <button id="lb-zoom-in" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:16px;cursor:pointer;">+</button>
+        </div>
+        <p id="lightbox-caption" style="position:absolute;top:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.6);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;z-index:2;pointer-events:none;"></p>
+        <div id="lightbox-stage" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:grab;">
+            <img id="lightbox-img" src="" alt="" style="max-width:90%;max-height:85vh;object-fit:contain;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,0.8);transform-origin:center;transition:transform 0.2s ease;user-select:none;-webkit-user-drag:none;">
+        </div>
+    </div>
 </body>
 
 </html>
