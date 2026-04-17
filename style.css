@@ -796,14 +796,14 @@ body.light-mode .hero [class*="font-label"][class*="text-black"] {
     letter-spacing: 0.15em !important;
 }
 
-/* "Motochefe Campo Grande" — Gradiente Prateado Escuro */
+/* "Motochefe Campo Grande" — Gradiente Cinza Escuro quase Preto */
 body.light-mode .hero-title-gradient {
-    background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 45%, #4A5568 100%) !important;
+    background: linear-gradient(180deg, #94A3B8 0%, #1E293B 40%, #020617 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
     color: transparent !important;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.15));
 }
 
 body.dark-mode .hero-title-gradient {
