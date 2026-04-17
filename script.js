@@ -746,7 +746,7 @@ window.openProductModal = function(id) {
     imgEl.alt = p.nome;
     imgEl.onclick = function(e) {
         e.stopPropagation();
-        openImageModal(imgEl.src);
+        window.openLightbox(imgEl.src, imgEl.alt);
     };
     
     // Miniaturas
