@@ -2354,3 +2354,189 @@ body.dark-mode .catalog-spec {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+/* ========================================
+   CATÁLOGO PREMIUM - SEÇÃO E CARDS
+   ======================================== */
+
+/* Card de Produto Premium */
+.catalog-card-premium {
+    position: relative;
+    background: #ffffff;
+    border-radius: 1.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+body.dark-mode .catalog-card-premium {
+    background: #1A1F3D;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px -8px rgba(201, 162, 39, 0.15);
+    border-color: rgba(201, 162, 39, 0.2);
+}
+
+body.dark-mode .catalog-card-premium:hover {
+    box-shadow: 0 12px 40px -8px rgba(201, 162, 39, 0.2);
+}
+
+.catalog-card-premium .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.catalog-card-premium:hover .card-image {
+    transform: scale(1.05);
+}
+
+.catalog-card-premium .card-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.catalog-card-premium .badge-destaque {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.catalog-card-premium .badge-categoria {
+    background: var(--brand-main);
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 4px 12px rgba(201, 162, 39, 0.3);
+}
+
+.catalog-card-premium .card-content {
+    padding: 16px;
+}
+
+.catalog-card-premium .card-title {
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: #0D0D0D;
+}
+
+body.dark-mode .catalog-card-premium .card-title {
+    color: #ffffff;
+}
+
+.catalog-card-premium .card-desc {
+    font-size: 11px;
+    line-height: 1.5;
+    color: #6B7280;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+body.dark-mode .catalog-card-premium .card-desc {
+    color: #a1a1aa;
+}
+
+.catalog-card-premium .card-specs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.catalog-card-premium .card-spec {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #52525b;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 5px 10px;
+    border-radius: 999px;
+}
+
+body.dark-mode .catalog-card-premium .card-spec {
+    color: #d4d4d8;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.catalog-card-premium .card-spec i {
+    color: var(--brand-main);
+    font-size: 9px;
+}
+
+/* Filtros Premium */
+.catalog-filter-premium {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.catalog-filter-premium.active {
+    background-color: var(--brand-main) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 16px rgba(201, 162, 39, 0.3);
+}
+
+.catalog-filter-premium:not(.active):hover {
+    border-color: rgba(201, 162, 39, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+/* Modal Produto Premium */
+.product-modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+body.light-mode .product-modal-content {
+    background: #ffffff !important;
+}
+
+body.dark-mode .product-modal-content {
+    background: #1A1F3D !important;
+}
+
+/* Animação de entrada dos cards */
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.catalog-card-premium {
+    animation: cardSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
