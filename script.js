@@ -594,7 +594,7 @@ function findKey(obj, ...candidates) {
     return undefined;
 }
 
-function normalizeProductData(raw, rawArray) {
+function normalizeProductData(_raw, rawArray) {
     // rawArray = valores em ordem de coluna [col0, col1, ..., col16]
     // Posições fixas (baseadas na planilha atual):
     // 0=ID, 1=Nome, 2=Cat, 3=Vel, 4=Pot, 5=Auto, 6=Desc,
@@ -764,9 +764,14 @@ window.openProductModal = function(id) {
     const imgEl = document.getElementById('produto-img');
     imgEl.src = p.imagem;
     imgEl.alt = p.nome;
+    imgEl.style.cursor = 'zoom-in';
+    imgEl.onclick = null;
     imgEl.onclick = function(e) {
         e.stopPropagation();
-        window.openLightbox(document.getElementById('produto-img').src, document.getElementById('produto-img').alt);
+        e.preventDefault();
+        var src = document.getElementById('produto-img').src;
+        var alt = document.getElementById('produto-img').alt;
+        window._abrirLightboxProduto(src, alt);
     };
 
     // Miniaturas
@@ -1057,26 +1062,53 @@ async function initCatalog() {
     // Barra de pesquisa
     const searchInput = document.getElementById('catalog-search');
     const searchClear = document.getElementById('catalog-search-clear');
+
+    function renderBusca() {
+        const secBusca = document.getElementById('section-busca-resultados');
+        const gridBusca = document.getElementById('catalog-grid-busca');
+        if (!secBusca || !gridBusca) return;
+
+        if (!catalogSearchQuery) {
+            secBusca.style.display = 'none';
+            gridBusca.innerHTML = '';
+            return;
+        }
+
+        const data = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
+        const filtered = data.filter(p =>
+            (p.status || '').toLowerCase() !== 'inativo' &&
+            productMatchesSearch(p, catalogSearchQuery)
+        );
+
+        if (filtered.length === 0) {
+            gridBusca.innerHTML = `<div class="col-span-full text-center py-10">
+                <i class="fa-solid fa-magnifying-glass text-4xl text-brand-main/20 mb-3 block"></i>
+                <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum resultado para "${catalogSearchQuery}"</p>
+                <p class="text-xs text-brand-gray mt-1">Tente outro termo de busca</p>
+            </div>`;
+        } else {
+            gridBusca.innerHTML = filtered.map((p, idx) => {
+                const isOferta = String(p.destaque).toLowerCase() === 'oferta da semana';
+                return cardV2HTML(p, idx, false, isOferta, false);
+            }).join('');
+        }
+
+        secBusca.style.display = '';
+    }
+
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             catalogSearchQuery = e.target.value.trim();
-            if (searchClear) {
-                searchClear.classList.toggle('visible', catalogSearchQuery.length > 0);
-            }
-            renderOfertasSemana();
-            renderDestaqueGrid();
+            if (searchClear) searchClear.classList.toggle('visible', catalogSearchQuery.length > 0);
+            renderBusca();
         });
     }
     if (searchClear) {
         searchClear.addEventListener('click', () => {
             catalogSearchQuery = '';
-            if (searchInput) {
-                searchInput.value = '';
-                searchInput.focus();
-            }
+            if (searchInput) { searchInput.value = ''; searchInput.focus(); }
             searchClear.classList.remove('visible');
-            renderOfertasSemana();
-            renderDestaqueGrid();
+            renderBusca();
         });
     }
 }
@@ -1109,6 +1141,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('%cMotochefe Campo Grande', 'color: #C9A227; font-size: 14px;');
     console.log('%cDesenvolvido por AG5 Agência', 'color: #8B5E1E; font-size: 12px;');
 });
+
+// ============================================
+// LIGHTBOX SIMPLES PARA IMAGEM DO PRODUTO
+// ============================================
+(function() {
+    var overlay = null;
+
+    function criar() {
+        if (overlay) return;
+        overlay = document.createElement('div');
+        overlay.id = 'lb-produto-overlay';
+        overlay.style.cssText = [
+            'display:none',
+            'position:fixed',
+            'inset:0',
+            'z-index:2147483647',
+            'background:rgba(0,0,0,0.95)',
+            'align-items:center',
+            'justify-content:center',
+            'cursor:zoom-out',
+        ].join(';');
+
+        var img = document.createElement('img');
+        img.id = 'lb-produto-img';
+        img.style.cssText = 'max-width:92vw;max-height:88vh;object-fit:contain;border-radius:12px;box-shadow:0 0 80px rgba(0,0,0,0.9);pointer-events:none;';
+
+        var btnFechar = document.createElement('button');
+        btnFechar.innerHTML = '&#10005;';
+        btnFechar.style.cssText = 'position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;';
+        btnFechar.onclick = fechar;
+
+        overlay.appendChild(img);
+        overlay.appendChild(btnFechar);
+        overlay.onclick = function(e) { if (e.target === overlay) fechar(); };
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') fechar(); });
+        document.body.appendChild(overlay);
+    }
+
+    function fechar() {
+        if (overlay) {
+            overlay.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    window._abrirLightboxProduto = function(src, alt) {
+        criar();
+        document.body.appendChild(overlay); // garante que é sempre o último no DOM
+        var img = document.getElementById('lb-produto-img');
+        img.src = src;
+        img.alt = alt || '';
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+})();
 
 // ============================================
 // EXPORTS (para uso global)

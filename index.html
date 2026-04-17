@@ -425,6 +425,18 @@
                         </div>
                     </div>
 
+                    <!-- Resultados da Busca -->
+                    <div id="section-busca-resultados" class="px-4 mb-10" style="display:none;">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-[3px] h-9 rounded-full bg-brand-main flex-shrink-0"></div>
+                            <div>
+                                <p class="text-[9px] font-bold uppercase tracking-[0.22em] text-brand-main">Busca</p>
+                                <h3 class="font-title text-[22px] font-extrabold uppercase leading-none text-brand-dark dark:text-white">Resultados encontrados</h3>
+                            </div>
+                        </div>
+                        <div id="catalog-grid-busca" class="grid grid-cols-1 gap-4"></div>
+                    </div>
+
                     <!-- Ofertas da Semana -->
                     <div id="section-ofertas-semana" class="px-4 mb-10">
                         <div class="flex items-center gap-3 mb-5">
@@ -566,7 +578,7 @@
                 </section>
 
                 <!-- Serviços Section -->
-                <section class="py-12 reveal">
+                <section class="py-12 reveal" id="section-servicos">
                     <div class="flex flex-col items-center mb-10 text-center px-4">
                         <span class="diferenciais-eyebrow">O que fazemos</span>
                         <h2 class="diferenciais-titulo">Nossos<br>Serviços</h2>
@@ -668,7 +680,7 @@
                 </section>
 
                 <!-- Sobre Section -->
-                <section class="mt-16 reveal">
+                <section class="mt-16 reveal" id="section-sustentabilidade">
                     <div
                         class="bg-[#18181b] rounded-[2.5rem] p-8 border border-white/5 shadow-2xl relative overflow-hidden">
                         <!-- Background Accent -->
@@ -742,7 +754,7 @@
                 </section>
 
                 <!-- Galeria Section (Premium) -->
-                <section class="mt-16 reveal pb-8 w-full overflow-hidden">
+                <section class="mt-16 reveal pb-8 w-full overflow-hidden" id="section-galeria">
                     <div class="flex flex-col items-center mb-10 text-center px-4">
                         <span class="diferenciais-eyebrow">Conheça a Motochefe</span>
                         <h2 class="diferenciais-titulo">Nossos<br>Modelos</h2>
@@ -932,7 +944,7 @@
                 </div>
 
                                 <!-- Localização & Info Section -->
-                <section class="mt-16 reveal pb-10">
+                <section class="mt-16 reveal pb-10" id="section-contato">
                     <div
                         class="bg-white dark:bg-[#18181b] rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/5 shadow-2xl relative">
                         <!-- Mapa Integrado -->
@@ -1189,7 +1201,7 @@
         <div class="modal-content product-modal-content !max-w-lg w-[95%] !p-0 !rounded-[2.5rem] overflow-hidden" onclick="event.stopPropagation();">
             <!-- Imagem do Produto -->
             <div class="relative w-full h-64 sm:h-72 modal-img-wrap">
-                <img id="produto-img" src="" alt="" class="w-full h-full object-contain p-4 cursor-zoom-in transition-transform duration-300 hover:scale-105" title="Clique para ampliar" onclick="event.stopPropagation(); if(window.openLightbox) window.openLightbox(this.src, this.alt);">
+                <img id="produto-img" src="" alt="" class="w-full h-full object-contain p-4 cursor-zoom-in transition-transform duration-300 hover:scale-105" title="Clique para ampliar">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
                 <!-- ícone lupa -->
                 <div class="absolute bottom-3 left-3 pointer-events-none flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-2.5 py-1">
