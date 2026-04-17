@@ -2649,7 +2649,7 @@ body.light-mode #modal-categoria #modal-categoria-grid > div {
 }
 
 body.light-mode #modal-categoria #modal-categoria-grid > div .relative.h-48 {
-    background: #0d0d0d !important;
+    background: #ffffff !important;
 }
 
 body.light-mode #modal-categoria #modal-categoria-grid > div .bg-gradient-to-t.from-black\/80,
@@ -2906,7 +2906,7 @@ body.light-mode .card-v2-oferta {
     background: #111;
 }
 body.light-mode .card-v2-img-wrap {
-    background: #e8e8e8;
+    background: #ffffff;
 }
 .card-v2-img-wrap img {
     width: 100%;
