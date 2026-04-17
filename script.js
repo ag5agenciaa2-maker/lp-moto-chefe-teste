@@ -1,10 +1,10 @@
-﻿/**
+/**
  * Motochefe Campo Grande - Links 360
  * Script principal de interatividade
  */
 
 // ============================================
-// FUNÃ‡ÃƒO: Ocultar/mostrar botÃµes fixos ao rolar
+// FUNÃ‡ÃƒO: Ocultar/mostrar botões fixos ao rolar
 // ============================================
 (function () {
     let lastScrollY = 0;
@@ -31,7 +31,7 @@ const CONFIG = window.Link360Config || {
     projectName: "motochefe-campo-grande",
     themeKey: "motochefe-theme",
     defaultDark: false,
-    greetingText: "Bem-vindo Ã  Motochefe",
+    greetingText: "Bem-vindo à Motochefe",
     accentColor: "#C9A227"
 };
 
@@ -45,7 +45,7 @@ function downloadVCard() {
         `FN:${CONFIG.vcard?.fn || 'Motochefe Campo Grande'}`,
         `N:${CONFIG.vcard?.n || 'Motochefe Campo Grande;;;'}`,
         `ORG:${CONFIG.vcard?.org || 'Motochefe'}`,
-        `TITLE:${CONFIG.vcard?.title || 'VeÃ­culos ElÃ©tricos'}`,
+        `TITLE:${CONFIG.vcard?.title || 'Veículos Elétricos'}`,
         `TEL;TYPE=CELL:${CONFIG.vcard?.tel || '+5521977342290'}`,
         `TEL;TYPE=WORK:${CONFIG.vcard?.telWork || '21977342290'}`,
         `URL:${CONFIG.vcard?.url || 'https://campogrande.motochefe.com.br/'}`,
@@ -73,7 +73,7 @@ function openModal(modalId) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         
-        // AnimaÃ§Ã£o de entrada
+        // Animação de entrada
         const content = modal.querySelector('.modal-content');
         if (content) {
             content.style.animation = 'none';
@@ -99,6 +99,44 @@ function openImageModal(src) {
         img.src = src;
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+    }
+}
+
+// ============================================
+// FUNÃ‡ÃƒO: Controle de Música
+// ============================================
+function initMusicToggle() {
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+    const musicIcon = document.getElementById('music-icon');
+
+    if (!musicBtn) return;
+
+    if (music) music.volume = 0.2;
+
+    const updateIcon = () => {
+        const musicPlaying = music && !music.paused;
+        if (musicPlaying) {
+            if (musicIcon) musicIcon.className = 'fa-solid fa-volume-high text-xs';
+        } else {
+            if (musicIcon) musicIcon.className = 'fa-solid fa-volume-xmark text-xs';
+        }
+    };
+
+    musicBtn.addEventListener('click', () => {
+        if (music) {
+            if (music.paused) {
+                music.play().catch(e => console.log("Erro ao tocar música:", e));
+            } else {
+                music.pause();
+            }
+        }
+        updateIcon();
+    });
+
+    if (music) {
+        music.addEventListener('play', updateIcon);
+        music.addEventListener('pause', updateIcon);
     }
 }
 
@@ -136,10 +174,10 @@ function initThemeToggle() {
         return;
     }
     
-    // Verificar preferÃªncia salva
+    // Verificar preferência salva
     const savedTheme = localStorage.getItem(CONFIG.themeKey);
     
-    // Aplicar tema inicial (padrÃ£o Ã© light para Motochefe)
+    // Aplicar tema inicial (padrão é light para Motochefe)
     if (savedTheme === 'dark') {
         document.body.classList.remove('light-mode');
         document.body.classList.add('dark-mode');
@@ -231,7 +269,7 @@ function initGalleryCarousel() {
         if (autoPlayInterval) clearInterval(autoPlayInterval);
     }
     
-    // Pausar auto-play em interaÃ§Ã£o
+    // Pausar auto-play em interação
     carousel.addEventListener('mouseenter', () => isHovering = true);
     carousel.addEventListener('mouseleave', () => {
         isHovering = false;
@@ -246,7 +284,7 @@ function initGalleryCarousel() {
         startAutoPlay();
     }, {passive:true});
 
-    // Iniciar sÃ³ quando estiver visÃ­vel
+    // Iniciar só quando estiver visível
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -361,7 +399,7 @@ function initVideoCarousel() {
         });
     });
     
-    // BotÃ£o ativar som
+    // Botão ativar som
     if (btnAtivarSom) {
         btnAtivarSom.addEventListener('click', () => {
             isPlaying = true;
@@ -430,17 +468,17 @@ function initWhatsappBubble() {
     const whatsappLink = document.querySelector('.whatsapp-float');
     let messageShown = false;
     
-    // Atualizar conteÃºdo do balÃ£o e link
+    // Atualizar conteúdo do balão e link
     if (whatsappMessage) {
         const msgText = whatsappMessage.querySelector('p');
-        if (msgText) msgText.textContent = "OlÃ¡! Gostaria de falar sobre veÃ­culos elÃ©tricos? Estou pronto para te ajudar!";
+        if (msgText) msgText.textContent = "Olá! Gostaria de falar sobre veículos elétricos? Estou pronto para te ajudar!";
     }
     if (whatsappLink) {
-        const waMsg = encodeURIComponent("OlÃ¡, vim atravÃ©s do link da bio e gostaria de falar sobre veÃ­culos elÃ©tricos.");
+        const waMsg = encodeURIComponent("Olá, vim através do link da bio e gostaria de falar sobre veículos elétricos.");
         whatsappLink.href = `https://wa.me/5521977342290?text=${waMsg}`;
     }
     
-    // Gatilho: SeÃ§Ã£o de Diferenciais
+    // Gatilho: Seção de Diferenciais
     const triggerSection = document.getElementById('section-diferenciais'); 
 
     function showWhatsappBubble() {
@@ -449,7 +487,7 @@ function initWhatsappBubble() {
 
         whatsappMessage.classList.add('show');
         
-        // Auto-esconder apÃ³s 15 segundos
+        // Auto-esconder após 15 segundos
         setTimeout(() => {
             if (whatsappMessage.classList.contains('show')) {
                 whatsappMessage.classList.remove('show');
@@ -493,7 +531,7 @@ function initWhatsappBubble() {
 }
 
 // ============================================
-// CATÃLOGO PREMIUM - GOOGLE SHEETS + FALLBACK
+// CATÁLOGO PREMIUM - GOOGLE SHEETS + FALLBACK
 // ============================================
 
 const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1EvK5ss-XaHY5I3fxn6YT3lG3Q9cX987SJnXs_Tic60Y/gviz/tq?tqx=out:csv';
@@ -526,7 +564,7 @@ function parseCSVLine(line) {
 function parseCSV(csvText) {
     const lines = csvText.trim().split(/\r?\n/);
     if (lines.length === 0) return [];
-    // Pula linha de tÃ­tulo da planilha (linha 0 tem o nome do catÃ¡logo, headers reais estÃ£o na linha 1)
+    // Pula linha de título da planilha (linha 0 tem o nome do catálogo, headers reais estão na linha 1)
     const firstCols = parseCSVLine(lines[0]);
     const headerLineIdx = (firstCols[0] || '').trim() === 'ID' ? 0 : 1;
     const headers = parseCSVLine(lines[headerLineIdx]).map(h => h.trim());
@@ -537,7 +575,7 @@ function parseCSV(csvText) {
         headers.forEach((h, idx) => {
             obj[h] = (values[idx] || '').trim();
         });
-        // anexa array bruto para leitura por Ã­ndice de coluna
+        // anexa array bruto para leitura por índice de coluna
         obj.__raw = values.map(v => (v || '').trim());
         rows.push(obj);
     }
@@ -558,10 +596,10 @@ function findKey(obj, ...candidates) {
 
 function normalizeProductData(raw, rawArray) {
     // rawArray = valores em ordem de coluna [col0, col1, ..., col16]
-    // PosiÃ§Ãµes fixas (baseadas na planilha atual):
+    // Posições fixas (baseadas na planilha atual):
     // 0=ID, 1=Nome, 2=Cat, 3=Vel, 4=Pot, 5=Auto, 6=Desc,
     // 7=Img1, 8=Img2, 9=Img3, 10=Link,
-    // 11=De: PreÃ§o (col L), 12=Por: PreÃ§o (col M),
+    // 11=De: Preço (col L), 12=Por: Preço (col M),
     // 13=Parcelado, 14=Badge, 15=Oferta, 16=Status
 
     function col(idx) {
@@ -578,7 +616,7 @@ function normalizeProductData(raw, rawArray) {
     const precoDeRaw = col(11);
     const precoPorRaw = col(12);
 
-    // Se De e Por forem idÃªnticos, nÃ£o hÃ¡ desconto â€” exibe sÃ³ o Por sem risco
+    // Se De e Por forem idênticos, não há desconto â€” exibe só o Por sem risco
     const precoDe  = parseMoney(precoDeRaw);
     const precoPor = parseMoney(precoPorRaw);
     const temDesconto = precoDe && precoPor && precoDe !== precoPor;
@@ -595,11 +633,11 @@ function normalizeProductData(raw, rawArray) {
         imagem2:    col(8),
         imagem3:    col(9),
         link:       col(10),
-        preco:      temDesconto ? precoDe  : '',   // sÃ³ mostra riscado se houver desconto real
-        precoPor:   precoPor || precoDe,            // preÃ§o final sempre visÃ­vel
+        preco:      temDesconto ? precoDe  : '',   // só mostra riscado se houver desconto real
+        precoPor:   precoPor || precoDe,            // preço final sempre visível
         parcelado:  col(13),
         badge:      col(14).replace(/Sem CNH\s*\|?\s*/gi, '').trim(),
-        destaque:   col(15) || 'NÃ£o',
+        destaque:   col(15) || 'Não',
         status:     col(16) || 'Ativo'
     };
 }
@@ -613,7 +651,7 @@ async function loadCatalogData() {
                 const parsed = parseCSV(csvText);
                 catalogData = parsed.map(p => normalizeProductData(p, p.__raw))
                                     .filter(p => p.nome && p.status.toLowerCase() !== 'inativo');
-                console.log('âœ… CatÃ¡logo carregado do Google Sheets:', catalogData.length);
+                console.log('âœ… Catálogo carregado do Google Sheets:', catalogData.length);
                 return;
             }
         } catch (e) {
@@ -621,42 +659,42 @@ async function loadCatalogData() {
         }
     }
     catalogData = CATALOG_FALLBACK_DATA.filter(p => p.status.toLowerCase() !== 'inativo');
-    console.log('ðŸ“¦ CatÃ¡logo usando fallback local:', catalogData.length);
+    console.log('ðŸ“¦ Catálogo usando fallback local:', catalogData.length);
 }
 
 const CATALOG_FALLBACK_DATA = [
-    { id: 1, nome: 'Giga', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Frente agressiva, farol e setas em LED e painel digital futurista. Escolha de quem quer sair do Ã³bvio, chegar em silÃªncio e causar impacto.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/Giga_modelo.webp', link: 'https://motochefebrasil.com.br/modelos/giga', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 2, nome: 'JET MAX', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '55 km', descricao: 'Visual esportivo de scooter robusta com tecnologia e conforto. Motor 1000W com 55 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/JET-MAX-_-Oficial-2_b.webp', link: 'https://motochefebrasil.com.br/modelos/jet-max', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 3, nome: 'X12', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Scooter elÃ©trica que redefine mobilidade urbana. Compacta, potente e tecnolÃ³gica com 1000W e atÃ© 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/x12b.webp', link: 'https://motochefebrasil.com.br/modelos/x12/', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 4, nome: 'BOB', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'PosiÃ§Ã£o confortÃ¡vel, plataforma baixa, assento amplo com espaÃ§o para carona e encosto traseiro.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/bob_1.webp', link: 'https://motochefebrasil.com.br/modelos/bob', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 5, nome: 'JET', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JET_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/jet', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 6, nome: 'Joyzinha', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Design para o dia a dia, parceira ideal para trabalho, faculdade ou passeio na orla.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/5.webp', link: 'https://motochefebrasil.com.br/modelos/joyzinha', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 7, nome: 'Joy Classic', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Estilo clÃ¡ssico, conforto de sobra e autonomia para o seu dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-CLASSIC-_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-classic', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 8, nome: 'Joy Super', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-SUPER-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-super', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 9, nome: 'MC20 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Farol FULL LED, freio a disco hidrÃ¡ulico, bateria removÃ­vel turbo 5A, suporta atÃ© 180 kg.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MC20-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20-mini', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 10, nome: 'MC21 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'EquilÃ­brio perfeito entre design minimalista e desempenho elÃ©trico. Bateria de lÃ­tio removÃ­vel.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc21_mini_tin.webp', link: 'https://motochefebrasil.com.br/modelos/mc21-mini', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 11, nome: 'Mia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'NÃ£o Ã© necessÃ¡ria CNH para conduzir um equipamento autopropelido (ResoluÃ§Ã£o nÂº 996/2023 do Contran).', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 12, nome: 'Sofia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Combina estilo clÃ¡ssico e tecnologia moderna. Motor 1000W, 32 km/h e autonomia de atÃ© 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/sofia_web3_tiny.webp', link: 'https://motochefebrasil.com.br/modelos/sofia', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 13, nome: 'Ret', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/RET-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ret', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 14, nome: 'Soma', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Sem CNH, sem emplacamento. Motor 1000W, bateria 60V 20Ah removÃ­vel e 40 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/Soma-1-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/soma', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 15, nome: 'Mia Tri', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elÃ©trico 800W para quem quer seguranÃ§a, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 16, nome: 'Joy Tri', categoria: 'Autopropelidos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi robusto de trÃªs rodas com estabilidade e confianÃ§a para o dia a dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 17, nome: 'BIG TRI', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com seguranÃ§a. Design retrÃ´, conforto e tecnologia moderna em triciclo elÃ©trico 1000W.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 18, nome: 'VED', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elÃ©trica acessÃ­vel, segura e confortÃ¡vel. Motor 1000W e autonomia de atÃ© 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 19, nome: 'X11', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '80 km', descricao: 'Design robusto e presenÃ§a marcante com soluÃ§Ãµes modernas de mobilidade elÃ©trica.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x11__-1.webp', link: 'https://motochefebrasil.com.br/modelos/x11', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 20, nome: 'MC20', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '40 km', descricao: '2000W ou 3000W, NFC, alarme com bloqueio, painel digital e atÃ© 80 km com bateria extra. Visual chopper, IP65.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc20_pop-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20/', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 21, nome: 'X15', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elÃ©trico potente e seguro com motor 3000W para aceleraÃ§Ã£o firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 22, nome: 'Roma', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '50 km', descricao: 'Charme retrÃ´ europeu com tecnologia elÃ©trica moderna. 3000W, 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/roma_ai_sombra-1.webp', link: 'https://motochefebrasil.com.br/modelos/roma', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 23, nome: 'GRID', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Ãgil, robusta e divertida de pilotar.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/GRID-LATERAL1-1.webp', link: 'https://motochefebrasil.com.br/modelos/grid/', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 24, nome: 'Style', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'E-bike urbana 750W (pico 1000W), bateria 48V 15,6Ah removÃ­vel, freio a disco hidrÃ¡ulico â€” assinada por Diego Ribas.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/style-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/style', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 25, nome: 'Liberty', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Motor 500W (pico 800W), bateria 48V 13Ah removÃ­vel e modos por aceleraÃ§Ã£o ou pedal assistido PAS 5 nÃ­veis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/liberty_product_web.webp', link: 'https://motochefebrasil.com.br/modelos/liberty', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 26, nome: 'SPACE', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Motor 750W, bateria 48V 12Ah removÃ­vel, 7 marchas. AceleraÃ§Ã£o no punho ou pedal assistido PAS 5 nÃ­veis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/space_ia-1.webp', link: 'https://motochefebrasil.com.br/modelos/space', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 27, nome: 'RetrÃ´', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Visual de bike urbana com praticidade de e-bike moderna. Motor 500W, 32 km/h e 35 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/retro_hero-1.webp', link: 'https://motochefebrasil.com.br/modelos/retro', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 28, nome: 'Joy Tri', categoria: 'Triciclos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi de trÃªs rodas com estabilidade e confianÃ§a. Ideal para quem quer seguranÃ§a sem abrir mÃ£o da liberdade.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 29, nome: 'BIG TRI', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com seguranÃ§a. Triciclo 1000W com design retrÃ´, conforto e tecnologia moderna.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 30, nome: 'Mia Tri', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elÃ©trico 800W para quem quer seguranÃ§a, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 31, nome: 'X15', categoria: 'Triciclos', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elÃ©trico potente com motor 3000W para aceleraÃ§Ã£o firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'NÃ£o', status: 'Ativo' },
-    { id: 32, nome: 'VED', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elÃ©trica acessÃ­vel, segura e confortÃ¡vel. Motor 1000W e autonomia de atÃ© 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'NÃ£o', status: 'Ativo' }
+    { id: 1, nome: 'Giga', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Frente agressiva, farol e setas em LED e painel digital futurista. Escolha de quem quer sair do óbvio, chegar em silêncio e causar impacto.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/Giga_modelo.webp', link: 'https://motochefebrasil.com.br/modelos/giga', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 2, nome: 'JET MAX', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '55 km', descricao: 'Visual esportivo de scooter robusta com tecnologia e conforto. Motor 1000W com 55 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/JET-MAX-_-Oficial-2_b.webp', link: 'https://motochefebrasil.com.br/modelos/jet-max', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 3, nome: 'X12', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Scooter elétrica que redefine mobilidade urbana. Compacta, potente e tecnológica com 1000W e até 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/x12b.webp', link: 'https://motochefebrasil.com.br/modelos/x12/', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 4, nome: 'BOB', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Posição confortável, plataforma baixa, assento amplo com espaço para carona e encosto traseiro.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/bob_1.webp', link: 'https://motochefebrasil.com.br/modelos/bob', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 5, nome: 'JET', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JET_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/jet', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 6, nome: 'Joyzinha', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Design para o dia a dia, parceira ideal para trabalho, faculdade ou passeio na orla.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/5.webp', link: 'https://motochefebrasil.com.br/modelos/joyzinha', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 7, nome: 'Joy Classic', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Estilo clássico, conforto de sobra e autonomia para o seu dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-CLASSIC-_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-classic', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 8, nome: 'Joy Super', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-SUPER-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-super', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 9, nome: 'MC20 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Farol FULL LED, freio a disco hidráulico, bateria removível turbo 5A, suporta até 180 kg.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MC20-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20-mini', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 10, nome: 'MC21 Mini', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Equilíbrio perfeito entre design minimalista e desempenho elétrico. Bateria de lítio removível.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc21_mini_tin.webp', link: 'https://motochefebrasil.com.br/modelos/mc21-mini', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 11, nome: 'Mia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Não é necessária CNH para conduzir um equipamento autopropelido (Resolução nÂº 996/2023 do Contran).', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 12, nome: 'Sofia', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Combina estilo clássico e tecnologia moderna. Motor 1000W, 32 km/h e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/sofia_web3_tiny.webp', link: 'https://motochefebrasil.com.br/modelos/sofia', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 13, nome: 'Ret', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Visual agressivo, zero burocracia: ligou, acelerou, chegou.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/RET-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ret', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 14, nome: 'Soma', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Sem CNH, sem emplacamento. Motor 1000W, bateria 60V 20Ah removível e 40 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/Soma-1-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/soma', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 15, nome: 'Mia Tri', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elétrico 800W para quem quer segurança, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 16, nome: 'Joy Tri', categoria: 'Autopropelidos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi robusto de três rodas com estabilidade e confiança para o dia a dia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 17, nome: 'BIG TRI', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com segurança. Design retrô, conforto e tecnologia moderna em triciclo elétrico 1000W.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 18, nome: 'VED', categoria: 'Autopropelidos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elétrica acessível, segura e confortável. Motor 1000W e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 19, nome: 'X11', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '80 km', descricao: 'Design robusto e presença marcante com soluções modernas de mobilidade elétrica.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x11__-1.webp', link: 'https://motochefebrasil.com.br/modelos/x11', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 20, nome: 'MC20', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '2000 W', autonomia: '40 km', descricao: '2000W ou 3000W, NFC, alarme com bloqueio, painel digital e até 80 km com bateria extra. Visual chopper, IP65.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/mc20_pop-1.webp', link: 'https://motochefebrasil.com.br/modelos/mc20/', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 21, nome: 'X15', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elétrico potente e seguro com motor 3000W para aceleração firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 22, nome: 'Roma', categoria: 'Ciclomotor', velocidade: '50 km/h', potencia: '3000 W', autonomia: '50 km', descricao: 'Charme retrô europeu com tecnologia elétrica moderna. 3000W, 50 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/roma_ai_sombra-1.webp', link: 'https://motochefebrasil.com.br/modelos/roma', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 23, nome: 'GRID', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Ágil, robusta e divertida de pilotar.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/GRID-LATERAL1-1.webp', link: 'https://motochefebrasil.com.br/modelos/grid/', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 24, nome: 'Style', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'E-bike urbana 750W (pico 1000W), bateria 48V 15,6Ah removível, freio a disco hidráulico â€” assinada por Diego Ribas.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/style-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/style', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 25, nome: 'Liberty', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Motor 500W (pico 800W), bateria 48V 13Ah removível e modos por aceleração ou pedal assistido PAS 5 níveis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/liberty_product_web.webp', link: 'https://motochefebrasil.com.br/modelos/liberty', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 26, nome: 'SPACE', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '750 W', autonomia: '35 km', descricao: 'Motor 750W, bateria 48V 12Ah removível, 7 marchas. Aceleração no punho ou pedal assistido PAS 5 níveis.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/space_ia-1.webp', link: 'https://motochefebrasil.com.br/modelos/space', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 27, nome: 'Retrô', categoria: 'E-Bikes', velocidade: '32 km/h', potencia: '500 W', autonomia: '35 km', descricao: 'Visual de bike urbana com praticidade de e-bike moderna. Motor 500W, 32 km/h e 35 km de autonomia.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/retro_hero-1.webp', link: 'https://motochefebrasil.com.br/modelos/retro', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 28, nome: 'Joy Tri', categoria: 'Triciclos', velocidade: '30 km/h', potencia: '600 W', autonomia: '40 km', descricao: 'Chassi de três rodas com estabilidade e confiança. Ideal para quem quer segurança sem abrir mão da liberdade.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/JOY-TRI-1-1.webp', link: 'https://motochefebrasil.com.br/modelos/joy-tri', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 29, nome: 'BIG TRI', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Liberdade com segurança. Triciclo 1000W com design retrô, conforto e tecnologia moderna.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/big_tri.webp', link: 'https://motochefebrasil.com.br/modelos/big-tri/', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 30, nome: 'Mia Tri', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '800 W', autonomia: '40 km', descricao: 'Triciclo elétrico 800W para quem quer segurança, praticidade e estilo.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/10/MIA-TRI-01-1.webp', link: 'https://motochefebrasil.com.br/modelos/mia-tri', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 31, nome: 'X15', categoria: 'Triciclos', velocidade: '50 km/h', potencia: '3000 W', autonomia: '40 km', descricao: 'Triciclo elétrico potente com motor 3000W para aceleração firme e desempenho consistente.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/x15.webp', link: 'https://motochefebrasil.com.br/modelos/x15', preco: '', destaque: 'Não', status: 'Ativo' },
+    { id: 32, nome: 'VED', categoria: 'Triciclos', velocidade: '32 km/h', potencia: '1000 W', autonomia: '40 km', descricao: 'Mobilidade elétrica acessível, segura e confortável. Motor 1000W e autonomia de até 40 km.', imagem: 'https://motochefebrasil.com.br/wp-content/uploads/2025/11/ved_1-1.webp', link: 'https://motochefebrasil.com.br/modelos/ved', preco: '', destaque: 'Não', status: 'Ativo' }
 ];
 
 let catalogData = [];
@@ -706,7 +744,7 @@ function renderCatalogPremium() {
     if (filtered.length === 0) {
         grid.innerHTML = `<div class="col-span-full text-center py-16">
             <i class="fa-solid fa-motorcycle text-5xl text-brand-main/20 mb-4 block"></i>
-            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veÃ­culo encontrado</p>
+            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p>
             <p class="text-xs text-brand-gray mt-2">Tente outro termo de busca ou filtro</p>
         </div>`;
         return;
@@ -728,9 +766,9 @@ window.openProductModal = function(id) {
     imgEl.alt = p.nome;
     imgEl.onclick = function(e) {
         e.stopPropagation();
-        window.openLightbox(imgEl.src, imgEl.alt);
+        window.openLightbox(document.getElementById('produto-img').src, document.getElementById('produto-img').alt);
     };
-    
+
     // Miniaturas
     const thumbsContainer = document.getElementById('produto-thumbs');
     const thumbs = [p.imagem, p.imagem2, p.imagem3].filter(src => src && src.trim() !== '');
@@ -738,7 +776,11 @@ window.openProductModal = function(id) {
         if (thumbs.length > 1) {
             thumbsContainer.classList.remove('hidden');
             thumbsContainer.innerHTML = thumbs.map((src, idx) => `
-                <button onclick="document.getElementById('produto-img').src='${src}';" class="flex-shrink-0 w-16 h-16 rounded-xl border-2 ${idx === 0 ? 'border-brand-main' : 'border-transparent'} overflow-hidden hover:border-brand-main transition-colors">
+                <button onclick="
+                    var im = document.getElementById('produto-img');
+                    im.src='${src}';
+                    document.querySelectorAll('#produto-thumbs button').forEach(function(b,i){ b.style.borderColor = i===${idx} ? 'var(--color-brand-main, #e11d48)' : 'transparent'; });
+                " class="flex-shrink-0 w-16 h-16 rounded-xl border-2 ${idx === 0 ? 'border-brand-main' : 'border-transparent'} overflow-hidden hover:border-brand-main transition-colors" style="border-color:${idx === 0 ? 'var(--color-brand-main,#e11d48)' : 'transparent'}">
                     <img src="${src}" alt="" class="w-full h-full object-cover">
                 </button>
             `).join('');
@@ -765,7 +807,7 @@ window.openProductModal = function(id) {
         const precoEl = document.getElementById('produto-preco');
         let html = '';
         if (isOfertaPopup) {
-            // Ofertas sempre mostram preÃ§o riscado + preÃ§o atual
+            // Ofertas sempre mostram preço riscado + preço atual
             const precoDe = (p.preco && String(p.preco).trim()) ? p.preco : p.precoPor;
             html += `<span class="modal-preco-de">R$ ${precoDe}</span>`;
             html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
@@ -794,7 +836,7 @@ window.openProductModal = function(id) {
     }
     
     const precoWa = p.precoPor ? ` â€” R$ ${p.precoPor}` : '';
-    const waText = encodeURIComponent(`OlÃ¡! Vi o catÃ¡logo e tenho interesse no modelo ${p.nome}${precoWa}. Pode me passar mais informaÃ§Ãµes?`);
+    const waText = encodeURIComponent(`Olá! Vi o catálogo e tenho interesse no modelo ${p.nome}${precoWa}. Pode me passar mais informações?`);
     document.getElementById('produto-link-whatsapp').href = 'https://wa.me/5521977342290?text=' + waText;
     
     const modal = document.getElementById('modal-produto');
@@ -810,7 +852,7 @@ function cardV2HTML(p, idx, forceDestaque = false, isOferta = false, hidePreco =
     const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
     const badge       = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
 
-    // PreÃ§o no card: ofertas sempre mostram De/Por (forÃ§ando desconto visual)
+    // Preço no card: ofertas sempre mostram De/Por (forçando desconto visual)
     let precoHTML = '';
     if (!hidePreco && temPreco) {
         if (isOferta) {
@@ -829,7 +871,7 @@ function cardV2HTML(p, idx, forceDestaque = false, isOferta = false, hidePreco =
 
     return `
     <div onclick="openProductModal(${p.id})" class="card-v2 ${isOferta ? 'card-v2-oferta' : ''}" style="animation-delay:${idx*60}ms">
-        ${isOferta ? `<div class="card-v2-promo-strip">PromoÃ§Ã£o</div>` : ''}
+        ${isOferta ? `<div class="card-v2-promo-strip">Promoção</div>` : ''}
         <div class="card-v2-img-wrap">
             <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
                  onerror="this.src='assets/logo-desktop-motochefe-campo-grande-veiculos-eletricos.webp'">
@@ -864,7 +906,7 @@ function renderOfertasSemana() {
     const wrap    = document.getElementById('catalog-grid-ofertas');
     if (!wrap || !section) return;
 
-    // Se hÃ¡ busca ativa, oculta a seÃ§Ã£o de ofertas
+    // Se há busca ativa, oculta a seção de ofertas
     if (catalogSearchQuery && catalogSearchQuery.trim().length > 0) {
         section.style.display = 'none';
         return;
@@ -874,7 +916,7 @@ function renderOfertasSemana() {
     const ativos  = data.filter(p => (p.status || '').toLowerCase() !== 'inativo');
     const ofertas = ativos.filter(p => String(p.destaque).toLowerCase() === 'oferta da semana');
 
-    // Sem nenhuma oferta da semana â†’ oculta a seÃ§Ã£o inteira
+    // Sem nenhuma oferta da semana â†’ oculta a seção inteira
     if (ofertas.length === 0) {
         section.style.display = 'none';
         return;
@@ -894,7 +936,7 @@ function renderDestaqueGrid() {
     const wrap    = document.getElementById('catalog-grid-destaque');
     if (!wrap || !section) return;
 
-    // Se hÃ¡ busca ativa, oculta a seÃ§Ã£o de destaques para focar nos resultados filtrados
+    // Se há busca ativa, oculta a seção de destaques para focar nos resultados filtrados
     if (catalogSearchQuery && catalogSearchQuery.trim().length > 0) {
         section.style.display = 'none';
         return;
@@ -904,7 +946,7 @@ function renderDestaqueGrid() {
     const ativos  = data.filter(p => (p.status || '').toLowerCase() !== 'inativo');
     const destaques = ativos.filter(p => String(p.destaque).toLowerCase() === 'sim');
 
-    // Sem nenhum destaque na col P â†’ oculta a seÃ§Ã£o inteira
+    // Sem nenhum destaque na col P â†’ oculta a seção inteira
     if (destaques.length === 0) {
         section.style.display = 'none';
         return;
@@ -941,7 +983,7 @@ function openCategoriaModal(filterValue) {
     if (filtered.length === 0) {
         grid.innerHTML = `<div class="text-center py-12">
             <i class="fa-solid fa-motorcycle text-5xl text-brand-main/20 mb-4 block"></i>
-            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veÃ­culo encontrado</p>
+            <p class="text-sm font-bold text-brand-dark dark:text-white">Nenhum veículo encontrado</p>
         </div>`;
     } else {
         grid.innerHTML = filtered.map((p, idx) => {
@@ -962,7 +1004,7 @@ function openCategoriaModal(filterValue) {
 
             return `
             <div onclick="openProductModal(${p.id})" class="group relative bg-white dark:bg-[#18181b] rounded-[1.5rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 cursor-pointer" style="animation-delay:${idx*50}ms">
-                ${isOferta ? `<div class="absolute top-3 right-[-26px] w-[100px] bg-gradient-to-r from-red-500 to-red-600 text-white text-[8px] font-black uppercase tracking-wider py-1 text-center rotate-45 z-10 shadow-md">PromoÃ§Ã£o</div>` : ''}
+                ${isOferta ? `<div class="absolute top-3 right-[-26px] w-[100px] bg-gradient-to-r from-red-500 to-red-600 text-white text-[8px] font-black uppercase tracking-wider py-1 text-center rotate-45 z-10 shadow-md">Promoção</div>` : ''}
                 <div class="relative h-48 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
                     <img src="${p.imagem}" alt="${p.nome}" loading="lazy" onerror="this.src='assets/logo-desktop-motochefe-campo-grande-veiculos-eletricos.webp'" class="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105">
                     ${String(p.destaque).toLowerCase() === 'sim' ? `<div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-lg"><i class="fa-solid fa-star text-[10px]"></i></div>` : ''}
@@ -1043,13 +1085,14 @@ async function initCatalog() {
 // INICIALIZAÃ‡ÃƒO
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Inicializar alternÃ¢ncia de tema (Prioridade)
+    // 1. Inicializar alternância de tema (Prioridade)
     initThemeToggle();
+    initMusicToggle();
     
-    // 2. Atualizar saudaÃ§Ã£o
+    // 2. Atualizar saudação
     updateGreeting();
     
-    // 3. Inicializar animaÃ§Ãµes de scroll
+    // 3. Inicializar animações de scroll
     initScrollReveal();
     
     // Outros componentes
@@ -1064,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Console log
     console.log(`%c${CONFIG.projectName}`, 'color: #C9A227; font-size: 20px; font-weight: bold;');
     console.log('%cMotochefe Campo Grande', 'color: #C9A227; font-size: 14px;');
-    console.log('%cDesenvolvido por AG5 AgÃªncia', 'color: #8B5E1E; font-size: 12px;');
+    console.log('%cDesenvolvido por AG5 Agência', 'color: #8B5E1E; font-size: 12px;');
 });
 
 // ============================================
@@ -1105,6 +1148,8 @@ window.openCategoriaModal = openCategoriaModal;
     window.openLightbox = function(src, alt) {
         const { lb, img, cap } = getEls();
         if (!lb) return;
+        // Move lightbox para o final do body para escapar de qualquer stacking context
+        document.body.appendChild(lb);
         scale = 1;
         img.style.transition = 'none';
         img.style.transform = 'scale(1)';
@@ -1130,7 +1175,7 @@ window.openCategoriaModal = openCategoriaModal;
             if (e.target === lb || e.target === stage) window.closeLightbox();
         });
 
-        // BotÃµes zoom
+        // Botões zoom
         document.getElementById('lightbox-close').addEventListener('click', window.closeLightbox);
         document.getElementById('lb-zoom-in').addEventListener('click', function(e) { e.stopPropagation(); applyScale(scale + STEP); });
         document.getElementById('lb-zoom-out').addEventListener('click', function(e) { e.stopPropagation(); applyScale(scale - STEP); });
