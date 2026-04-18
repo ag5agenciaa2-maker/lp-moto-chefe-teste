@@ -538,52 +538,63 @@ const SHEETS_ID = '10XX9vD_MP7vQMhFj9pcRPBkmQCsnY1xCWDKLUwxfd6Q';
 const GOOGLE_SHEETS_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%A6%20Cat%C3%A1logo`;
 
 async function loadSheetTab(sheetName) {
-    // Timestamp na URL para evitar cache do browser e do Google
     const ts = Date.now();
-    const url = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_=${ts}`;
-    try {
-        const res = await fetch(url, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
-        if (!res.ok) return null;
-        const text = await res.text();
-        const lines = text.trim().split(/\r?\n/);
-        if (!lines.length) return null;
+    const cleanName = sheetName.replace(/[\uD83D\uDD14\uD83D\uDD52\uD83D\uDCE2\uD83D\uDCE3\u231B]/g, '').trim();
+    
+    // Lista de tentativas: nome original e nome sem emoji
+    const attempts = [sheetName];
+    if (cleanName !== sheetName) attempts.push(cleanName);
+    if (sheetName.includes('Alertas')) attempts.push('Alertas');
+    if (sheetName.includes('Horarios')) attempts.push('Horarios');
+    if (sheetName.includes('Promocoes')) attempts.push('Promocoes');
 
-        // Detecta se é formato HORIZONTAL (primeira linha tem os cabeçalhos)
-        // ou VERTICAL (coluna A = campo, coluna B = valor)
-        const firstRow = parseCSVLine(lines[0]).map(c => c.trim().toLowerCase());
-        const isHorizontal = firstRow.length > 1 && firstRow[0] !== 'campo' && !firstRow[0].includes('🔔') && !firstRow[0].includes('🕐') && !firstRow[0].includes('📢');
+    for (const name of attempts) {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&_=${ts}`;
+        try {
+            const res = await fetch(url, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+            if (!res.ok) continue;
+            
+            const text = await res.text();
+            if (!text || text.includes('<!DOCTYPE html>')) continue; // Se retornar HTML, a aba não existe ou está inacessível
 
-        const result = {};
+            const lines = text.trim().split(/\r?\n/);
+            if (!lines.length) continue;
 
-        if (isHorizontal) {
-            // Formato: linha 0 = headers, linha 1 = valores
-            const headers = parseCSVLine(lines[0]).map(c => c.trim());
-            const values  = lines[1] ? parseCSVLine(lines[1]).map(c => c.trim()) : [];
-            headers.forEach((h, i) => { if (h) result[h] = values[i] || ''; });
-        } else {
-            // Formato vertical: coluna A = campo, coluna B = valor
-            // Pula linhas de título/instrução até achar linha com "CAMPO" ou dado real
-            let dataStart = 0;
-            for (let i = 0; i < lines.length; i++) {
-                const row = parseCSVLine(lines[i]);
-                const k = (row[0] || '').trim().toLowerCase();
-                if (k === 'campo') { dataStart = i + 1; break; }
-                if (k && !k.includes('🔔') && !k.includes('🕐') && !k.includes('📢') && !k.includes('instruç')) {
-                    dataStart = i; break;
+            const firstRow = parseCSVLine(lines[0]).map(c => c.trim().toLowerCase());
+            const isHorizontal = firstRow.length > 1 && firstRow[0] !== 'campo';
+
+            const result = {};
+            if (isHorizontal) {
+                const headers = parseCSVLine(lines[0]).map(c => c.trim());
+                const values  = lines[1] ? parseCSVLine(lines[1]).map(c => c.trim()) : [];
+                headers.forEach((h, i) => { if (h) result[h] = values[i] || ''; });
+            } else {
+                let dataStart = 0;
+                for (let i = 0; i < lines.length; i++) {
+                    const row = parseCSVLine(lines[i]);
+                    const k = (row[0] || '').trim().toLowerCase();
+                    if (k === 'campo') { dataStart = i + 1; break; }
+                    if (k && !k.includes('🔔') && !k.includes('🕐') && !k.includes('📢')) {
+                        dataStart = i; break;
+                    }
+                }
+                for (let i = dataStart; i < lines.length; i++) {
+                    const cols = parseCSVLine(lines[i]);
+                    const key = (cols[0] || '').trim();
+                    const val = (cols[1] || '').trim();
+                    if (key) result[key] = val;
                 }
             }
-            for (let i = dataStart; i < lines.length; i++) {
-                const cols = parseCSVLine(lines[i]);
-                const key = (cols[0] || '').trim();
-                const val = (cols[1] || '').trim();
-                if (key && key.toLowerCase() !== 'tipo') result[key] = val;
+            if (Object.keys(result).length > 0) {
+                console.log(`✅ Aba [${name}] carregada com sucesso.`);
+                return result;
             }
+        } catch (e) {
+            console.warn(`Tentativa falhou para aba [${name}]:`, e);
         }
-        return result;
-    } catch (e) {
-        console.warn('loadSheetTab falhou para', sheetName, e);
-        return null;
     }
+    console.error(`❌ Não foi possível encontrar a aba [${sheetName}] ou ela está inacessível.`);
+    return null;
 }
 
 function parseCSVLine(line) {
@@ -1521,10 +1532,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initCatalog();
     initImpactoAmbiental();
 
-    // Módulos Google Sheets dinâmicos
-    await initAlertas();
-    await initHorariosAoVivo();
-    await initPromocoes();
+    // Módulos Google Sheets dinâmicos (carregamento em paralelo para evitar bloqueio)
+    initAlertas().catch(e => console.error('Erro ao iniciar Alertas:', e));
+    initHorariosAoVivo().catch(e => console.error('Erro ao iniciar Horários:', e));
+    initPromocoes().catch(e => console.error('Erro ao iniciar Promoções:', e));
 
     // Console log
     console.log(`%c${CONFIG.projectName}`, 'color: #C9A227; font-size: 20px; font-weight: bold;');
