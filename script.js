@@ -534,7 +534,57 @@ function initWhatsappBubble() {
 // CATÁLOGO PREMIUM - GOOGLE SHEETS + FALLBACK
 // ============================================
 
-const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/1EvK5ss-XaHY5I3fxn6YT3lG3Q9cX987SJnXs_Tic60Y/gviz/tq?tqx=out:csv';
+const SHEETS_ID = '10XX9vD_MP7vQMhFj9pcRPBkmQCsnY1xCWDKLUwxfd6Q';
+const GOOGLE_SHEETS_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=%F0%9F%93%A6%20Cat%C3%A1logo`;
+
+async function loadSheetTab(sheetName) {
+    // Timestamp na URL para evitar cache do browser e do Google
+    const ts = Date.now();
+    const url = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&_=${ts}`;
+    try {
+        const res = await fetch(url, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+        if (!res.ok) return null;
+        const text = await res.text();
+        const lines = text.trim().split(/\r?\n/);
+        if (!lines.length) return null;
+
+        // Detecta se é formato HORIZONTAL (primeira linha tem os cabeçalhos)
+        // ou VERTICAL (coluna A = campo, coluna B = valor)
+        const firstRow = parseCSVLine(lines[0]).map(c => c.trim().toLowerCase());
+        const isHorizontal = firstRow.length > 1 && firstRow[0] !== 'campo' && !firstRow[0].includes('🔔') && !firstRow[0].includes('🕐') && !firstRow[0].includes('📢');
+
+        const result = {};
+
+        if (isHorizontal) {
+            // Formato: linha 0 = headers, linha 1 = valores
+            const headers = parseCSVLine(lines[0]).map(c => c.trim());
+            const values  = lines[1] ? parseCSVLine(lines[1]).map(c => c.trim()) : [];
+            headers.forEach((h, i) => { if (h) result[h] = values[i] || ''; });
+        } else {
+            // Formato vertical: coluna A = campo, coluna B = valor
+            // Pula linhas de título/instrução até achar linha com "CAMPO" ou dado real
+            let dataStart = 0;
+            for (let i = 0; i < lines.length; i++) {
+                const row = parseCSVLine(lines[i]);
+                const k = (row[0] || '').trim().toLowerCase();
+                if (k === 'campo') { dataStart = i + 1; break; }
+                if (k && !k.includes('🔔') && !k.includes('🕐') && !k.includes('📢') && !k.includes('instruç')) {
+                    dataStart = i; break;
+                }
+            }
+            for (let i = dataStart; i < lines.length; i++) {
+                const cols = parseCSVLine(lines[i]);
+                const key = (cols[0] || '').trim();
+                const val = (cols[1] || '').trim();
+                if (key && key.toLowerCase() !== 'tipo') result[key] = val;
+            }
+        }
+        return result;
+    } catch (e) {
+        console.warn('loadSheetTab falhou para', sheetName, e);
+        return null;
+    }
+}
 
 function parseCSVLine(line) {
     const result = [];
@@ -633,8 +683,8 @@ function normalizeProductData(_raw, rawArray) {
         imagem2:    col(8),
         imagem3:    col(9),
         link:       col(10),
-        preco:      temDesconto ? precoDe  : '',   // só mostra riscado se houver desconto real
-        precoPor:   precoPor || precoDe,            // preço final sempre visível
+        preco:      precoDe,
+        precoPor:   precoPor || precoDe,
         parcelado:  col(13),
         badge:      col(14).replace(/Sem CNH\s*\|?\s*/gi, '').trim(),
         destaque:   col(15) || 'Não',
@@ -803,7 +853,7 @@ window.openProductModal = function(id) {
     document.getElementById('produto-link-site').href = p.link || '#';
     
     const badgeDestaque = document.getElementById('produto-badge-destaque');
-    const isDestaque = String(p.destaque).toLowerCase() === 'sim' || String(p.destaque).toLowerCase() === 'yes' || String(p.destaque).includes('🔥');
+    const isDestaque = String(p.destaque).toLowerCase().includes('mais vendidos') || String(p.destaque).toLowerCase() === 'sim' || String(p.destaque).toLowerCase() === 'yes' || String(p.destaque).includes('🔥');
     badgeDestaque.classList.toggle('hidden', !isDestaque);
     
     const isOfertaPopup = String(p.destaque).toLowerCase() === 'oferta da semana';
@@ -811,18 +861,11 @@ window.openProductModal = function(id) {
     if ((p.preco && String(p.preco).trim()) || (p.precoPor && String(p.precoPor).trim())) {
         const precoEl = document.getElementById('produto-preco');
         let html = '';
-        if (isOfertaPopup) {
-            // Ofertas sempre mostram preço riscado + preço atual
-            const precoDe = (p.preco && String(p.preco).trim()) ? p.preco : p.precoPor;
-            html += `<span class="modal-preco-de">R$ ${precoDe}</span>`;
+        if (p.preco && String(p.preco).trim()) {
+            html += `<span class="modal-preco-de">R$ ${p.preco}</span>`;
+        }
+        if (p.precoPor && String(p.precoPor).trim()) {
             html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
-        } else {
-            if (p.preco && String(p.preco).trim()) {
-                html += `<span class="modal-preco-de">R$ ${p.preco}</span>`;
-            }
-            if (p.precoPor && String(p.precoPor).trim()) {
-                html += `<span class="modal-preco-por">R$ ${p.precoPor}</span>`;
-            }
         }
         precoEl.innerHTML = html;
         precoBox.classList.remove('hidden');
@@ -852,26 +895,19 @@ window.openProductModal = function(id) {
 };
 
 function cardV2HTML(p, idx, forceDestaque = false, isOferta = false, hidePreco = false) {
-    const isDestaque  = forceDestaque || String(p.destaque).toLowerCase() === 'sim';
+    const isDestaque  = forceDestaque || String(p.destaque).toLowerCase().includes('mais vendidos') || String(p.destaque).toLowerCase() === 'sim';
     const temPreco    = p.precoPor && String(p.precoPor).trim();
     const temDesconto = p.preco && String(p.preco).trim() && p.preco !== p.precoPor;
     const badge       = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
 
     // Preço no card: ofertas sempre mostram De/Por (forçando desconto visual)
     let precoHTML = '';
-    if (!hidePreco && temPreco) {
-        if (isOferta) {
-            const precoDe = p.preco && String(p.preco).trim() ? p.preco : p.precoPor;
-            precoHTML = `<div class="card-v2-preco-wrap">
-                <span class="card-v2-de">R$ ${precoDe}</span>
-                <span class="card-v2-por">R$ ${p.precoPor}</span>
-            </div>`;
-        } else {
-            precoHTML = `<div class="card-v2-preco-wrap">
-                ${temDesconto ? `<span class="card-v2-de">R$ ${p.preco}</span>` : ''}
-                <span class="card-v2-por">R$ ${p.precoPor}</span>
-            </div>`;
-        }
+    if (!hidePreco && p.precoPor && String(p.precoPor).trim()) {
+        const temPrecoDe = p.preco && String(p.preco).trim();
+        precoHTML = `<div class="card-v2-preco-wrap">
+            ${temPrecoDe ? `<span class="card-v2-de">R$ ${p.preco}</span>` : ''}
+            <span class="card-v2-por">R$ ${p.precoPor}</span>
+        </div>`;
     }
 
     return `
@@ -949,7 +985,7 @@ function renderDestaqueGrid() {
 
     const data    = catalogData.length > 0 ? catalogData : CATALOG_FALLBACK_DATA;
     const ativos  = data.filter(p => (p.status || '').toLowerCase() !== 'inativo');
-    const destaques = ativos.filter(p => String(p.destaque).toLowerCase() === 'sim');
+    const destaques = ativos.filter(p => String(p.destaque).toLowerCase().includes('mais vendidos'));
 
     // Sem nenhum destaque na col P â†’ oculta a seção inteira
     if (destaques.length === 0) {
@@ -998,13 +1034,12 @@ function openCategoriaModal(filterValue) {
             const badge = (p.badge || '').replace('Sem CNH', '').replace('Sem CNH | ', '').trim();
 
             let precoHTML = '';
-            if (temPreco) {
-                if (isOferta) {
-                    const precoDe = (p.preco && String(p.preco).trim()) ? p.preco : p.precoPor;
-                    precoHTML = `<div class="flex items-baseline gap-2 mt-1"><span class="text-[11px] font-bold text-white/70 line-through decoration-red-500 decoration-2">R$ ${precoDe}</span><span class="text-base font-extrabold text-brand-main" style="font-family:'Barlow Condensed',sans-serif">R$ ${p.precoPor}</span></div>`;
-                } else {
-                    precoHTML = `<div class="flex items-baseline gap-2 mt-1">${temDesconto ? `<span class="text-[11px] font-bold text-white/70 line-through decoration-red-500 decoration-2">R$ ${p.preco}</span>` : ''}<span class="text-base font-extrabold text-brand-main" style="font-family:'Barlow Condensed',sans-serif">R$ ${p.precoPor}</span></div>`;
-                }
+            if (p.precoPor && String(p.precoPor).trim()) {
+                const temPrecoDe = p.preco && String(p.preco).trim();
+                precoHTML = `<div class="flex items-baseline gap-2 mt-1">
+                    ${temPrecoDe ? `<span class="text-[11px] font-bold text-white/70 line-through decoration-red-500 decoration-2">R$ ${p.preco}</span>` : ''}
+                    <span class="text-base font-extrabold text-brand-main" style="font-family:'Barlow Condensed',sans-serif">R$ ${p.precoPor}</span>
+                </div>`;
             }
 
             return `
@@ -1012,7 +1047,7 @@ function openCategoriaModal(filterValue) {
                 ${isOferta ? `<div class="absolute top-3 right-[-26px] w-[100px] bg-gradient-to-r from-red-500 to-red-600 text-white text-[8px] font-black uppercase tracking-wider py-1 text-center rotate-45 z-10 shadow-md">Promoção</div>` : ''}
                 <div class="relative h-48 overflow-hidden bg-zinc-100 dark:bg-zinc-900">
                     <img src="${p.imagem}" alt="${p.nome}" loading="lazy" onerror="this.src='assets/logo-desktop-motochefe-campo-grande-veiculos-eletricos.webp'" class="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105">
-                    ${String(p.destaque).toLowerCase() === 'sim' ? `<div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-lg"><i class="fa-solid fa-star text-[10px]"></i></div>` : ''}
+                    ${(String(p.destaque).toLowerCase().includes('mais vendidos') || String(p.destaque).toLowerCase() === 'sim') ? `<div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-lg"><i class="fa-solid fa-star text-[10px]"></i></div>` : ''}
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 pt-8">
                         <h3 class="text-white font-extrabold text-lg uppercase tracking-tight leading-none" style="font-family:'Barlow Condensed',sans-serif;text-shadow:0 1px 3px rgba(0,0,0,.5)">${p.nome}</h3>
                         ${precoHTML}
@@ -1114,19 +1149,368 @@ async function initCatalog() {
 }
 
 // ============================================
+// CONTADOR DE IMPACTO AMBIENTAL
+// ============================================
+function initImpactoAmbiental() {
+    const elCo2    = document.getElementById('counter-co2');
+    const elLitros = document.getElementById('counter-litros');
+    const section  = document.getElementById('impacto-ambiental');
+    if (!elCo2 || !elLitros || !section) return;
+
+    // Premissa conservadora: 30 veículos × 30 km/dia × 0,04 kg CO₂/km evitado
+    // Gasolina: 0,04 kg CO₂/km ÷ 2,3 kg CO₂/litro ≈ 0,017 L/km × 30 km × 30 veíc.
+    const INICIO         = new Date('2025-01-01');
+    const dias           = Math.max(0, Math.floor((Date.now() - INICIO) / 86400000));
+    const CO2_POR_DIA    = 36;    // kg  (30 veíc × 30 km × 0,04 kg/km)
+    const LITROS_POR_DIA = 15.6;  // L   (30 veíc × 30 km × 0,017 L/km)
+
+    const totalCo2    = Math.round(dias * CO2_POR_DIA);
+    const totalLitros = Math.round(dias * LITROS_POR_DIA);
+
+    function formatNum(n) {
+        return n.toLocaleString('pt-BR');
+    }
+
+    function animateCounter(el, target, duration) {
+        const start = performance.now();
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = formatNum(Math.round(eased * target));
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
+    let animated = false;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !animated) {
+            animated = true;
+            animateCounter(elCo2,    totalCo2,    2000);
+            animateCounter(elLitros, totalLitros, 2000);
+        }
+    }, { threshold: 0.4 });
+    observer.observe(section);
+}
+
+// ============================================
+// MÓDULO: ALERTAS (Google Sheets → aba 🔔 Alertas)
+// ============================================
+async function initAlertas() {
+    const data = await loadSheetTab('🔔 Alertas');
+    if (!data) { console.log('🔔 Alertas: sem dados na planilha'); return; }
+    
+    // Função auxiliar para buscar chaves sem se preocupar com maiúsculas/acentos
+    const get = (key) => {
+        const k = key.toLowerCase();
+        const found = Object.keys(data).find(dk => dk.toLowerCase().includes(k));
+        return found ? (data[found] || '').trim() : '';
+    };
+
+    const ativo = get('ativo').toLowerCase() === 'sim';
+    if (!ativo) { console.log('🔔 Alertas: inativo na planilha'); return; }
+
+    const tipo     = get('tipo').toLowerCase() || 'info';
+    const mensagem = get('mensagem');
+    const exibirDe  = get('exibir de');
+    const exibirAte = get('exibir ate');
+
+    if (!mensagem) { console.log('🔔 Alertas: mensagem vazia'); return; }
+
+    function parseDMY(str) {
+        if (!str || !str.includes('/')) return null;
+        const p = str.trim().split('/');
+        return new Date(+p[2], +p[1] - 1, +p[0]);
+    }
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const de  = parseDMY(exibirDe);
+    const ate = parseDMY(exibirAte);
+    
+    if (de  && now < de)  { console.log('🔔 Alertas: fora do período (antes)'); return; }
+    if (ate && now > ate) { console.log('🔔 Alertas: fora do período (depois)'); return; }
+
+    const cores = {
+        info:    { bg: '#1565C0', icon: 'fa-circle-info' },
+        aviso:   { bg: '#F57F17', icon: 'fa-triangle-exclamation' },
+        urgente: { bg: '#C62828', icon: 'fa-circle-exclamation' },
+    };
+    const { bg, icon } = cores[tipo] || cores.info;
+
+    // Remove barra anterior se existir
+    const old = document.getElementById('alerta-bar');
+    if (old) { old.remove(); document.body.style.paddingTop = ''; }
+
+    const bar = document.createElement('div');
+    bar.id = 'alerta-bar';
+    bar.style.cssText = `position:fixed;top:0;left:0;right:0;z-index:99999;background:${bg};color:#fff;
+        font-size:11px;font-weight:700;letter-spacing:.05em;text-align:center;
+        padding:12px 48px 12px 16px;display:flex;align-items:center;justify-content:center;gap:8px;
+        box-shadow:0 4px 15px rgba(0,0,0,.3);animation:alertaSlideDown .4s cubic-bezier(.23,1,.32,1);line-height:1.4;`;
+    
+    bar.innerHTML = `
+        <i class="fa-solid ${icon}" style="font-size:14px;flex-shrink:0;"></i>
+        <span style="max-width:800px;">${mensagem}</span>
+        <button onclick="this.closest('#alerta-bar').remove();document.body.style.paddingTop=''"
+            style="position:absolute;right:12px;top:50%;transform:translateY(-50%);
+                   background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;
+                   border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;">
+            <i class="fa-solid fa-xmark" style="font-size:14px;"></i>
+        </button>`;
+    
+    document.body.prepend(bar);
+    document.body.style.paddingTop = bar.offsetHeight + 'px';
+    console.log('✅ Alerta ativado:', mensagem);
+}
+
+// ============================================
+// MÓDULO: HORÁRIOS AO VIVO (Google Sheets → aba 🕐 Horarios)
+// ============================================
+async function initHorariosAoVivo() {
+    const data = await loadSheetTab('🕐 Horarios');
+    if (!data) { console.log('Horários: sem dados'); return; }
+    console.log('Horários data:', data);
+
+    // --- ATUALIZAÇÃO DOS TEXTOS NA SEÇÃO ONDE ESTAMOS ---
+    const hSegSex = document.getElementById('horario-seg-sex');
+    const hSabado = document.getElementById('horario-sabado');
+    const hDomingo = document.getElementById('horario-domingo');
+    const liDomingo = document.getElementById('li-horario-domingo');
+
+    if (hSegSex && data['Seg-Sex Abertura'] && data['Seg-Sex Fechamento']) {
+        hSegSex.textContent = `${data['Seg-Sex Abertura']} - ${data['Seg-Sex Fechamento']}`;
+    }
+    if (hSabado && data['Sabado Abertura'] && data['Sabado Fechamento']) {
+        const val = data['Sabado Abertura'].toLowerCase() === 'fechado' ? 'Fechado' : `${data['Sabado Abertura']} - ${data['Sabado Fechamento']}`;
+        hSabado.textContent = val;
+    }
+    if (hDomingo && liDomingo && data['Domingo']) {
+        const domVal = data['Domingo'].trim();
+        if (domVal.toLowerCase() !== 'fechado') {
+            hDomingo.textContent = domVal.includes('-') ? domVal.replace('-', ' - ') : domVal;
+            liDomingo.classList.remove('hidden');
+            liDomingo.classList.add('flex');
+        } else {
+            liDomingo.classList.add('hidden');
+            liDomingo.classList.remove('flex');
+        }
+    }
+    // --------------------------------------------------
+
+    if ((data['Exibir Status ao Vivo'] || '').toLowerCase().trim() !== 'sim') return;
+
+    function toMin(hhmm) {
+        if (!hhmm || hhmm.trim().toLowerCase() === 'fechado') return null;
+        const parts = hhmm.trim().split(':').map(Number);
+        return parts[0] * 60 + (parts[1] || 0);
+    }
+
+    const now       = new Date();
+    const dia       = now.getDay();   // 0=dom 1=seg … 6=sab
+    const minAtual  = now.getHours() * 60 + now.getMinutes();
+
+    // Feriado: só considera feriado se o campo tiver formato dd/mm/aaaa
+    const feriadoStr = (data['Feriado Proximo'] || '').trim();
+    let isFeriado = false;
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(feriadoStr)) {
+        const [fd, fm, fy] = feriadoStr.split('/').map(Number);
+        isFeriado = now.getDate() === fd && (now.getMonth() + 1) === fm && now.getFullYear() === fy;
+    }
+
+    let aberto = false;
+    let proximaAbertura = '';
+    const msgFeriado = data['Msg Feriado'] || 'Fechado no feriado';
+    const abreSeg = data['Seg-Sex Abertura'] || '08:00';
+    const abreSab = data['Sabado Abertura']  || '09:00';
+
+    if (isFeriado) {
+        aberto = false;
+        proximaAbertura = msgFeriado;
+    } else if (dia >= 1 && dia <= 5) {
+        // Segunda a Sexta
+        const abre  = toMin(data['Seg-Sex Abertura']);
+        const fecha = toMin(data['Seg-Sex Fechamento']);
+        aberto = abre !== null && fecha !== null && minAtual >= abre && minAtual < fecha;
+        if (!aberto) {
+            if (minAtual < abre) {
+                proximaAbertura = `Abre hoje às ${data['Seg-Sex Abertura']}`;
+            } else if (dia < 5) {
+                proximaAbertura = `Abre amanhã às ${abreSeg}`;
+            } else {
+                // Sexta após fechar → verifica se tem sábado
+                const sabAbre = toMin(data['Sabado Abertura']);
+                proximaAbertura = sabAbre !== null
+                    ? `Abre Sábado às ${abreSab}`
+                    : `Abre Segunda às ${abreSeg}`;
+            }
+        }
+    } else if (dia === 6) {
+        // Sábado
+        const abre  = toMin(data['Sabado Abertura']);
+        const fecha = toMin(data['Sabado Fechamento']);
+        if (abre === null) {
+            aberto = false;
+            proximaAbertura = `Abre Segunda às ${abreSeg}`;
+        } else {
+            aberto = fecha !== null && minAtual >= abre && minAtual < fecha;
+            if (!aberto) {
+                proximaAbertura = minAtual < abre
+                    ? `Abre hoje às ${abreSab}`
+                    : `Abre Segunda às ${abreSeg}`;
+            }
+        }
+    } else {
+        // Domingo
+        const domVal = (data['Domingo'] || 'Fechado').trim().toLowerCase();
+        if (domVal !== 'fechado' && domVal.includes('-')) {
+            const [a, f] = domVal.split('-');
+            const abre  = toMin(a);
+            const fecha = toMin(f);
+            aberto = abre !== null && fecha !== null && minAtual >= abre && minAtual < fecha;
+        }
+        if (!aberto) proximaAbertura = `Abre Segunda às ${abreSeg}`;
+    }
+
+    // Remove badge anterior se existir
+    const oldBadge = document.getElementById('status-badge');
+    if (oldBadge) oldBadge.remove();
+
+    const badge = document.createElement('div');
+    badge.id = 'status-badge';
+    badge.style.cssText = `display:flex;align-items:center;justify-content:center;gap:6px;
+        font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+        padding:5px 14px;border-radius:999px;margin:0 auto 2px;width:fit-content;
+        background:${aberto ? 'rgba(34,197,94,.15)' : 'rgba(239,68,68,.12)'};
+        color:${aberto ? '#16a34a' : '#dc2626'};
+        border:1px solid ${aberto ? 'rgba(34,197,94,.35)' : 'rgba(239,68,68,.3)'};`;
+    badge.innerHTML = `
+        <span style="width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block;
+            background:${aberto ? '#22c55e' : '#ef4444'};
+            ${aberto ? 'box-shadow:0 0 0 3px rgba(34,197,94,.25);animation:statusPulse 2s infinite;' : ''}"></span>
+        ${aberto ? 'Aberto agora' : (proximaAbertura || 'Fechado')}`;
+
+    // Injeta acima do botão "Ver Catálogo de Veículos"
+    const catalogBtn = document.querySelector('a[href="#section-catalogo"]');
+    if (catalogBtn) {
+        catalogBtn.parentElement.insertAdjacentElement('beforebegin', badge);
+    } else {
+        // fallback: insere no início do <main>
+        const mainEl = document.querySelector('main');
+        if (mainEl) mainEl.prepend(badge);
+    }
+
+    // Status no balão flutuante removido (solicitado pelo usuário)
+    // if (!aberto && proximaAbertura) { ... }
+}
+
+// ============================================
+// MÓDULO: PROMOÇÕES + COUNTDOWN (Google Sheets → aba 📢 Promocoes)
+// ============================================
+async function initPromocoes() {
+    const data = await loadSheetTab('📢 Promocoes');
+    if (!data) return;
+
+    const ativo = (data['Ativo'] || '').toLowerCase().trim() === 'sim';
+    if (!ativo) { console.log('Promoções: inativo'); return; }
+
+    function parseDMY(str) {
+        if (!str || !String(str).includes('/')) return null;
+        const p = String(str).trim().split('/');
+        return new Date(+p[2], +p[1] - 1, +p[0]);
+    }
+
+    const inicio = parseDMY(data['Data Inicio'] || data['Data Início']);
+    const fim    = parseDMY(data['Data Fim']);
+    const now    = new Date();
+    now.setHours(0, 0, 0, 0);
+    if (inicio && now < inicio) { console.log('Promoções: antes do período'); return; }
+    const fimDia = fim ? new Date(fim.getFullYear(), fim.getMonth(), fim.getDate(), 23, 59, 59) : null;
+    if (fimDia && new Date() > fimDia) { console.log('Promoções: após período'); return; }
+
+    const titulo    = data['Titulo']    || data['Título']    || '';
+    const subtitulo = data['Subtitulo'] || data['Subtítulo'] || '';
+    const corBanner = data['Cor do Banner'] || '#e11d48';
+    const linkWA    = data['Link WA'] || '';
+    const doCountdown = (data['Exibir Countdown'] || '').toLowerCase().trim() === 'sim';
+    const waNum     = '5521977342290';
+    const waMsg     = linkWA || 'vim através do link da bio e gostaria de saber mais sobre a promoção!';
+    const waHref    = `https://wa.me/${waNum}?text=${encodeURIComponent('Olá, ' + waMsg)}`;
+
+    // Remove banner anterior
+    const oldBanner = document.getElementById('promocao-banner');
+    if (oldBanner) oldBanner.remove();
+
+    const banner = document.createElement('div');
+    banner.id = 'promocao-banner';
+    banner.style.cssText = `background:${corBanner};color:#fff;padding:14px 16px 12px;
+        text-align:center;position:relative;overflow:hidden;
+        animation:alertaSlideDown .5s cubic-bezier(.23,1,.32,1);`;
+    banner.innerHTML = `
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.1);pointer-events:none;"></div>
+        <a href="${waHref}" target="_blank" rel="noopener"
+           style="position:relative;z-index:1;text-decoration:none;color:#fff;display:block;">
+            ${subtitulo ? `<p style="font-size:10px;font-weight:800;letter-spacing:.25em;text-transform:uppercase;opacity:.85;margin:0 0 2px;">${subtitulo}</p>` : ''}
+            <p style="font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;margin:0 0 6px;font-family:'Barlow Condensed',sans-serif;">${titulo}</p>
+            ${doCountdown && fimDia ? `
+            <div id="promo-countdown" style="display:inline-flex;gap:6px;align-items:center;margin-bottom:6px;">
+                <span id="cd-dias"  style="font-size:11px;font-weight:800;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:6px;min-width:32px;">--d</span>
+                <span style="font-size:10px;opacity:.5;">:</span>
+                <span id="cd-horas" style="font-size:11px;font-weight:800;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:6px;min-width:32px;">--h</span>
+                <span style="font-size:10px;opacity:.5;">:</span>
+                <span id="cd-min"   style="font-size:11px;font-weight:800;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:6px;min-width:32px;">--m</span>
+                <span style="font-size:10px;opacity:.5;">:</span>
+                <span id="cd-seg"   style="font-size:11px;font-weight:800;background:rgba(255,255,255,.2);padding:3px 8px;border-radius:6px;min-width:32px;">--s</span>
+            </div>` : ''}
+            <p style="font-size:9px;font-weight:700;margin:2px 0 0;opacity:.8;letter-spacing:.1em;text-transform:uppercase;">
+                Toque para aproveitar &nbsp;<i class="fa-brands fa-whatsapp"></i>
+            </p>
+        </a>
+        <button onclick="this.closest('#promocao-banner').remove()"
+            style="position:absolute;top:8px;right:10px;background:rgba(255,255,255,.2);border:none;
+                   color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;z-index:2;
+                   display:flex;align-items:center;justify-content:center;font-size:12px;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>`;
+
+    const mainEl = document.querySelector('main');
+    if (mainEl) mainEl.prepend(banner);
+
+    if (doCountdown && fimDia) {
+        const fimMs = fimDia.getTime();
+        const timerInterval = setInterval(() => {
+            const diff = fimMs - Date.now();
+            if (diff <= 0 || !document.getElementById('promocao-banner')) {
+                clearInterval(timerInterval);
+                return;
+            }
+            const pad = n => String(n).padStart(2, '0');
+            const elD = document.getElementById('cd-dias');
+            const elH = document.getElementById('cd-horas');
+            const elM = document.getElementById('cd-min');
+            const elS = document.getElementById('cd-seg');
+            if (!elD) return;
+            elD.textContent = `${Math.floor(diff / 86400000)}d`;
+            elH.textContent = `${pad(Math.floor((diff % 86400000) / 3600000))}h`;
+            elM.textContent = `${pad(Math.floor((diff % 3600000) / 60000))}m`;
+            elS.textContent = `${pad(Math.floor((diff % 60000) / 1000))}s`;
+        }, 1000);
+    }
+}
+
+// ============================================
 // INICIALIZAÃ‡ÃƒO
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Inicializar alternância de tema (Prioridade)
     initThemeToggle();
     initMusicToggle();
-    
+
     // 2. Atualizar saudação
     updateGreeting();
-    
+
     // 3. Inicializar animações de scroll
     initScrollReveal();
-    
+
     // Outros componentes
     initGalleryCarousel();
     initVideoCarousel();
@@ -1135,6 +1519,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     initEscapeKey();
     initWhatsappBubble();
     await initCatalog();
+    initImpactoAmbiental();
+
+    // Módulos Google Sheets dinâmicos
+    await initAlertas();
+    await initHorariosAoVivo();
+    await initPromocoes();
 
     // Console log
     console.log(`%c${CONFIG.projectName}`, 'color: #C9A227; font-size: 20px; font-weight: bold;');

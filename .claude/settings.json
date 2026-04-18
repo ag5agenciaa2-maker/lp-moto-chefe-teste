@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(python3 -c ' *)",
-      "Bash(python3 check_encoding.py)"
+      "Bash(python3 check_encoding.py)",
+      "Bash(python -c ' *)",
+      "Bash(python add_sheets.py)"
     ]
   }
 }

@@ -194,7 +194,7 @@
                 </div>
 
                 <!-- Content Over Gradient -->
-                <div class="relative z-20 px-6 pb-8 text-center flex flex-col items-center">
+                <div class="relative z-20 px-6 pb-4 text-center flex flex-col items-center">
                     <h1
                         class="leading-none font-title mb-4 tracking-tight uppercase transition-colors flex flex-col items-center">
                         <span class="font-label text-[1.1rem] !text-white mb-2 drop-shadow-md dark:drop-shadow-lg">Desde
@@ -209,12 +209,12 @@
 
                     <!-- Categoria Pill -->
                     <p data-config="negocio.subtitulo"
-                        class="font-label text-[10px] opacity-100 uppercase tracking-[0.3em] mb-5 bg-zinc-100/90 dark:bg-black/40 backdrop-blur-md px-8 py-2.5 rounded-full shadow-md border border-white/10 text-brand-dark dark:text-white transition-colors">
+                        class="font-label text-[10px] opacity-100 uppercase tracking-[0.3em] mb-3 bg-zinc-100/90 dark:bg-black/40 backdrop-blur-md px-8 py-2.5 rounded-full shadow-md border border-white/10 text-brand-dark dark:text-white transition-colors">
                         Veículos Elétricos</p>
 
                     <!-- Descrição -->
                     <p data-config="negocio.descricao"
-                        class="text-white dark:text-white/90 max-w-[340px] leading-relaxed text-[13px] font-medium mb-2 drop-shadow-sm transition-colors">
+                        class="text-white dark:text-white/90 max-w-[340px] leading-relaxed text-[13px] font-medium mb-1 drop-shadow-sm transition-colors">
                         Somos a maior empresa de mobilidade elétrica do Rio de Janeiro. Liberdade, velocidade e
                         sustentabilidade você só encontra aqui.
                     </p>
@@ -222,7 +222,7 @@
             </section>
 
             <!-- Main CTA & Links -->
-            <main class="px-5 pt-4 space-y-4">
+            <main class="px-5 pt-1 space-y-4">
 
                 <!-- Link Ã‚ncora Catálogo (Sutil e Centralizado) -->
                 <div class="flex justify-center pb-2">
@@ -867,6 +867,268 @@
                     </div>
                 </section>
 
+                <!-- Avaliações Section -->
+                <section class="py-12 reveal" id="section-avaliacoes">
+                    <div class="flex flex-col items-center mb-10 text-center px-4">
+                        <span class="diferenciais-eyebrow">O que dizem sobre nós</span>
+                        <h2 class="diferenciais-titulo">Avaliações<br>dos Clientes</h2>
+                        <div class="diferenciais-linha"></div>
+                        <div class="flex items-center justify-center gap-2 mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 flex-shrink-0">
+                                <path fill="#EA4335" d="M24 9.5c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 3.1 29.6 1 24 1 14.8 1 6.9 6.5 3.2 14.4l7 5.4C12 13.6 17.5 9.5 24 9.5z"/>
+                                <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7c4.3-4 6.8-9.9 6.8-16.9z"/>
+                                <path fill="#FBBC05" d="M10.2 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.1.7-4.6l-7-5.4A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.6-6.2z"/>
+                                <path fill="#34A853" d="M24 47c5.6 0 10.3-1.8 13.7-5l-7.4-5.7c-1.8 1.2-4.1 1.9-6.3 1.9-6.5 0-12-4.1-14-9.8l-7.6 6.2C6.9 41.5 14.8 47 24 47z"/>
+                            </svg>
+                            <span class="text-black/70 dark:text-white/60 text-[11px] font-semibold">+60 avaliações 5 estrelas</span>
+                        </div>
+                    </div>
+
+                    <!-- Cards de Avaliações -->
+                    <style>
+                        @keyframes scroll-avaliacoes {
+                            0%   { transform: translateX(0); }
+                            100% { transform: translateX(-50%); }
+                        }
+                        .avaliacoes-track {
+                            animation: scroll-avaliacoes 28s linear infinite;
+                            cursor: default;
+                        }
+                        .avaliacoes-track:hover { animation-play-state: paused; }
+                    </style>
+                    <div class="overflow-hidden -mx-4">
+                        <div class="flex gap-4 avaliacoes-track" style="width: max-content;">
+
+                            <!-- Card 1 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">E</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Elizabeth Maria da Silva</p>
+                                        <p class="text-white/40 text-[10px]">Local Guide · 4 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Amei comprar na MotoChefe. O Flávio é diferencial desde a primeira compra. Só agradecer pelo atendimento maravilhoso de sempre. Sem dúvida eu indico a Motochefe.</p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">V</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Vitória Assis</p>
+                                        <p class="text-white/40 text-[10px]">5 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Comprei minha moto elétrica e estou muito feliz! Atendimento excelente e produto de qualidade! Fui atendida pelo Flávio que me explicou tudo, me tirou todas as dúvidas, fizemos test drive.</p>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">C</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Carolina Gomes</p>
+                                        <p class="text-white/40 text-[10px]">7 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Atendimento de muita qualidade! Gostei muito da experiência desde o primeiro atendimento, test drive, explicações dos diferenciais até o momento de compra. Vendedor Flávio super atencioso e divertido.</p>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">A</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Aline F. Roque</p>
+                                        <p class="text-white/40 text-[10px]">9 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">O atendimento superou todas as minhas expectativas! O vendedor Flávio foi extremamente simpático, educado e prestativo. Estou muito satisfeita e recomendo de coração a Moto Chefe!</p>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">F</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Felipe Castro</p>
+                                        <p class="text-white/40 text-[10px]">10 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Profissionais rápidos e objetivos, sem enrolação, facilidade de pagamento, agilidade em tudo. Não tenho o que reclamar, fui bem atendido em tudo que precisei. Dá pra confiar 100%!</p>
+                            </div>
+
+                            <!-- Card 6 -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">I</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Ivison Inácio de Oliveira</p>
+                                        <p class="text-white/40 text-[10px]">10 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Foi muito bom o Flávio e as atendentes, foram bem receptivos. Gostei do atendimento. Fui bem atendido pelo pessoal da mecânica também. Estou satisfeito.</p>
+                            </div>
+
+                            <!-- Duplicatas para loop infinito -->
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">E</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Elizabeth Maria da Silva</p>
+                                        <p class="text-white/40 text-[10px]">Local Guide · 4 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Amei comprar na MotoChefe. O Flávio é diferencial desde a primeira compra. Só agradecer pelo atendimento maravilhoso de sempre. Sem dúvida eu indico a Motochefe.</p>
+                            </div>
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">V</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Vitória Assis</p>
+                                        <p class="text-white/40 text-[10px]">5 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Comprei minha moto elétrica e estou muito feliz! Atendimento excelente e produto de qualidade! Fui atendida pelo Flávio que me explicou tudo, me tirou todas as dúvidas, fizemos test drive.</p>
+                            </div>
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">C</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Carolina Gomes</p>
+                                        <p class="text-white/40 text-[10px]">7 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Atendimento de muita qualidade! Gostei muito da experiência desde o primeiro atendimento, test drive, explicações dos diferenciais até o momento de compra. Vendedor Flávio super atencioso e divertido.</p>
+                            </div>
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">A</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Aline F. Roque</p>
+                                        <p class="text-white/40 text-[10px]">9 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">O atendimento superou todas as minhas expectativas! O vendedor Flávio foi extremamente simpático, educado e prestativo. Estou muito satisfeita e recomendo de coração a Moto Chefe!</p>
+                            </div>
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">F</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Felipe Castro</p>
+                                        <p class="text-white/40 text-[10px]">10 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Profissionais rápidos e objetivos, sem enrolação, facilidade de pagamento, agilidade em tudo. Não tenho o que reclamar, fui bem atendido em tudo que precisei. Dá pra confiar 100%!</p>
+                            </div>
+                            <div class="bg-[#18181b] border border-white/8 rounded-2xl p-5 shadow-xl flex flex-col gap-3 flex-shrink-0" style="width: 280px;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-brand-main flex items-center justify-center text-white font-bold text-sm flex-shrink-0">I</div>
+                                    <div>
+                                        <p class="text-white text-xs font-semibold leading-tight">Ivison Inácio de Oliveira</p>
+                                        <p class="text-white/40 text-[10px]">10 meses atrás</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5">
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-white/70 text-[11px] leading-relaxed">Foi muito bom o Flávio e as atendentes, foram bem receptivos. Gostei do atendimento. Fui bem atendido pelo pessoal da mecânica também. Estou satisfeito.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- CTA Google -->
+                    <div class="mt-10 flex justify-center">
+                        <a href="https://search.google.com/local/writereview?placeid=ChIJVaJCnVrnmwARIYMqnr13PxM" target="_blank"
+                            class="group inline-flex items-center pb-1 border-b border-white/30 dark:border-white/30 hover:border-brand-main transition-colors duration-300">
+                            <span class="text-[11px] font-semibold text-black/60 dark:text-white/60 group-hover:text-brand-main transition-colors duration-300 uppercase tracking-widest">Avaliar loja no Google</span>
+                        </a>
+                    </div>
+                </section>
+
                 <!-- Sobre Section -->
                 <section class="mt-16 reveal" id="section-sustentabilidade">
                     <div
@@ -941,6 +1203,32 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Contador de Impacto Ambiental -->
+                        <div class="mt-8 pt-7 border-t border-white/8" id="impacto-ambiental">
+                            <div class="flex flex-col items-center mb-5 text-center">
+                                <span class="diferenciais-eyebrow">Impacto Real</span>
+                                <h3 class="text-base font-title font-bold text-brand-dark dark:text-white uppercase tracking-tight mt-1">Nossos Clientes Já Evitaram</h3>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-brand-main/10 border border-brand-main/25 rounded-2xl p-5 text-center">
+                                    <i class="fa-solid fa-cloud text-brand-main text-2xl mb-2"></i>
+                                    <div class="text-xl font-title font-black text-brand-main leading-none" id="counter-co2">0</div>
+                                    <div class="text-[10px] font-bold text-brand-dark/70 dark:text-white/60 uppercase tracking-widest mt-1">kg de CO₂</div>
+                                    <div class="text-[9px] text-brand-dark/50 dark:text-white/40 mt-0.5">não emitidos</div>
+                                </div>
+                                <div class="bg-brand-main/10 border border-brand-main/25 rounded-2xl p-5 text-center">
+                                    <i class="fa-solid fa-gas-pump text-brand-main text-2xl mb-2"></i>
+                                    <div class="text-xl font-title font-black text-brand-main leading-none" id="counter-litros">0</div>
+                                    <div class="text-[10px] font-bold text-brand-dark/70 dark:text-white/60 uppercase tracking-widest mt-1">Litros de gasolina</div>
+                                    <div class="text-[9px] text-brand-dark/50 dark:text-white/40 mt-0.5">economizados</div>
+                                </div>
+                            </div>
+                            <p class="text-[9px] text-brand-dark/40 dark:text-white/30 text-center mt-4 leading-relaxed">
+                                * Estimativa conservadora: 30 veículos em circulação × 30 km/dia × 0,04 kg CO₂/km evitado. Acumulado desde jan/2025.
+                            </p>
+                        </div>
+
                     </div>
                 </section>
 
@@ -1179,14 +1467,15 @@
                                     <li class="flex justify-between items-center pb-2 border-b border-white/5">
                                         <span class="opacity-70 font-medium text-brand-dark dark:text-white">Segunda a
                                             Sexta</span>
-                                        <span class="font-bold text-brand-main dark:text-white font-mono">09:00 -
-                                            18:00</span>
+                                        <span id="horario-seg-sex" class="font-bold text-brand-main dark:text-white font-mono">09:00 - 18:00</span>
                                     </li>
-                                    <li class="flex justify-between items-center">
-                                        <span
-                                            class="opacity-70 font-medium text-brand-dark dark:text-white">Sábado</span>
-                                        <span class="font-bold text-brand-main dark:text-white font-mono">09:00 -
-                                            14:00</span>
+                                    <li class="flex justify-between items-center pb-2 border-b border-white/5 last:border-0">
+                                        <span class="opacity-70 font-medium text-brand-dark dark:text-white">Sábado</span>
+                                        <span id="horario-sabado" class="font-bold text-brand-main dark:text-white font-mono">09:00 - 14:00</span>
+                                    </li>
+                                    <li id="li-horario-domingo" class="hidden justify-between items-center">
+                                        <span class="opacity-70 font-medium text-brand-dark dark:text-white">Domingo</span>
+                                        <span id="horario-domingo" class="font-bold text-brand-main dark:text-white font-mono">Fechado</span>
                                     </li>
                                 </ul>
                             </div>
