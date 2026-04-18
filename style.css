@@ -1078,6 +1078,14 @@ body,
     padding: 1.5rem 1rem;
 }
 
+/* Modal Tour 360 — ocupa tela inteira */
+#modal-360 {
+    padding: 0 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    overflow-y: hidden !important;
+}
+
 /* produto modal — sem max-height próprio, cresce livremente dentro do backdrop scrollável */
 .product-modal-content {
     max-height: none !important;
@@ -2575,6 +2583,14 @@ body.light-mode button.catalog-filter-premium.active {
     background-color: var(--brand-main) !important;
     color: #ffffff !important;
     border-color: transparent !important;
+}
+
+body.light-mode .catalog-filter-premium.active .filter-icon {
+    color: #ffffff !important;
+}
+
+body.light-mode .catalog-filter-premium:not(.active) .filter-icon {
+    color: #9ca3af !important;
 }
 
 /* Dark mode - fundo escuro nos filtros inativos */
